@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://soap.ipbanka.etf.unibl.org" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://soap.ipbanka.etf.unibl.org" xmlns:intf="http://soap.ipbanka.etf.unibl.org" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<!--WSDL created by Apache Axis version: 1.4
+Built on Apr 22, 2006 (06:55:48 PDT)-->
+ <wsdl:types>
+  <schema elementFormDefault="qualified" targetNamespace="http://soap.ipbanka.etf.unibl.org" xmlns="http://www.w3.org/2001/XMLSchema">
+   <element name="isValid">
+    <complexType>
+     <sequence>
+      <element name="userMail" type="xsd:string"/>
+      <element name="name" type="xsd:string"/>
+      <element name="surname" type="xsd:string"/>
+      <element name="cardNumber" type="xsd:string"/>
+      <element name="type" type="xsd:string"/>
+      <element name="month" type="xsd:string"/>
+      <element name="year" type="xsd:string"/>
+      <element name="cvc" type="xsd:string"/>
+      <element name="total" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="isValidResponse">
+    <complexType>
+     <sequence>
+      <element name="isValidReturn" type="xsd:boolean"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="payTotal">
+    <complexType>
+     <sequence>
+      <element name="userMail" type="xsd:string"/>
+      <element name="name" type="xsd:string"/>
+      <element name="surname" type="xsd:string"/>
+      <element name="cardNumber" type="xsd:string"/>
+      <element name="type" type="xsd:string"/>
+      <element name="month" type="xsd:string"/>
+      <element name="year" type="xsd:string"/>
+      <element name="cvc" type="xsd:string"/>
+      <element name="total" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="payTotalResponse">
+    <complexType>
+     <sequence>
+      <element name="payTotalReturn" type="xsd:boolean"/>
+     </sequence>
+    </complexType>
+   </element>
+  </schema>
+ </wsdl:types>
+
+   <wsdl:message name="payTotalRequest">
+
+      <wsdl:part element="impl:payTotal" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="payTotalResponse">
+
+      <wsdl:part element="impl:payTotalResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="isValidRequest">
+
+      <wsdl:part element="impl:isValid" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="isValidResponse">
+
+      <wsdl:part element="impl:isValidResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:portType name="IpBankaSoapService">
+
+      <wsdl:operation name="isValid">
+
+         <wsdl:input message="impl:isValidRequest" name="isValidRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:isValidResponse" name="isValidResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="payTotal">
+
+         <wsdl:input message="impl:payTotalRequest" name="payTotalRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:payTotalResponse" name="payTotalResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="IpBankaSoapServiceSoapBinding" type="impl:IpBankaSoapService">
+
+      <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="isValid">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="isValidRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="isValidResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="payTotal">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="payTotalRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="payTotalResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="IpBankaSoapServiceService">
+
+      <wsdl:port binding="impl:IpBankaSoapServiceSoapBinding" name="IpBankaSoapService">
+
+         <wsdlsoap:address location="http://localhost:8080/IPBanka/services/IpBankaSoapService"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>
