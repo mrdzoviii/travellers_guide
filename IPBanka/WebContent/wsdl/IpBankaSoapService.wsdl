@@ -4,28 +4,6 @@
 Built on Apr 22, 2006 (06:55:48 PDT)-->
  <wsdl:types>
   <schema elementFormDefault="qualified" targetNamespace="http://soap.ipbanka.etf.unibl.org" xmlns="http://www.w3.org/2001/XMLSchema">
-   <element name="isValid">
-    <complexType>
-     <sequence>
-      <element name="userMail" type="xsd:string"/>
-      <element name="name" type="xsd:string"/>
-      <element name="surname" type="xsd:string"/>
-      <element name="cardNumber" type="xsd:string"/>
-      <element name="type" type="xsd:string"/>
-      <element name="month" type="xsd:string"/>
-      <element name="year" type="xsd:string"/>
-      <element name="cvc" type="xsd:string"/>
-      <element name="total" type="xsd:string"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="isValidResponse">
-    <complexType>
-     <sequence>
-      <element name="isValidReturn" type="xsd:boolean"/>
-     </sequence>
-    </complexType>
-   </element>
    <element name="payTotal">
     <complexType>
      <sequence>
@@ -67,35 +45,7 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
-   <wsdl:message name="isValidRequest">
-
-      <wsdl:part element="impl:isValid" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="isValidResponse">
-
-      <wsdl:part element="impl:isValidResponse" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
    <wsdl:portType name="IpBankaSoapService">
-
-      <wsdl:operation name="isValid">
-
-         <wsdl:input message="impl:isValidRequest" name="isValidRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:isValidResponse" name="isValidResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
 
       <wsdl:operation name="payTotal">
 
@@ -114,24 +64,6 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
    <wsdl:binding name="IpBankaSoapServiceSoapBinding" type="impl:IpBankaSoapService">
 
       <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
-
-      <wsdl:operation name="isValid">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="isValidRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="isValidResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
 
       <wsdl:operation name="payTotal">
 

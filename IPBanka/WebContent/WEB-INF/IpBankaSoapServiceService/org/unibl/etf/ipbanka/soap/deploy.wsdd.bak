@@ -1,0 +1,37 @@
+<!-- Use this file to deploy some handlers/chains and services      -->
+<!-- Two ways to do this:                                           -->
+<!--   java org.apache.axis.client.AdminClient deploy.wsdd          -->
+<!--      after the axis server is running                          -->
+<!-- or                                                             -->
+<!--   java org.apache.axis.utils.Admin client|server deploy.wsdd   -->
+<!--      from the same directory that the Axis engine runs         -->
+
+<deployment
+    xmlns="http://xml.apache.org/axis/wsdd/"
+    xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+
+  <!-- Services from IpBankaSoapServiceService WSDL service -->
+
+  <service name="IpBankaSoapService" provider="java:RPC" style="wrapped" use="literal">
+      <parameter name="wsdlTargetNamespace" value="http://soap.ipbanka.etf.unibl.org"/>
+      <parameter name="wsdlServiceElement" value="IpBankaSoapServiceService"/>
+      <parameter name="schemaQualified" value="http://soap.ipbanka.etf.unibl.org"/>
+      <parameter name="wsdlServicePort" value="IpBankaSoapService"/>
+      <parameter name="className" value="org.unibl.etf.ipbanka.soap.IpBankaSoapServiceSoapBindingImpl"/>
+      <parameter name="wsdlPortType" value="IpBankaSoapService"/>
+      <parameter name="typeMappingVersion" value="1.2"/>
+      <operation name="payTotal" qname="operNS:payTotal" xmlns:operNS="http://soap.ipbanka.etf.unibl.org" returnQName="retNS:payTotalReturn" xmlns:retNS="http://soap.ipbanka.etf.unibl.org" returnType="rtns:boolean" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="" >
+        <parameter qname="pns:userMail" xmlns:pns="http://soap.ipbanka.etf.unibl.org" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:name" xmlns:pns="http://soap.ipbanka.etf.unibl.org" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:surname" xmlns:pns="http://soap.ipbanka.etf.unibl.org" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:cardNumber" xmlns:pns="http://soap.ipbanka.etf.unibl.org" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:type" xmlns:pns="http://soap.ipbanka.etf.unibl.org" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:month" xmlns:pns="http://soap.ipbanka.etf.unibl.org" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:year" xmlns:pns="http://soap.ipbanka.etf.unibl.org" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:cvc" xmlns:pns="http://soap.ipbanka.etf.unibl.org" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:total" xmlns:pns="http://soap.ipbanka.etf.unibl.org" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <parameter name="allowedMethods" value="payTotal"/>
+
+  </service>
+</deployment>
