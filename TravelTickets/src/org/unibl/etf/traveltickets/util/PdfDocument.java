@@ -51,20 +51,24 @@ public class PdfDocument {
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return null;
 		} catch (DocumentException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return null;
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return null;
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return null;
 		}
 		return fileName;
 	}
 	public static PdfPCell createImageCell() throws DocumentException, IOException {
-		Integer number = 5 + rand.nextInt(70);
+		Integer number = 5 + rand.nextInt(100);
 		File file = QRCode.from(number.toString()).to(ImageType.JPG).withSize(150, 150).file();
 		Image img = Image.getInstance(file.getAbsolutePath());
 	    PdfPCell cell = new PdfPCell(img, true);

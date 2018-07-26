@@ -6,7 +6,6 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -18,14 +17,14 @@ import org.unibl.etf.traveltickets.rest.model.Request;
 import org.unibl.etf.traveltickets.util.ServiceUtility;
 
 
-@Path("/rest")
+@Path("/")
 public class TravelTicketsRestService {
-	@Path("/destination/{destination}")
+	@Path("/tickets")
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getTickets(@PathParam("destination") String destination) {
+	public Response getTickets() {
 		JSONArray array=new JSONArray();
-		List<Ticket> tickets=ServiceUtility.getByDestination(destination);
+		List<Ticket> tickets=ServiceUtility.getAllTickets();
 		for(Ticket t:tickets) {
 			array.put(new JSONObject(t));
 		}

@@ -6,14 +6,19 @@ import org.unibl.etf.traveltickets.db.dao.TicketMain;
 import org.unibl.etf.traveltickets.db.dto.Ticket;
 
 public class ServiceUtility {
-	
-	public static List<Ticket> getByDestination(String destination){
-		Ticket criteria=new Ticket(destination, null, null);
-		TicketMain ticketDb=TicketMain.getTicketMain();
-		return ticketDb.selectByTicket(criteria);
+
+	public static List<Ticket> getAllTickets() {
+		TicketMain ticketDb = TicketMain.getTicketMain();
+		return ticketDb.getAll();
 	}
-	public static Boolean buyTicket(String name,String surname,String mail,String date,String destination,String type) {
-		String pdf= PdfDocument.makePdf(name, surname, date, destination,type);
-		return MailUtilities.sendMail(pdf, mail);
+
+	public static Boolean buyTicket(String name, String surname, String mail, String date, String destination,
+			String type) {
+		String pdf = PdfDocument.makePdf(name, surname, date, destination, type);
+		if (pdf != null) {
+			MailUtilities.sendMail(pdf, mail);
+			return true;
+		}
+		return false;
 	}
 }

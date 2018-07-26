@@ -47,13 +47,14 @@ public class Request {
 	public void setDestination(String destination) {
 		this.destination = destination;
 	}
-	public Request(String name, String surname, String mail, String date, String destination) {
+	public Request(String name, String surname, String mail, String date, String destination,String transportType) {
 		super();
 		this.name = name;
 		this.surname = surname;
 		this.mail = mail;
 		this.date = date;
 		this.destination = destination;
+		this.transportType=transportType;
 	}
 	public Request() {
 		super();

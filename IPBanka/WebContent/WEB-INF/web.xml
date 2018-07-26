@@ -17,7 +17,7 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>ServletContainer</servlet-name>
-    <url-pattern>/*</url-pattern>
+    <url-pattern>/rest/*</url-pattern>
   </servlet-mapping>
   <servlet>
     <display-name>Apache-Axis Servlet</display-name>

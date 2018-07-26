@@ -28,7 +28,6 @@ public class ServiceUtility {
 	private static final String MONTH_PATTERN = BUNDLE.getString("bank.MonthPattern");
 	private static final String CARD_NUMBER_PATTERN = BUNDLE.getString("bank.CardNumberPattern");
 	
-
 	
 	public static void init() {
 		JedisPool pool = new JedisPool(redisHost);

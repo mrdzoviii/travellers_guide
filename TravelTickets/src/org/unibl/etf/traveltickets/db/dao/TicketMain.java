@@ -2,6 +2,7 @@ package org.unibl.etf.traveltickets.db.dao;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import org.unibl.etf.traveltickets.db.dto.Ticket;
 
@@ -11,7 +12,8 @@ import com.db4o.ObjectSet;
 
 public class TicketMain {
 	private static TicketMain reference;
-	private static final String dbName="ticket.oodb";
+	private static final ResourceBundle BUNDLE=ResourceBundle.getBundle("org.unibl.etf.traveltickets.config.TravelTicketsConfig");
+	private static final String dbName=BUNDLE.getString("oodb.db.name");
 	public static TicketMain getTicketMain() {
 		if(reference==null) {
 			reference=new TicketMain();
@@ -34,10 +36,10 @@ public class TicketMain {
 	}
 	
 
-	public synchronized List<Ticket> selectByTicket(Ticket t) {
+	public synchronized List<Ticket> getAll() {
 		List<Ticket> tickets = new ArrayList<>();
 		ObjectContainer db = Db4oEmbedded.openFile(dbName);
-		ObjectSet<Ticket> driveSet = db.queryByExample(t);
+		ObjectSet<Ticket> driveSet = db.queryByExample(new Ticket(null, null, null));
 		while (driveSet.hasNext()) {
 			tickets.add(driveSet.next());
 		}

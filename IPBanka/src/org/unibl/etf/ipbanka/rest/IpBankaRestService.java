@@ -9,7 +9,7 @@ import javax.ws.rs.core.Response;
 
 import org.unibl.etf.ipbanka.util.ServiceUtility;
 
-@Path("/rest")
+@Path("/")
 public class IpBankaRestService {
 	@Path("/check/{mail}")
 	@GET

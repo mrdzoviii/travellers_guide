@@ -18,7 +18,7 @@ public class Ticket implements Serializable{
 	
 	
 	private String destination;
-	private String typeOfTransport;
+	private String transportType;
 	private String price;
 	public String getDestination() {
 		return destination;
@@ -26,11 +26,11 @@ public class Ticket implements Serializable{
 	public void setDestination(String destination) {
 		this.destination = destination;
 	}
-	public String getTypeOfTransport() {
-		return typeOfTransport;
+	public String getTransportType() {
+		return transportType;
 	}
-	public void setTypeOfTransport(String typeOfTransport) {
-		this.typeOfTransport = typeOfTransport;
+	public void setTransportType(String transportType) {
+		this.transportType =transportType;
 	}
 	public String getPrice() {
 		return price;
@@ -41,7 +41,7 @@ public class Ticket implements Serializable{
 	public Ticket(String destination, String typeOfTransport, String price) {
 		super();
 		this.destination = destination;
-		this.typeOfTransport = typeOfTransport;
+		this.transportType = typeOfTransport;
 		this.price = price;
 	}
 	public Ticket() {
