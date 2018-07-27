@@ -9,7 +9,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 <title>Travel Advertiser</title>
 <h:outputStylesheet library="css" name="style.css"/>
-<h:outputScript library="js" name="toogleForm.js"></h:outputScript>
+<h:outputScript library="js" name="script.js"></h:outputScript>
 </h:head>
 <h:body>
 
@@ -24,10 +24,11 @@
 	<f:validateLength maximum="255" minimum="5"></f:validateLength></p:inputTextarea>
 	<p:message for="ad_text" display="text"></p:message>
 	<p:outputLabel value="Picture:"></p:outputLabel>
-	<p:fileUpload fileLimit="1" cancelLabel="Cancel" 
+	<p:fileUpload fileLimit="1" cancelLabel="Cancel"
 	accept="/(\.|\/)(gif|jpe?g|png)$/" uploadLabel="Upload" 
-	fileUploadListener="#{ad.handleFileUpload}" 
-	allowTypes="/(\.|\/)(gif|jpe?g|png)$/"></p:fileUpload>
+	fileUploadListener="#{ad.handleFileUpload}" widgetVar="ad_upload" oncomplete="disable()"
+	allowTypes="/(\.|\/)(gif|jpe?g|png)$/">
+   </p:fileUpload>
 	<p:outputLabel></p:outputLabel>
 	<p:outputLabel for="ad_type" value="Ad type:"></p:outputLabel>
 	<p:selectOneButton value="#{ad.type}" id="ad_type" required="true" requiredMessage="Ad type must be selected.">
@@ -119,7 +120,7 @@
 </div>
 </h:panelGroup>
 <div id="ad_submit">
-<p:commandButton id="submit" value="Submit ad" icon="ui-icon-disk"
+<p:commandButton id="submit" value="Submit ad" 
 			styleClass="ui-priority-primary" action="#{ad.saveAd}"
 			update="ad_form">
 		</p:commandButton>

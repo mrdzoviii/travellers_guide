@@ -29,6 +29,8 @@ public class Ad implements Serializable {
 	private AdDto ad = new AdDto();
 	private boolean paid = false;
 	private boolean free = true;
+	
+
 	private Account account = new Account();
 	private UploadedFile uploadedFile;
 	private String type = "Free";
@@ -202,7 +204,6 @@ public class Ad implements Serializable {
 			imageBytes = baos.toByteArray();
 			baos.close();
 			ad.setImage(imageBytes);
-			System.out.println("ad.image.bytes"+ad.getImage().length);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
