@@ -26,6 +26,28 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
      </sequence>
     </complexType>
    </element>
+   <element name="validateData">
+    <complexType>
+     <sequence>
+      <element name="userMail" type="xsd:string"/>
+      <element name="name" type="xsd:string"/>
+      <element name="surname" type="xsd:string"/>
+      <element name="cardNumber" type="xsd:string"/>
+      <element name="type" type="xsd:string"/>
+      <element name="month" type="xsd:string"/>
+      <element name="year" type="xsd:string"/>
+      <element name="cvc" type="xsd:string"/>
+      <element name="total" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="validateDataResponse">
+    <complexType>
+     <sequence>
+      <element name="validateDataReturn" type="xsd:boolean"/>
+     </sequence>
+    </complexType>
+   </element>
   </schema>
  </wsdl:types>
 
@@ -45,6 +67,22 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
+   <wsdl:message name="validateDataRequest">
+
+      <wsdl:part element="impl:validateData" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="validateDataResponse">
+
+      <wsdl:part element="impl:validateDataResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
    <wsdl:portType name="IpBankaSoapService">
 
       <wsdl:operation name="payTotal">
@@ -54,6 +92,18 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
        </wsdl:input>
 
          <wsdl:output message="impl:payTotalResponse" name="payTotalResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="validateData">
+
+         <wsdl:input message="impl:validateDataRequest" name="validateDataRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:validateDataResponse" name="validateDataResponse">
 
        </wsdl:output>
 
@@ -76,6 +126,24 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
          </wsdl:input>
 
          <wsdl:output name="payTotalResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="validateData">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="validateDataRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="validateDataResponse">
 
             <wsdlsoap:body use="literal"/>
 

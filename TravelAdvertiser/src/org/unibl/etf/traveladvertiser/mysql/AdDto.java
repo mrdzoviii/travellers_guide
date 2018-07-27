@@ -1,9 +1,11 @@
 package org.unibl.etf.traveladvertiser.mysql;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Date;
 
-public class AdDto {
+public class  AdDto implements Serializable {
+	private static final long serialVersionUID = 1L;
 	private int id;
 	private String text;
 	private byte[] image;

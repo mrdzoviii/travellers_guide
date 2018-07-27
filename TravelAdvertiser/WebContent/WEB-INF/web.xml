@@ -29,4 +29,8 @@
     <servlet-name>ServletContainer</servlet-name>
     <url-pattern>/rest/*</url-pattern>
   </servlet-mapping>
+  <context-param>
+    <param-name>primefaces.THEME</param-name>
+    <param-value>home</param-value>
+</context-param>
 </web-app>
