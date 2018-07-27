@@ -44,16 +44,16 @@ public class IpBankaSoapServiceProxy implements org.unibl.etf.ipbanka.soap.IpBan
     return ipBankaSoapService;
   }
   
-  public boolean payTotal(java.lang.String userMail, java.lang.String name, java.lang.String surname, java.lang.String cardNumber, java.lang.String type, java.lang.String month, java.lang.String year, java.lang.String cvc, java.lang.String total) throws java.rmi.RemoteException{
+  public boolean payTotal(java.lang.String userMail, java.lang.String name, java.lang.String surname, java.lang.String cardNumber, java.lang.String type, java.lang.String expirationDate, java.lang.String cvc, java.lang.String total) throws java.rmi.RemoteException{
     if (ipBankaSoapService == null)
       _initIpBankaSoapServiceProxy();
-    return ipBankaSoapService.payTotal(userMail, name, surname, cardNumber, type, month, year, cvc, total);
+    return ipBankaSoapService.payTotal(userMail, name, surname, cardNumber, type, expirationDate, cvc, total);
   }
   
-  public boolean validateData(java.lang.String userMail, java.lang.String name, java.lang.String surname, java.lang.String cardNumber, java.lang.String type, java.lang.String month, java.lang.String year, java.lang.String cvc, java.lang.String total) throws java.rmi.RemoteException{
+  public boolean validateData(java.lang.String userMail, java.lang.String name, java.lang.String surname, java.lang.String cardNumber, java.lang.String type, java.lang.String expirationDate, java.lang.String cvc, java.lang.String total) throws java.rmi.RemoteException{
     if (ipBankaSoapService == null)
       _initIpBankaSoapServiceProxy();
-    return ipBankaSoapService.validateData(userMail, name, surname, cardNumber, type, month, year, cvc, total);
+    return ipBankaSoapService.validateData(userMail, name, surname, cardNumber, type, expirationDate, cvc, total);
   }
   
   

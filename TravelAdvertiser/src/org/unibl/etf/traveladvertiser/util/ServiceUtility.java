@@ -3,12 +3,14 @@ package org.unibl.etf.traveladvertiser.util;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 import org.unibl.etf.traveladvertiser.mysql.AdDao;
 import org.unibl.etf.traveladvertiser.mysql.AdDto;
@@ -40,8 +42,8 @@ public class ServiceUtility {
 		return new Date();
 	}
 	
-	public static Date getOffsetDate(int offset) {
-		return new Date(LocalDate.now().plusDays(offset).toEpochDay());
+	public static Date getOffsetDate(int offset,Date date) {
+		return new Date(date.getTime()+offset*24*60*60*1000);
 	}
 	
 	public static BufferedImage resize(BufferedImage img, int height, int width) {
@@ -52,4 +54,13 @@ public class ServiceUtility {
         g2d.dispose();
         return resized;
     }
+	
+	public static long differeceInDays(Date date1, Date date2) {
+		return TimeUnit.DAYS.convert(Math.abs(date1.getTime() - date2.getTime()), TimeUnit.MILLISECONDS);
+	}
+	
+	public static String parseDouble(double price) {
+		DecimalFormat df=new DecimalFormat("0.00");
+		return df.format(price);
+	}
 }

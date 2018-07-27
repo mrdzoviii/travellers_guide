@@ -7,8 +7,8 @@
   <ns1:parameter name="dotNetSoapEncFix" value="true"/>
   <ns1:parameter name="enableNamespacePrefixOptimization" value="false"/>
   <ns1:parameter name="sendXMLDeclaration" value="true"/>
-  <ns1:parameter name="attachments.implementation" value="org.apache.axis.attachments.AttachmentsImpl"/>
   <ns1:parameter name="sendXsiTypes" value="true"/>
+  <ns1:parameter name="attachments.implementation" value="org.apache.axis.attachments.AttachmentsImpl"/>
   <ns1:requestFlow>
    <ns1:handler type="java:org.apache.axis.handlers.JWSHandler">
     <ns1:parameter name="scope" value="session"/>
@@ -39,12 +39,21 @@
    <ns2:parameter qname="ns1:surname" type="xsd:string"/>
    <ns2:parameter qname="ns1:cardNumber" type="xsd:string"/>
    <ns2:parameter qname="ns1:type" type="xsd:string"/>
-   <ns2:parameter qname="ns1:month" type="xsd:string"/>
-   <ns2:parameter qname="ns1:year" type="xsd:string"/>
+   <ns2:parameter qname="ns1:expirationDate" type="xsd:string"/>
    <ns2:parameter qname="ns1:cvc" type="xsd:string"/>
    <ns2:parameter qname="ns1:total" type="xsd:string"/>
   </ns2:operation>
-  <ns1:parameter name="allowedMethods" value="payTotal"/>
+  <ns1:operation name="validateData" qname="ns2:validateData" returnQName="ns2:validateDataReturn" returnType="xsd:boolean" soapAction="" xmlns:ns2="http://soap.ipbanka.etf.unibl.org" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns2:userMail" type="xsd:string"/>
+   <ns1:parameter qname="ns2:name" type="xsd:string"/>
+   <ns1:parameter qname="ns2:surname" type="xsd:string"/>
+   <ns1:parameter qname="ns2:cardNumber" type="xsd:string"/>
+   <ns1:parameter qname="ns2:type" type="xsd:string"/>
+   <ns1:parameter qname="ns2:expirationDate" type="xsd:string"/>
+   <ns1:parameter qname="ns2:cvc" type="xsd:string"/>
+   <ns1:parameter qname="ns2:total" type="xsd:string"/>
+  </ns1:operation>
+  <ns1:parameter name="allowedMethods" value="payTotal validateData"/>
   <ns1:parameter name="typeMappingVersion" value="1.2"/>
   <ns1:parameter name="wsdlPortType" value="IpBankaSoapService"/>
   <ns1:parameter name="className" value="org.unibl.etf.ipbanka.soap.IpBankaSoapService"/>

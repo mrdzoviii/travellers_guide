@@ -1,18 +1,15 @@
-package org.unibl.etf.traveladvertiser.bean;
+package org.unibl.etf.ipbanka.soap.model;
 
-import javax.annotation.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import java.io.Serializable;
 
-@ManagedBean
-@RequestScoped
-public class Account {
+public class Account implements Serializable{
+	private static final long serialVersionUID = 1L;
 	private String mail;
 	private String cardNumber;
 	private String cardType;
 	private String name;
 	private String surname;
-	private String year;
-	private String month;
+	private String expirationTime;
 	private String cvc;
 	public Account() {
 		super();
@@ -47,17 +44,12 @@ public class Account {
 	public void setSurname(String surname) {
 		this.surname = surname;
 	}
-	public String getYear() {
-		return year;
+	
+	public String getExpirationTime() {
+		return expirationTime;
 	}
-	public void setYear(String year) {
-		this.year = year;
-	}
-	public String getMonth() {
-		return month;
-	}
-	public void setMonth(String month) {
-		this.month = month;
+	public void setExpirationTime(String expirationTime) {
+		this.expirationTime = expirationTime;
 	}
 	public String getCvc() {
 		return cvc;

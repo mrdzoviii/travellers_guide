@@ -14,7 +14,7 @@ import org.unibl.etf.traveladvertiser.util.ConnectionPool;
 
 public class AdDao {
 	private static final String SQL_SELECT = "SELECT * FROM ad WHERE ad_date_from <= date(now()) AND ad_date_to >= date(now())";
-	private static final String SQL_INSERT = "INSERT INTO reklama VALUES (?, ?, ?, ?, ?)";
+	private static final String SQL_INSERT = "INSERT INTO ad VALUES (?, ?, ?, ?, ?)";
 	private static final String AD_ID=ConnectionPool.bundle.getString("ad.id");
 	private static final String AD_TEXT=ConnectionPool.bundle.getString("ad.text");
 	private static final String AD_IMAGE=ConnectionPool.bundle.getString("ad.image");

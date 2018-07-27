@@ -14,10 +14,10 @@
 <h:body>
 
 <h:form id="ad_form">
-<p:growl id="error" sticky="true"></p:growl>
+<p:growl id="error" life="800" globalOnly="true"></p:growl>
 <div id="ad_basic_data">
-<p:panel header="About ad:">
-<p:panelGrid columns="3">
+<p:panel header="About ad:" >
+<p:panelGrid columns="3" styleClass="form">
 	<p:outputLabel for="ad_text" value="Text:"></p:outputLabel>
 	<p:inputTextarea id="ad_text" value="#{ad.ad.text}" styleClass="textArea" required="true" cols="80" rows="4"
 	requiredMessage="Please enter some text." validatorMessage="Text length must be between 5 and 255 characters." >
@@ -26,11 +26,8 @@
 	<p:outputLabel value="Picture:"></p:outputLabel>
 	<p:fileUpload fileLimit="1" cancelLabel="Cancel" 
 	accept="/(\.|\/)(gif|jpe?g|png)$/" uploadLabel="Upload" 
-	fileUploadListener="#{ad.handleUpload}" 
-	allowTypes="/(\.|\/)(gif|jpe?g|png)$/" ></p:fileUpload>
-	<p:outputLabel></p:outputLabel>
-	<p:outputLabel for="ad_image" value="Ad picture:"></p:outputLabel>
-	<p:graphicImage id="ad_image" value="#{ad.image}" styleClass="picture"></p:graphicImage>
+	fileUploadListener="#{ad.handleFileUpload}" 
+	allowTypes="/(\.|\/)(gif|jpe?g|png)$/"></p:fileUpload>
 	<p:outputLabel></p:outputLabel>
 	<p:outputLabel for="ad_type" value="Ad type:"></p:outputLabel>
 	<p:selectOneButton value="#{ad.type}" id="ad_type" required="true" requiredMessage="Ad type must be selected.">
@@ -42,7 +39,7 @@
 </p:panelGrid>
 </p:panel>
 </div>
-<h:panelGroup id="ad_advanced_data">
+<h:panelGroup id="ad_advanced_data" styleClass="form">
 <div id="ad_free">
 <p:panel header="Free ad:" rendered="#{ad.free}" id="panel_free">
 <p:panelGrid columns="3">
@@ -57,73 +54,76 @@
 <div id="ad_paid">
 <p:panel header="Paid ad:" rendered="#{ad.paid}" id="panel_paid">
 <p:panelGrid columns="3">
-<p:outputLabel for="paid_ad_date_from" value="Date from: "></p:outputLabel>
-	<p:calendar id="paid_ad_date_from" value="#{ad.ad.dateFrom}" required="true" 
-	requiredMessage="Please select start date of your advertisement." navigator="true" 
-	mindate="#{ad.ad.dateFrom}" pattern="dd/MM/yyyy" mask="true"></p:calendar>
+	<p:outputLabel for="paid_ad_date_from" value="Date from: "></p:outputLabel>
+		<p:calendar id="paid_ad_date_from" value="#{ad.ad.dateFrom}" required="true" 
+	      requiredMessage="Please select start date of your advertisement." navigator="true" 
+	      mindate="#{ad.ad.dateFrom}" pattern="dd/MM/yyyy" mask="true"></p:calendar>
 	<p:message for="paid_ad_date_from" display="text"></p:message>
+	
 	<p:outputLabel for="ad_days" value="Number of days:"></p:outputLabel>
-	<p:inputMask id="ad_days" value="#{ad.days}"  mask="9999" required="true" requiredMessage="Enter number of days.">
+	<p:inputText id="ad_days" value="#{ad.days}"  required="true" requiredMessage="Enter number of days." validatorMessage="Enter valid number of days.">
 	<p:ajax event="change" update="price"></p:ajax>
-	</p:inputMask>
+	<f:validateLongRange minimum="1" maximum="1000"></f:validateLongRange>
+	</p:inputText>
 	<p:message for="ad_days" display="text"></p:message>
+	
 	<p:outputLabel for="account_email" value="Email:"></p:outputLabel>
-	<p:inputText id="account_email" value="#{account.mail}" required="true" requiredMessage="Enter email." validatorMessage="Enter valid email.">
+	<p:inputText id="account_email" value="#{ad.account.mail}" required="true" requiredMessage="Enter email." validatorMessage="Enter valid email.">
 	 <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$"></f:validateRegex>
 	</p:inputText>
 	<p:message for="account_email" display="text"></p:message>
+	
 	<p:outputLabel for="account_name" value="Name:"></p:outputLabel>
-	<p:inputText id="account_name" value="#{account.name}" required="true" requiredMessage="Enter name." validatorMessage="Name must be between 2 and 50 characters.">
+	<p:inputText id="account_name" value="#{ad.account.name}" required="true" requiredMessage="Enter name." validatorMessage="Name must be between 2 and 50 characters.">
 		<f:validateLength maximum="50" minimum="2"></f:validateLength>
 	</p:inputText>
+	
 	<p:message for="account_surname" display="text"></p:message>
 	<p:outputLabel for="account_surname" value="Surname:"></p:outputLabel>
-	<p:inputText id="account_surname" value="#{account.surname}" required="true" requiredMessage="Enter surname." validatorMessage="Surname must be between 2 and 100 characters.">
+	<p:inputText id="account_surname" value="#{ad.account.surname}" required="true" requiredMessage="Enter surname." validatorMessage="Surname must be between 2 and 100 characters.">
 		<f:validateLength maximum="100" minimum="2"></f:validateLength>
 	</p:inputText>
 	<p:message for="account_surname" display="text"></p:message>
+	
 	<p:outputLabel for="account_card_type" value="Card type:"></p:outputLabel>
-	<p:selectOneButton value="#{account.cardType}" id="account_card_type" required="true" requiredMessage="Card type must be selected.">
+	<p:selectOneButton value="#{ad.account.cardType}" id="account_card_type" required="true" requiredMessage="Card type must be selected.">
             <f:selectItem itemLabel="Visa" itemValue="VISA"/>
             <f:selectItem itemLabel="MasterCard" itemValue="MasterCard" />
             <f:selectItem itemLabel="American Express" itemValue="AMERICAN EXPRESS" />
         </p:selectOneButton>
     <p:message for="account_card_type" display="text"></p:message>
+    
     <p:outputLabel for="account_card_number" value="Card number:"></p:outputLabel>
-					<p:inputMask id="account_card_number" value="#{account.cardNumber}"
-						required="true" requiredMessage="Enter card number"
-						mask="9999-9999-9999-9999">
-					</p:inputMask>
-					<p:message for="account_card_number" display="text"></p:message>
+	<p:inputMask id="account_card_number" value="#{ad.account.cardNumber}" required="true" requiredMessage="Enter card number"
+	mask="9999-9999-9999-9999"></p:inputMask>
+	<p:message for="account_card_number" display="text"></p:message>
 					
-					<p:outputLabel for="account_expire_time" value="Expire time:"></p:outputLabel>
-					<p:panel id="account_expire_time">
-					<p:inputMask id="account_month" value="#{account.month}"
-						required="true" requiredMessage="Enter expire month"
-						mask="99" validatorMessage="Enter valid month number (1-12)">
-					<f:validateRegex pattern="^(0?[1-9]|1[012])$"></f:validateRegex></p:inputMask>
-					<p:inputMask id="account_year" value="#{account.year}"
-						required="true" requiredMessage="Enter expire year"
-						mask="9999" validatorMessage="Enter valid year.">
-					<f:validateRegex pattern="^[0-9]{4}$"></f:validateRegex></p:inputMask>
-					</p:panel>
-					<p:message for="account_month" display="text"></p:message>
-					<p:outputLabel for="account_cvc" value="CVC:"></p:outputLabel>
-					<p:inputMask id="account_cvc" value="#{account.cvc}" required="true"
-						requiredMessage="Enter CVC number." mask="9999">
-					</p:inputMask>
-					<p:message for="account_cvc" display="text"></p:message>
-					<p:outputLabel for="price" value="Price (USD):"></p:outputLabel>
-					<p:inputText id="price" value="#{ad.getPrice}"
-						readonly="true">
-						<f:convertNumber maxFractionDigits="2"></f:convertNumber>
-					</p:inputText>
-					<p:message for="price" display="text"></p:message>
+	<p:outputLabel for="account_expiration_time" value="Expiration time:"></p:outputLabel>
+	<p:inputMask id="account_expiration_time" value="#{ad.account.expirationTime}" required="true" 
+	requiredMessage="Enter expiration time." mask="99/99" validatorMessage="Enter valid expiration time in format MM/YY.">
+					<f:validateRegex pattern="^(0[1-9]|1[012])\/[0-9][0-9]$"></f:validateRegex></p:inputMask>
+	<p:message for="account_expiration_time" display="text"></p:message>
+					
+  <p:outputLabel for="account_cvc" value="CVC:"></p:outputLabel>
+  <p:inputMask id="account_cvc" value="#{ad.account.cvc}" required="true" requiredMessage="Enter CVC number." mask="9999"></p:inputMask>
+ <p:message for="account_cvc" display="text"></p:message>
+ 
+ <p:outputLabel for="price" value="Price (USD):"></p:outputLabel>
+ <p:inputText id="price" value="#{ad.price}" readonly="true">
+ <f:convertNumber maxFractionDigits="2" minFractionDigits="2" ></f:convertNumber></p:inputText>
+<p:message for="price" display="text"></p:message>
+ 
+ 
 </p:panelGrid>
 </p:panel>
 </div>
 </h:panelGroup>
-<div id="ad_submit"></div>
+<div id="ad_submit">
+<p:commandButton id="submit" value="Submit ad" icon="ui-icon-disk"
+			styleClass="ui-priority-primary" action="#{ad.saveAd}"
+			update="ad_form">
+		</p:commandButton>
+</div>
 </h:form>
 </h:body>
 </html>

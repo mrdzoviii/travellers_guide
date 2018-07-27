@@ -35,9 +35,7 @@ public class IpBankaSoapServiceSoapBindingStub extends org.apache.axis.client.St
         oper.addParameter(param);
         param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("http://soap.ipbanka.etf.unibl.org", "type"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"), java.lang.String.class, false, false);
         oper.addParameter(param);
-        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("http://soap.ipbanka.etf.unibl.org", "month"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"), java.lang.String.class, false, false);
-        oper.addParameter(param);
-        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("http://soap.ipbanka.etf.unibl.org", "year"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"), java.lang.String.class, false, false);
+        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("http://soap.ipbanka.etf.unibl.org", "expirationDate"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"), java.lang.String.class, false, false);
         oper.addParameter(param);
         param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("http://soap.ipbanka.etf.unibl.org", "cvc"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"), java.lang.String.class, false, false);
         oper.addParameter(param);
@@ -62,9 +60,7 @@ public class IpBankaSoapServiceSoapBindingStub extends org.apache.axis.client.St
         oper.addParameter(param);
         param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("http://soap.ipbanka.etf.unibl.org", "type"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"), java.lang.String.class, false, false);
         oper.addParameter(param);
-        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("http://soap.ipbanka.etf.unibl.org", "month"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"), java.lang.String.class, false, false);
-        oper.addParameter(param);
-        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("http://soap.ipbanka.etf.unibl.org", "year"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"), java.lang.String.class, false, false);
+        param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("http://soap.ipbanka.etf.unibl.org", "expirationDate"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"), java.lang.String.class, false, false);
         oper.addParameter(param);
         param = new org.apache.axis.description.ParameterDesc(new javax.xml.namespace.QName("http://soap.ipbanka.etf.unibl.org", "cvc"), org.apache.axis.description.ParameterDesc.IN, new javax.xml.namespace.QName("http://www.w3.org/2001/XMLSchema", "string"), java.lang.String.class, false, false);
         oper.addParameter(param);
@@ -130,7 +126,7 @@ public class IpBankaSoapServiceSoapBindingStub extends org.apache.axis.client.St
         }
     }
 
-    public boolean payTotal(java.lang.String userMail, java.lang.String name, java.lang.String surname, java.lang.String cardNumber, java.lang.String type, java.lang.String month, java.lang.String year, java.lang.String cvc, java.lang.String total) throws java.rmi.RemoteException {
+    public boolean payTotal(java.lang.String userMail, java.lang.String name, java.lang.String surname, java.lang.String cardNumber, java.lang.String type, java.lang.String expirationDate, java.lang.String cvc, java.lang.String total) throws java.rmi.RemoteException {
         if (super.cachedEndpoint == null) {
             throw new org.apache.axis.NoEndPointException();
         }
@@ -146,7 +142,7 @@ public class IpBankaSoapServiceSoapBindingStub extends org.apache.axis.client.St
 
         setRequestHeaders(_call);
         setAttachments(_call);
- try {        java.lang.Object _resp = _call.invoke(new java.lang.Object[] {userMail, name, surname, cardNumber, type, month, year, cvc, total});
+ try {        java.lang.Object _resp = _call.invoke(new java.lang.Object[] {userMail, name, surname, cardNumber, type, expirationDate, cvc, total});
 
         if (_resp instanceof java.rmi.RemoteException) {
             throw (java.rmi.RemoteException)_resp;
@@ -164,7 +160,7 @@ public class IpBankaSoapServiceSoapBindingStub extends org.apache.axis.client.St
 }
     }
 
-    public boolean validateData(java.lang.String userMail, java.lang.String name, java.lang.String surname, java.lang.String cardNumber, java.lang.String type, java.lang.String month, java.lang.String year, java.lang.String cvc, java.lang.String total) throws java.rmi.RemoteException {
+    public boolean validateData(java.lang.String userMail, java.lang.String name, java.lang.String surname, java.lang.String cardNumber, java.lang.String type, java.lang.String expirationDate, java.lang.String cvc, java.lang.String total) throws java.rmi.RemoteException {
         if (super.cachedEndpoint == null) {
             throw new org.apache.axis.NoEndPointException();
         }
@@ -180,7 +176,7 @@ public class IpBankaSoapServiceSoapBindingStub extends org.apache.axis.client.St
 
         setRequestHeaders(_call);
         setAttachments(_call);
- try {        java.lang.Object _resp = _call.invoke(new java.lang.Object[] {userMail, name, surname, cardNumber, type, month, year, cvc, total});
+ try {        java.lang.Object _resp = _call.invoke(new java.lang.Object[] {userMail, name, surname, cardNumber, type, expirationDate, cvc, total});
 
         if (_resp instanceof java.rmi.RemoteException) {
             throw (java.rmi.RemoteException)_resp;

@@ -12,8 +12,7 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
       <element name="surname" type="xsd:string"/>
       <element name="cardNumber" type="xsd:string"/>
       <element name="type" type="xsd:string"/>
-      <element name="month" type="xsd:string"/>
-      <element name="year" type="xsd:string"/>
+      <element name="expirationDate" type="xsd:string"/>
       <element name="cvc" type="xsd:string"/>
       <element name="total" type="xsd:string"/>
      </sequence>
@@ -34,8 +33,7 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
       <element name="surname" type="xsd:string"/>
       <element name="cardNumber" type="xsd:string"/>
       <element name="type" type="xsd:string"/>
-      <element name="month" type="xsd:string"/>
-      <element name="year" type="xsd:string"/>
+      <element name="expirationDate" type="xsd:string"/>
       <element name="cvc" type="xsd:string"/>
       <element name="total" type="xsd:string"/>
      </sequence>

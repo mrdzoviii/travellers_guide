@@ -16,8 +16,7 @@
         <parameter xmlns:pns="http://soap.ipbanka.etf.unibl.org" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:surname" type="tns:string"/>
         <parameter xmlns:pns="http://soap.ipbanka.etf.unibl.org" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:cardNumber" type="tns:string"/>
         <parameter xmlns:pns="http://soap.ipbanka.etf.unibl.org" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:type" type="tns:string"/>
-        <parameter xmlns:pns="http://soap.ipbanka.etf.unibl.org" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:month" type="tns:string"/>
-        <parameter xmlns:pns="http://soap.ipbanka.etf.unibl.org" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:year" type="tns:string"/>
+        <parameter xmlns:pns="http://soap.ipbanka.etf.unibl.org" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:expirationDate" type="tns:string"/>
         <parameter xmlns:pns="http://soap.ipbanka.etf.unibl.org" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:cvc" type="tns:string"/>
         <parameter xmlns:pns="http://soap.ipbanka.etf.unibl.org" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:total" type="tns:string"/>
       </operation>
@@ -27,8 +26,7 @@
         <parameter xmlns:pns="http://soap.ipbanka.etf.unibl.org" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:surname" type="tns:string"/>
         <parameter xmlns:pns="http://soap.ipbanka.etf.unibl.org" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:cardNumber" type="tns:string"/>
         <parameter xmlns:pns="http://soap.ipbanka.etf.unibl.org" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:type" type="tns:string"/>
-        <parameter xmlns:pns="http://soap.ipbanka.etf.unibl.org" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:month" type="tns:string"/>
-        <parameter xmlns:pns="http://soap.ipbanka.etf.unibl.org" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:year" type="tns:string"/>
+        <parameter xmlns:pns="http://soap.ipbanka.etf.unibl.org" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:expirationDate" type="tns:string"/>
         <parameter xmlns:pns="http://soap.ipbanka.etf.unibl.org" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:cvc" type="tns:string"/>
         <parameter xmlns:pns="http://soap.ipbanka.etf.unibl.org" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:total" type="tns:string"/>
       </operation>

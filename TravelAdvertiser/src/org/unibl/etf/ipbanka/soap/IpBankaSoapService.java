@@ -8,6 +8,6 @@
 package org.unibl.etf.ipbanka.soap;
 
 public interface IpBankaSoapService extends java.rmi.Remote {
-    public boolean payTotal(java.lang.String userMail, java.lang.String name, java.lang.String surname, java.lang.String cardNumber, java.lang.String type, java.lang.String month, java.lang.String year, java.lang.String cvc, java.lang.String total) throws java.rmi.RemoteException;
-    public boolean validateData(java.lang.String userMail, java.lang.String name, java.lang.String surname, java.lang.String cardNumber, java.lang.String type, java.lang.String month, java.lang.String year, java.lang.String cvc, java.lang.String total) throws java.rmi.RemoteException;
+    public boolean payTotal(java.lang.String userMail, java.lang.String name, java.lang.String surname, java.lang.String cardNumber, java.lang.String type, java.lang.String expirationDate, java.lang.String cvc, java.lang.String total) throws java.rmi.RemoteException;
+    public boolean validateData(java.lang.String userMail, java.lang.String name, java.lang.String surname, java.lang.String cardNumber, java.lang.String type, java.lang.String expirationDate, java.lang.String cvc, java.lang.String total) throws java.rmi.RemoteException;
 }
