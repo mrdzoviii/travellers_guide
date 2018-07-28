@@ -11,16 +11,18 @@
 </h:head>
 
 <body style="padding: 0; margin: 0;">
+ <div class="guest-header">
+ <div class="header" align="center">
+ <p:outputLabel styleClass="header-name">Travel Buddy - Welcome</p:outputLabel>
+ </div>
 	<h:form enctype="multipart/form-data">
-		<p:toolbar
-			styleClass="guest-navbar-toolbar"
-			id="navbar">
-			<p:toolbarGroup align="left">
+		<p:toolbar styleClass="guest-navbar-toolbar" id="navbar">
+			<p:toolbarGroup align="left" styleClass="guest-navbar-button">
 				<p:commandButton ajax="false" action="index.xhtml?faces-redirect=true" value="Home Page"
 					icon="ui-icon-home"/>
 				<p:commandButton ajax="false" value="Advertisements"/>
 			</p:toolbarGroup>
-			<p:toolbarGroup align="right">
+			<p:toolbarGroup align="right" styleClass="guest-navbar-button">
 				<p:commandButton ajax="false" action="guest_registration.xhtml?faces-redirect=true"
 					value="Registration"/>
 				<p:commandButton value="Login"
@@ -29,6 +31,7 @@
 		</p:toolbar>
 		<p:sticky target="navbar"></p:sticky>
 	</h:form>
+	</div>
 	<h:form>
 		<p:dialog header="Login" widgetVar="loginVar" resizable="false"
 			modal="true">

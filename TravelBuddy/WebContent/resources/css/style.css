@@ -1,15 +1,51 @@
 .guest-navbar-toolbar {
 	margin-top: 0px !important;
 }
+.guest-header{
+		background-color: #424548 !important;
+}
+.header-name{
+	background-color: #424548 !important;
+	color: white;
+	width:100%;
+	font-size: 40px !important;
+	font-style: oblique!important;
+	align-content: center;
+}
+.footer-name{
+	background-color: #424548 !important;
+	color: white;
+	width:100%;
+	font-size: 20px !important;
+	font-style: oblique!important;
+	align-content: center;
+}
+.ui-widget-header{
+	border-style :none;
+}
+}
+.header{
+	height: 10px;
+	vertical-align: middle;
+	width: 100%;
+	background:  #424548;
+}
+.footer{
+	height: 100px;
+	vertical-align: middle;
+	width: 100%;
+	background:  #424548;
+}
+.guest-navbar-button{
+	margin-bottom:0px !important
+}
 .dashboard {
 	margin-left: 10%;
 	margin-right: 10%;
 	margin-top: 5%;
 }
 .div-ads {
-	padding: 10px; 
-	margin-left: 40%;
-	align="center";
+	width: 100%;
 }
 #ad-image{
 	display: block;

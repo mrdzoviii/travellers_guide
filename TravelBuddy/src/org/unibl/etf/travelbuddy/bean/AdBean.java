@@ -1,6 +1,4 @@
 package org.unibl.etf.travelbuddy.bean;
-
-import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 import javax.faces.bean.ApplicationScoped;
@@ -43,9 +41,8 @@ public class AdBean {
 				AdBean ad = ServiceUtility.getRandomAd();
 				text = ad.getText();
 				image = "data:image/png;base64," + ad.getImage();
-				System.out.println(new Date()+"  text: "+text+" length:"+image.length());
 			}
-		}, 0,1*60 * 1000);
+		}, 0,10*60 * 1000);
 		if (text == null && image == null) {
 			AdBean ad = ServiceUtility.getRandomAd();
 			text = ad.getText();
