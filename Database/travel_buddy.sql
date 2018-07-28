@@ -20,6 +20,7 @@ USE `travel_buddy_db` ;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `travel_buddy_db`.`user` (
   `id` INT NOT NULL AUTO_INCREMENT,
+  `create_time` TIMESTAMP NOT NULL,
   `username` VARCHAR(50) NOT NULL,
   `password` VARCHAR(50) NOT NULL,
   `name` VARCHAR(50) NOT NULL,

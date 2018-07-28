@@ -1,0 +1,56 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+	<title>Travel Buddy</title>
+	<h:outputScript library="js" name="source.js"></h:outputScript>
+	<h:outputStylesheet library="cs" name="style.css"></h:outputStylesheet>
+</h:head>
+
+<body style="padding: 0; margin: 0;">
+	<h:form enctype="multipart/form-data">
+		<p:toolbar
+			styleClass="guest-navbar-toolbar"
+			id="navbar">
+			<p:toolbarGroup align="left">
+				<p:commandButton ajax="false" action="index.xhtml?faces-redirect=true" value="Home Page"
+					icon="ui-icon-home"/>
+				<p:commandButton ajax="false" value="Advertisements"/>
+			</p:toolbarGroup>
+			<p:toolbarGroup align="right">
+				<p:commandButton ajax="false" action="guest_registration.xhtml?faces-redirect=true"
+					value="Registration"/>
+				<p:commandButton value="Login"
+					onclick="showLogin('loginVar')" />
+			</p:toolbarGroup>
+		</p:toolbar>
+		<p:sticky target="navbar"></p:sticky>
+	</h:form>
+	<h:form>
+		<p:dialog header="Login" widgetVar="loginVar" resizable="false"
+			modal="true">
+			<h:panelGrid columns="2" cellpadding="5">
+				<h:outputLabel for="username" value="Username:" />
+				<p:inputText id="username" value="#{userBean.username}"
+					required="true" label="username" />
+	
+				<h:outputLabel for="password" value="Password:" />
+				<p:password id="password" value="#{userBean.password}"
+					required="true" label="password" />
+	
+				<f:facet name="footer">
+					<p:commandButton value="Log in"
+						actionListener="#{userBean.login}"
+						oncomplete="handleLoginRequest(xhr, status, args)" />
+				</f:facet>
+			</h:panelGrid>
+		</p:dialog>
+	</h:form>
+</body>
+
+</html>
+
+

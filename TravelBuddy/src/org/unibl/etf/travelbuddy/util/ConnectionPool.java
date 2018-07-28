@@ -8,7 +8,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ResourceBundle;
 
 
 public class ConnectionPool {
@@ -22,7 +21,7 @@ public class ConnectionPool {
 	private int connectCount;
 	private List<Connection> usedConnections;
 	private List<Connection> freeConnections;
-	public static final ResourceBundle bundle=ResourceBundle.getBundle("org.unibl.etf.travelbuddy.config.TravelBuddyConfig");
+
 
 	private static ConnectionPool instance;
 
@@ -50,17 +49,17 @@ public class ConnectionPool {
 
 	private void readConfiguration() {
 		try {
-			jdbcURL = bundle.getString("jdbcURL");
-			username = bundle.getString("username");
-			password = bundle.getString("password");
-			driver = bundle.getString("driver");
+			jdbcURL = ServiceUtility.bundle.getString("jdbcURL");
+			username = ServiceUtility.bundle.getString("username");
+			password = ServiceUtility.bundle.getString("password");
+			driver = ServiceUtility.bundle.getString("driver");
 			Class.forName(driver);
 			preconnectCount = 0;
 			maxIdleConnections = 10;
 			maxConnections = 10;
-			preconnectCount = Integer.parseInt(bundle.getString("preconnectCount"));
-			maxIdleConnections = Integer.parseInt(bundle.getString("maxIdleConnections"));
-			maxConnections = Integer.parseInt(bundle.getString("maxConnections"));
+			preconnectCount = Integer.parseInt(ServiceUtility.bundle.getString("preconnectCount"));
+			maxIdleConnections = Integer.parseInt(ServiceUtility.bundle.getString("maxIdleConnections"));
+			maxConnections = Integer.parseInt(ServiceUtility.bundle.getString("maxConnections"));
 		} catch (Exception e) {
 			 e.printStackTrace();
 		}

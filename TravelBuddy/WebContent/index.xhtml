@@ -1,16 +1,36 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-	  xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:p="http://primefaces.org/ui"
->
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
 <h:head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 <title>Travel Buddy</title>
 <h:outputStylesheet library="css" name="style.css"/>
-<h:outputScript library="js" name="script.js"></h:outputScript>
 </h:head>
+
 <h:body>
+	<ui:composition template="/WEB-INF/templates/template.xhtml">
+		<ui:define name="header">
+			<ui:include src="/WEB-INF/components/guest_header.xhtml" />
+		</ui:define>
+
+		<ui:define name="ads">
+			<div class="div-ads">
+			<h:form id="ad_form">
+				<img id="image" src="#{adBean.image}" alt="No image."/> 
+				<p:outputLabel id="text" styleClass="ad-text" value="#{adBean.text}"></p:outputLabel>
+				<p:poll interval="30" update="ad_form"></p:poll>
+				</h:form>
+			</div>
+		</ui:define>
+
+		<ui:define name="body">
+			<div align="center">
+				<ui:include src="/WEB-INF/components/body_guest.xhtml" />
+			</div>
+		</ui:define>
+	</ui:composition>
 </h:body>
+
 </html>
