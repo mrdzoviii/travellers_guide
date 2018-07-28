@@ -23,15 +23,18 @@
 	requiredMessage="Please enter some text." validatorMessage="Text length must be between 5 and 255 characters." >
 	<f:validateLength maximum="255" minimum="5"></f:validateLength></p:inputTextarea>
 	<p:message for="ad_text" display="text"></p:message>
-	<p:outputLabel value="Picture:"></p:outputLabel>
-	<p:fileUpload fileLimit="1" cancelLabel="Cancel"
+	<p:outputLabel for="ad_upload" value="Picture:"></p:outputLabel>
+	<p:fileUpload fileLimit="1" cancelLabel="Cancel" id="ad_upload"
 	accept="/(\.|\/)(gif|jpe?g|png)$/" uploadLabel="Upload" 
-	fileUploadListener="#{ad.handleFileUpload}" widgetVar="ad_upload" oncomplete="disable()"
-	allowTypes="/(\.|\/)(gif|jpe?g|png)$/">
-   </p:fileUpload>
-	<p:outputLabel></p:outputLabel>
+	fileUploadListener="#{ad.handleFileUpload}" widgetVar="ad_upload" update="ad_image ad_upload" disabled="#{ad.uploadDisabled}"
+	allowTypes="/(\.|\/)(gif|jpe?g|png)$/" >
+    </p:fileUpload>
+	<p:message for="ad_upload" display="text"></p:message>
+	<p:outputLabel for="ad_image" value="Uploaded image:"></p:outputLabel>
+    <p:graphicImage id="ad_image" value="#{ad.image}" style="max-width: 200px;"/>
+	<p:message for="ad_image" display="text"></p:message>
 	<p:outputLabel for="ad_type" value="Ad type:"></p:outputLabel>
-	<p:selectOneButton value="#{ad.type}" id="ad_type" required="true" requiredMessage="Ad type must be selected.">
+	<p:selectOneButton value="#{ad.type}" id="ad_type" required="true" requiredMessage="Ad type must be selected." >
             <f:selectItem itemLabel="Free" itemValue="Free" />
             <f:selectItem itemLabel="Paid" itemValue="Paid" />
             <p:ajax listener="#{ad.onTypeChanged}" update="ad_advanced_data"></p:ajax>
@@ -120,9 +123,9 @@
 </div>
 </h:panelGroup>
 <div id="ad_submit">
-<p:commandButton id="submit" value="Submit ad" 
+<p:commandButton id="submit" value="Submit ad" oncomplete="enable()"
 			styleClass="ui-priority-primary" action="#{ad.saveAd}"
-			update="ad_form">
+			update="ad_form ad_upload">
 		</p:commandButton>
 </div>
 </h:form>
