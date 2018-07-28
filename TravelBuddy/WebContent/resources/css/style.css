@@ -30,19 +30,17 @@
 		display: block; 
 		border: thin; 
 		border-style: solid;
-		border-color: darkorchid;
+		border-color: #424548;
 		margin-bottom: 30px; 
 		overflow: hidden;
 	    background-color: white;
-	    border-bottom-right-radius: 20px;
-	    border-top-left-radius: 20px;
 	}
 .title {
 		display: block;
 		padding: 10px;
-		background-color: darkorchid;
+		background-color: #424548;
 		color: white;
-		font-family: 'Raleway', sans-serif;
+		font-family: sans-serif;
 		font-size: 16pt;
 	}
 a {
