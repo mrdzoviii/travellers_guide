@@ -37,7 +37,7 @@ public class ServiceUtility {
 			mapa.put(NUMBER, "1234-1234-1234-1234");
 			mapa.put(EXIRATION_DATE, "07/19");
 			mapa.put(CVC, "1234");
-			mapa.put(BALANCE, "100.00");
+			mapa.put(BALANCE, "1000000.00");
 			jedis.hmset("joco-95@hotmail.com", mapa);
 			mapa = new HashMap<>();
 			mapa.put(NAME, "Marko");

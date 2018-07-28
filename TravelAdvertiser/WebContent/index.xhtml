@@ -24,9 +24,7 @@
 	<p:outputLabel for="ad_upload" value="Picture:"></p:outputLabel>
 	<p:fileUpload fileLimit="1" cancelLabel="Cancel" id="ad_upload"
 	accept="/(\.|\/)(gif|jpe?g|png)$/" uploadLabel="Upload" 
-	fileUploadListener="#{ad.handleFileUpload}" update="ad_upload"
-	allowTypes="/(\.|\/)(gif|jpe?g|png)$/" >
-    </p:fileUpload>
+	fileUploadListener="#{ad.handleFileUpload}" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" ></p:fileUpload>
 	<p:message for="ad_upload" display="text"></p:message>
 	<p:outputLabel for="ad_type" value="Ad type:"></p:outputLabel>
 	<p:selectOneButton value="#{ad.type}" id="ad_type" required="true" requiredMessage="Ad type must be selected." >
