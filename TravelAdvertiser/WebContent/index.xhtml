@@ -14,25 +14,20 @@
 <h:body>
 
 <h:form id="ad_form">
-<p:growl id="error" life="800" globalOnly="true"></p:growl>
+<p:growl id="error" life="1800" globalOnly="true"></p:growl>
 <div id="ad_basic_data">
 <p:panel header="About ad:" >
 <p:panelGrid columns="3" styleClass="form">
 	<p:outputLabel for="ad_text" value="Text:"></p:outputLabel>
-	<p:inputTextarea id="ad_text" value="#{ad.ad.text}" styleClass="textArea" required="true" cols="80" rows="4"
-	requiredMessage="Please enter some text." validatorMessage="Text length must be between 5 and 255 characters." >
-	<f:validateLength maximum="255" minimum="5"></f:validateLength></p:inputTextarea>
+	<p:inputTextarea id="ad_text" value="#{ad.ad.text}" styleClass="textArea"></p:inputTextarea>
 	<p:message for="ad_text" display="text"></p:message>
 	<p:outputLabel for="ad_upload" value="Picture:"></p:outputLabel>
 	<p:fileUpload fileLimit="1" cancelLabel="Cancel" id="ad_upload"
 	accept="/(\.|\/)(gif|jpe?g|png)$/" uploadLabel="Upload" 
-	fileUploadListener="#{ad.handleFileUpload}" widgetVar="ad_upload" update="ad_image ad_upload" disabled="#{ad.uploadDisabled}"
+	fileUploadListener="#{ad.handleFileUpload}" update="ad_upload"
 	allowTypes="/(\.|\/)(gif|jpe?g|png)$/" >
     </p:fileUpload>
 	<p:message for="ad_upload" display="text"></p:message>
-	<p:outputLabel for="ad_image" value="Uploaded image:"></p:outputLabel>
-    <p:graphicImage id="ad_image" value="#{ad.image}" style="max-width: 200px;"/>
-	<p:message for="ad_image" display="text"></p:message>
 	<p:outputLabel for="ad_type" value="Ad type:"></p:outputLabel>
 	<p:selectOneButton value="#{ad.type}" id="ad_type" required="true" requiredMessage="Ad type must be selected." >
             <f:selectItem itemLabel="Free" itemValue="Free" />
@@ -56,7 +51,7 @@
 </p:panel>
 </div>
 <div id="ad_paid">
-<p:panel header="Paid ad:" rendered="#{ad.paid}" id="panel_paid">
+<p:panel header="Paid ad:" id="panel_paid" rendered="#{ad.paid}">
 <p:panelGrid columns="3">
 	<p:outputLabel for="paid_ad_date_from" value="Date from: "></p:outputLabel>
 		<p:calendar id="paid_ad_date_from" value="#{ad.ad.dateFrom}" required="true" 
@@ -123,9 +118,9 @@
 </div>
 </h:panelGroup>
 <div id="ad_submit">
-<p:commandButton id="submit" value="Submit ad" oncomplete="enable()"
+<p:commandButton id="submit" value="Submit ad" 
 			styleClass="ui-priority-primary" action="#{ad.saveAd}"
-			update="ad_form ad_upload">
+			update="ad_form">
 		</p:commandButton>
 </div>
 </h:form>

@@ -1,7 +1,6 @@
 package org.unibl.etf.traveladvertiser.bean;
 
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
@@ -15,9 +14,6 @@ import javax.imageio.ImageIO;
 import javax.xml.rpc.ServiceException;
 
 import org.primefaces.event.FileUploadEvent;
-import org.primefaces.model.DefaultStreamedContent;
-import org.primefaces.model.StreamedContent;
-import org.primefaces.model.UploadedFile;
 import org.unibl.etf.ipbanka.soap.IpBankaSoapService;
 import org.unibl.etf.ipbanka.soap.IpBankaSoapServiceServiceLocator;
 import org.unibl.etf.ipbanka.soap.model.Account;
@@ -33,31 +29,10 @@ public class Ad implements Serializable {
 	private boolean paid = false;
 	private boolean free = true;
 	private Account account = new Account();
-	private UploadedFile uploadedFile;
 	private String type = "Free";
 	private byte[] imageBytes;
 	private double costPerDay = ServiceUtility.calculateCostPerDay();
 	private int days = 1;
-	private boolean uploadDisabled = false;
-	private StreamedContent image = null;
-	
-
-	public StreamedContent getImage() {
-		if (imageBytes != null) {
-			image=new DefaultStreamedContent(new ByteArrayInputStream(imageBytes));
-			return image;
-		}
-		return null;
-	}
-
-	public boolean isUploadDisabled() {
-		return uploadDisabled;
-	}
-
-	public void setUploadDisabled(boolean uploaded) {
-		this.uploadDisabled = uploaded;
-	}
-
 	public Account getAccount() {
 		return account;
 	}
@@ -89,10 +64,9 @@ public class Ad implements Serializable {
 		paid = false;
 		free = true;
 		type = "Free";
+		costPerDay=ServiceUtility.calculateCostPerDay();
 		ad.setDateFrom(ServiceUtility.getCurrentDate());
-		uploadDisabled = false;
-		imageBytes=null;
-		image = null;
+		days=1;
 	}
 
 	public int getDays() {
@@ -119,13 +93,6 @@ public class Ad implements Serializable {
 		this.paid = paid;
 	}
 
-	public UploadedFile getUploadedFile() {
-		return uploadedFile;
-	}
-
-	public void setUploadedFile(UploadedFile uploadedFile) {
-		this.uploadedFile = uploadedFile;
-	}
 
 	public String getType() {
 		return type;
@@ -147,13 +114,14 @@ public class Ad implements Serializable {
 		return costPerDay;
 	}
 
+	
 	public void setCostPerDay(double costPerDay) {
 		this.costPerDay = costPerDay;
 	}
 
 	public void saveAd() {
 		boolean operationMade = false;
-		if (ad.getImage() == null && ad.getText() == null) {
+		if (ad.getImage() == null && (ad.getText() == null || ad.getText().isEmpty())) {
 			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
 					"Ad text or text image must be entered", "");
 			FacesContext.getCurrentInstance().addMessage(null, message);
@@ -174,26 +142,23 @@ public class Ad implements Serializable {
 			try {
 				IpBankaSoapServiceServiceLocator locator = new IpBankaSoapServiceServiceLocator();
 				IpBankaSoapService service = locator.getIpBankaSoapService();
-				if (account != null) {
-					if (service.validateData(account.getMail(), account.getName(), account.getSurname(),
+				if (service.validateData(account.getMail(), account.getName(), account.getSurname(),
+						account.getCardNumber(), account.getCardType(), account.getExpirationTime(), account.getCvc(),
+						ServiceUtility.parseDouble(getPrice()))) {
+					operationMade = service.payTotal(account.getMail(), account.getName(), account.getSurname(),
 							account.getCardNumber(), account.getCardType(), account.getExpirationTime(),
-							account.getCvc(), ServiceUtility.parseDouble(getPrice()))) {
-						System.out.println(ServiceUtility.parseDouble(getPrice()));
-						operationMade = service.payTotal(account.getMail(), account.getName(), account.getSurname(),
-								account.getCardNumber(), account.getCardType(), account.getExpirationTime(),
-								account.getCvc(), ServiceUtility.parseDouble(getPrice()));
-					} else {
-						FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
-								"You enetered invalid data", "");
-						FacesContext.getCurrentInstance().addMessage(null, message);
-						return;
-					}
-					if (!operationMade) {
-						FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
-								"You don't have enough money on your bank account", "");
-						FacesContext.getCurrentInstance().addMessage(null, message);
-						return;
-					}
+							account.getCvc(), ServiceUtility.parseDouble(getPrice()));
+				} else {
+					FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "You enetered invalid data",
+							"");
+					FacesContext.getCurrentInstance().addMessage(null, message);
+					return;
+				}
+				if (!operationMade) {
+					FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
+							"You don't have enough money on your bank account", "");
+					FacesContext.getCurrentInstance().addMessage(null, message);
+					return;
 				}
 			} catch (ServiceException e) {
 				e.printStackTrace();
@@ -215,7 +180,6 @@ public class Ad implements Serializable {
 	public void handleFileUpload(FileUploadEvent event) {
 		BufferedImage originalImage;
 		try {
-			uploadDisabled = true;
 			originalImage = ImageIO.read(event.getFile().getInputstream());
 			BufferedImage resized = ServiceUtility.resize(originalImage, 200, 266);
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -229,6 +193,7 @@ public class Ad implements Serializable {
 			e.printStackTrace();
 		}
 	}
+
 	public void onTypeChanged() {
 		paid = "Paid".equals(type);
 		free = "Free".equals(type);
