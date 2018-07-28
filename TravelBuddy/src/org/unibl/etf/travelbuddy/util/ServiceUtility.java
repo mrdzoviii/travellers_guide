@@ -50,7 +50,10 @@ public class ServiceUtility {
 		}
 	public static AdBean getRandomAd() {
 		List<AdBean> ads=getAds();
+		if(ads.size()>0) {
 		return ads.get(rand.nextInt(ads.size()));
+		}
+		return null;
 	}
 	
 }

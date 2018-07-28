@@ -5,7 +5,7 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 <h:head>
-	<title>Travel Buddy</title>
+    <title>Travel Buddy</title>
 	<h:outputScript library="js" name="source.js"></h:outputScript>
 	<h:outputStylesheet library="cs" name="style.css"></h:outputStylesheet>
 </h:head>
@@ -18,12 +18,12 @@
 	<h:form enctype="multipart/form-data">
 		<p:toolbar styleClass="guest-navbar-toolbar" id="navbar">
 			<p:toolbarGroup align="left" styleClass="guest-navbar-button">
-				<p:commandButton ajax="false" action="index.xhtml?faces-redirect=true" value="Home Page"
+				<p:commandButton ajax="false" action="/index.xhtml?faces-redirect=true" value="Home Page"
 					icon="ui-icon-home"/>
 				<p:commandButton ajax="false" value="Advertisements"/>
 			</p:toolbarGroup>
 			<p:toolbarGroup align="right" styleClass="guest-navbar-button">
-				<p:commandButton ajax="false" action="guest_registration.xhtml?faces-redirect=true"
+				<p:commandButton ajax="false" action="/guest/guest_registration.xhtml?faces-redirect=true"
 					value="Registration"/>
 				<p:commandButton value="Login"
 					onclick="showLogin('loginVar')" />

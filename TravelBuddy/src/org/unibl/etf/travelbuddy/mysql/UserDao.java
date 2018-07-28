@@ -123,7 +123,7 @@ public class UserDao {
 		return user;
 	}
 	
-	public static void insertAd(UserDto user) {
+	public static void insert(UserDto user) {
 		PreparedStatement ps = null;
 		Connection c = null;
 		try {
