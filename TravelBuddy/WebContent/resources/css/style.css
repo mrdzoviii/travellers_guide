@@ -1,4 +1,4 @@
-.navbar-toolbar{
+.navbar-toolbar {
 	margin-top: 0px !important;
 }
 
@@ -10,9 +10,11 @@
 	font-style: oblique !important;
 	align-content: center;
 }
+
 .ui-toolbar {
-	border-style: none!important;
+	border-style: none !important;
 }
+
 .footer-name {
 	background-color: #424548 !important;
 	color: white;
@@ -135,4 +137,74 @@ body {
 
 .registration-button {
 	width: 100%;
+}
+
+.offer-title {
+	width: 100%;
+	background-color: #F9B569;
+	color: white;
+	border: 1px solid;
+	border-color: orange;
+	border-radius: 4px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+.need-title {
+	width: 100%;
+	background-color: #38C28C;
+	color: white;
+	border: 1px solid;
+	border-color: green;
+	border-radius: 4px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+.filter-area {
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+.search-input {
+	margin-right: 10px;
+	width: 400px;
+	font-size: medium;
+}
+
+.md {
+	margin-left: 10px;
+	margin-right: 10px;
+}
+
+.ad-font{
+	font-weight: bold;
+}
+.weather-modal-dialog {
+	font-family: 'Raleway', sans-serif;
+}
+
+.ui-dialog-footer.ui-widget-content {
+	font-size: 10px;
+}
+.weather-badge {
+    display: inline-block;
+    min-width: 10px;
+    padding: 3px 7px;
+    font-size: 12px;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1;
+    vertical-align: baseline;
+    white-space: nowrap;
+    text-align: center;
+    background-color: #999;
+    border-radius: 10px;
+}
+
+.weather-table {
+	display: table;
+}
+.weather-table>tbody>tr>td:first-of-type {
+	width: 100px;
 }

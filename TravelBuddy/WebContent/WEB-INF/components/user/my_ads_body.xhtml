@@ -1,0 +1,96 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+	<title>Travel Buddy</title>
+	<h:outputStylesheet library="css" name="style.css"></h:outputStylesheet>
+</h:head>
+
+<body style="padding: 0; margin: 0;">
+	<div class="dashboard">
+		<h:form>
+			<div class="filter-area">
+				<p:inputText id="search" placeholder="Search"
+					styleClass="search-input" value="#{myAdsBean.query}">
+					<p:ajax event="keyup" process="search, need, offer" update="ads"
+						listener="#{myAdsBean.filterAds}" />
+				</p:inputText>
+
+				<p:outputLabel for="@next" value="Need"></p:outputLabel>
+				<p:selectBooleanCheckbox styleClass="md" id="need"
+					value="#{myAdsBean.need}">
+					<p:ajax update="ads" process="search, need, offer"
+						listener="#{myAdsBean.filterAds}" />
+				</p:selectBooleanCheckbox>
+
+				<p:outputLabel style="margin-left: 10px;" for="@next" value="Offer"></p:outputLabel>
+				<p:selectBooleanCheckbox styleClass="md" id="offer"
+					value="#{myAdsBean.offer}">
+					<p:ajax update="ads" process="search, need , offer"
+						listener="#{myAdsBean.filterAds}" />
+				</p:selectBooleanCheckbox>
+
+				<p:button style="float: right;" value="New ad"
+					outcome="/user/new_addfsfsfdfsd" />
+			</div>
+			<p:dataScroller id="ads" value="#{myAdsBean.ads}" var="ad"
+				chunkSize="10" mode="inline">
+				<f:facet name="header">Scroll for more ads</f:facet>
+				<h:panelGrid columns="1" style="width:100%;">
+					<p:outputPanel>
+						<div class="#{ad.category == 0 ? 'offer-title' : 'need-title'}"
+							align="center">
+							<p:outputLabel value="#{ad.category == 0? 'Offer' : 'Need'}"></p:outputLabel>
+						</div>
+
+						<h:panelGrid columns="2" cellpadding="5">
+							<h:outputText value="Title:" />
+							<h:outputText value="#{ad.title}" styleClass="ad-font" />
+
+							<h:outputText value="Location from:" />
+							<h:outputText value="#{ad.startingPoint}" styleClass="ad-font" />
+
+							<h:outputText value="Location to:" />
+							<h:outputText value="#{ad.destination}" styleClass="ad-font" />
+
+							<h:outputText value="Departure time:" />
+							<h:outputText value="#{ad.departureTime}" styleClass="ad-font">
+								<f:convertDateTime type="date" pattern="dd/MM/yyyy HH:mm:ss"
+									timeZone="Europe/Berlin" />
+							</h:outputText>
+
+							<h:outputText value="Number of persons:" />
+							<h:outputText value="#{ad.numberOfPersons}" styleClass="ad-font" />
+
+
+							<h:outputText value="Create time:" />
+							<h:outputText value="#{ad.createTime}" styleClass="ad-font">
+								<f:convertDateTime type="date" pattern="dd/MM/yyyy HH:mm:ss"
+									timeZone="Europe/Berlin" />
+							</h:outputText>
+						</h:panelGrid>
+
+						<p:button style="float: right; margin-top: 150px;"
+							outcome="user_oglasi_update" value="Update">
+							<f:param name="adId" value="#{ad.id}" />
+						</p:button>
+						<p:commandButton process="ads" update="ads"
+							style="float: right; margin-top: 150px;" value="Delete"
+							action="#{myAdsBean.delete}">
+							<f:setPropertyActionListener value="#{ad}"
+								target="#{myAdsBean.selectedAd}" />
+						</p:commandButton>
+					</p:outputPanel>
+				</h:panelGrid>
+				<hr></hr>
+			</p:dataScroller>
+		</h:form>
+	</div>
+</body>
+
+</html>
+
+

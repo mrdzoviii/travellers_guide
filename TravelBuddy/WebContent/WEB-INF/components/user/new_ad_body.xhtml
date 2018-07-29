@@ -1,0 +1,108 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+	<title>Travel Buddy</title>
+	<h:outputStylesheet library="css" name="style.css"></h:outputStylesheet>
+	<h:outputScript library="js" name="user.js"></h:outputScript>
+</h:head>
+
+<body style="padding: 0; margin: 0;">
+	<div>
+		<p:dialog styleClass="weather-modal-dialog" class="weather-modal-dialog"
+			header="Weather forecast" widgetVar="forecast"
+			footer="Powered by OpenWeatherAPI">
+			<table class="weather-table">
+				<tbody>
+					<tr>
+						<td><img id="icon" src="" alt="error loading" ></img></td>
+						<td>
+							<b id="city"></b> 
+							<img id="countryIcon" src=""></img>
+							<b><i id="weather"></i></b>
+							<p>
+								<span id="temperature" class="weather-badge"></span>
+								<span id="minMaxTemperature"></span>
+							</p>
+							<p id="humidity">
+							</p>
+							<p id="pressure">
+							</p>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</p:dialog>
+		<h:form id="post_form">
+		    <p:growl id="error" life="1800" showDetail="true" globalOnly="true"></p:growl>
+		    <p:panel header="Post new ad">
+			<h:panelGrid columns="3" cellpadding="5">
+				<p:outputLabel styleClass="output" for="title" 
+					value="Title:" />
+				<p:inputTextarea styleClass="input" id="title"
+					value="#{adUserBean.ad.title}" required="true"
+					requiredMessage="Title required." label="title" />
+				<p:message styleClass="output" for="title" display="text"></p:message>
+
+				<p:outputLabel styleClass="output" for="category"
+					value="Category: " />
+				<p:selectOneMenu styleClass="input" id="category"
+					value="#{adUserBean.ad.category}" required="true"
+					requiredMessage="Category required." label="category">
+					<f:selectItem itemLabel="Need" itemValue="1">
+					</f:selectItem>
+					<f:selectItem itemLabel="Offer" itemValue="0">
+					</f:selectItem>
+				</p:selectOneMenu>
+				<p:message styleClass="output" for="category" display="text"></p:message>
+
+				<p:outputLabel styleClass="output" for="starting_point"
+					value="Location from:" />
+				<p:inputText styleClass="input" id="starting_point"
+					value="#{adUserBean.ad.startingPoint}" required="true"
+					requiredMessage="Location from required." label="starting_point">
+				</p:inputText>
+				<p:message styleClass="output" for="starting_point" display="text"></p:message>
+
+				<p:outputLabel styleClass="output" for="destination"
+					value="Location to:"  />
+				<p:inputText widgetVar="location" styleClass="input destination" id="destination"
+					value="#{adUserBean.ad.destination}" required="true"
+					requiredMessage="Destination required." label="destination">
+				</p:inputText>
+				<p:message styleClass="output" for="destination" display="text"></p:message>
+
+				<p:outputLabel styleClass="output" for="departure_time"
+					value="Departure time:" />
+				<p:calendar styleClass="input" id="departure_time"
+					value="#{adUserBean.ad.departureTime}" required="true"
+					label="departure_time" navigator="true"
+					requiredMessage="Departure time required." yearRange="1900:2050"
+					pattern="dd/MM/yyyy HH:mm" mask="true" />
+				<p:message styleClass="output" for="departure_time" display="text"></p:message>
+
+				<p:outputLabel styleClass="output" for="persons"
+					value="Number of persons:" />
+				<p:spinner id="persons"
+					value="#{adUserBean.ad.numberOfPersons}" label="persons"
+					required="true" requiredMessage="Number of persons required." min="1" />
+				<p:message styleClass="outputLabel" for="persons" display="text"></p:message>
+
+				<p:outputLabel styleClass="output" value=""></p:outputLabel>
+				<p:commandButton oncomplete="handleSaveRequest(xhr, status, args)"
+					id="post_ad" styleClass="output" style="width: 100%;"
+					value="Post ad" actionListener="#{adUserBean.saveAd}"
+					update="post_form"></p:commandButton>
+				<p:outputLabel value=""></p:outputLabel>
+			</h:panelGrid>
+			</p:panel>
+		</h:form>
+	</div>
+</body>
+
+</html>
+
+

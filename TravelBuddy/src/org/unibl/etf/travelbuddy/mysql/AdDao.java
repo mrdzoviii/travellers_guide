@@ -21,21 +21,21 @@ public class AdDao {
 	private static final String DESTINATION=ServiceUtility.bundle.getString("ad.destination");
 	private static final String NUMBER_OF_PERSONS=ServiceUtility.bundle.getString("ad.numberOfPersons");
 	private static final String GOOGLE_MAP_STARTING_POINT=ServiceUtility.bundle.getString("ad.googleMapStartingPoint");
-	private static final String GOOGLE_MAP_DESTINATION=ServiceUtility.bundle.getString("ad.googleMapDestinationPoint");
+	private static final String GOOGLE_MAP_DESTINATION=ServiceUtility.bundle.getString("ad.googleMapDestination");
 	private static final String GOOGLE_MAP_LOCATION=ServiceUtility.bundle.getString("ad.googleMapLocation");
 	private static final String STATUS=ServiceUtility.bundle.getString("ad.status");
 	private static final String USER_ID=ServiceUtility.bundle.getString("ad.userId");
 	
-	private static final String SQL_SELECT_ALL = "SELECT * FROM advertisment WHERE status=1";
-	private static final String SQL_SELECT_STATUS = "SELECT * FROM advertisment WHERE status=?";
-	private static final String SQL_SELECT_BY_USER_ID = "SELECT * FROM advertisment WHERE user_id=? and status=1";
-	private static final String SQL_SELECT_BY_ID = "SELECT * FROM advertisment WHERE id=? and status=1";
-	private static final String SQL_DELETE = "UPDATE advertisment SET status=0 WHERE id=?";
-	private static final String SQL_INSERT = "INSERT INTO advertisment VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-	private static final String SQL_UPDATE = "UPDATE advertisment SET title=?, departure_time=?, starting_point=?, category=?, destination=?, number_of_persons=? ,google_map_starting_point=?, google_map_destination=?, google_map_location=?  WHERE id=?";
-	private static final String SQL_UPDATE_STATUS = "UPDATE advertisment SET status=? WHERE id=?";
-	private static final String SQL_SELECT_DISTINCT = "SELECT DISTINCT a.* FROM advertisment a INNER JOIN content_report c on a.id=c.advertisment_id WHERE a.status=1 AND c.status=1";
-	private static final String SQL_SELECT_REPORT = "SELECT COUNT(*) as count FROM `advertisment` WHERE create_time LIKE ?";
+	private static final String SQL_SELECT_ALL = "SELECT * FROM advertisement WHERE status=1";
+	private static final String SQL_SELECT_STATUS = "SELECT * FROM advertisement WHERE status=?";
+	private static final String SQL_SELECT_BY_USER_ID = "SELECT * FROM advertisement WHERE user_id=? and status=1";
+	private static final String SQL_SELECT_BY_ID = "SELECT * FROM advertisement WHERE id=? and status=1";
+	private static final String SQL_DELETE = "UPDATE advertisement SET status=0 WHERE id=?";
+	private static final String SQL_INSERT = "INSERT INTO advertisement VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+	private static final String SQL_UPDATE = "UPDATE advertisement SET title=?, departure_time=?, starting_point=?, category=?, destination=?, number_of_persons=? ,google_map_starting_point=?, google_map_destination=?, google_map_location=?  WHERE id=?";
+	private static final String SQL_UPDATE_STATUS = "UPDATE advertisement SET status=? WHERE id=?";
+	private static final String SQL_SELECT_DISTINCT = "SELECT DISTINCT a.* FROM advertisement a INNER JOIN content_report c on a.id=c.advertisment_id WHERE a.status=1 AND c.status=1";
+	private static final String SQL_SELECT_REPORT = "SELECT COUNT(*) as count FROM `advertisement` WHERE create_time LIKE ?";
 	
 	public static void updateStatus(int id, int status) {
 		PreparedStatement ps = null;
