@@ -14,6 +14,7 @@ public class UserDao {
 	private static final String SQL_SELECT_ACTIVE = "SELECT * FROM user WHERE status=3 AND username=?";
 	private static final String SQL_SELECT_ALL = "SELECT * FROM user";
 	private static final String SQL_SELECT_BY_USERNAME = "SELECT * FROM user WHERE username= ?";
+	private static final String SQL_SELECT_BY_ID="SELECT * FROM user WHERE id=?";
 	private static final String SQL_INSERT = "INSERT INTO user VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     private static final String SQL_UPDATE = "UPDATE user SET status=? WHERE id= ?";
 	private static final String SQL_SELECT_REPORT = "SELECT COUNT(*) as count FROM `user` WHERE status!=1 AND create_time LIKE ?";
@@ -84,6 +85,29 @@ public class UserDao {
 			c = ConnectionPool.getInstance().checkOut();
 			Object pom[] = { username };
 			ps = ConnectionPool.prepareStatement(c,SQL_SELECT_BY_USERNAME,false, pom);
+			rs = ps.executeQuery();
+			if (rs.next()) {
+				user = new UserDto(rs.getInt(ID), rs.getString(USERNAME),rs.getString(PASSWORD),
+						 rs.getString(NAME),rs.getString(SURNAME),rs.getDate(BIRTHDATE),rs.getString(EMAIL),rs.getInt(TYPE),rs.getInt(STATUS),rs.getTimestamp(CREATE_TIME));
+			}
+			ps.close();
+		} catch (Exception exp) {
+			exp.printStackTrace();
+		} finally {
+			ConnectionPool.close(ps);
+			ConnectionPool.getInstance().checkIn(c);
+		}
+		return user;
+	}
+	public static UserDto selectById(int id) {
+		PreparedStatement ps = null;
+		Connection c = null;
+		UserDto user = null;
+		ResultSet rs = null;
+		try {
+			c = ConnectionPool.getInstance().checkOut();
+			Object pom[] = { id };
+			ps = ConnectionPool.prepareStatement(c,SQL_SELECT_BY_ID,false, pom);
 			rs = ps.executeQuery();
 			if (rs.next()) {
 				user = new UserDto(rs.getInt(ID), rs.getString(USERNAME),rs.getString(PASSWORD),

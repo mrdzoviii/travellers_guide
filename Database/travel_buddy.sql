@@ -39,10 +39,11 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `travel_buddy_db`.`advertisement` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `title` VARCHAR(100) NOT NULL,
-  `category` INT NOT NULL,
   `create_time` DATETIME NOT NULL,
+  `title` VARCHAR(100) NOT NULL,
+  `departure_time` DATETIME NOT NULL,
   `starting_point` VARCHAR(100) NOT NULL,
+  `category` INT NOT NULL,
   `destination` VARCHAR(100) NOT NULL,
   `number_of_persons` INT NOT NULL,
   `google_map_starting_point` VARCHAR(100) NULL,
