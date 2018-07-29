@@ -5,9 +5,8 @@ function handleLoginRequest(xhr, status, args) {
 				}, 100);
 			} else {
 				PF('loginVar').hide();
-				$('#loginLink').fadeOut();
 			}
-		}
+}
 function showLogin(varName){
 	PF(varName).show();
 }

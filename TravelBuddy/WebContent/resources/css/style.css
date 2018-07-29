@@ -1,9 +1,5 @@
-.guest-navbar-toolbar {
+.navbar-toolbar{
 	margin-top: 0px !important;
-}
-
-.guest-header {
-	background-color: #424548 !important;
 }
 
 .header-name {
@@ -14,7 +10,9 @@
 	font-style: oblique !important;
 	align-content: center;
 }
-
+.ui-toolbar {
+	border-style: none!important;
+}
 .footer-name {
 	background-color: #424548 !important;
 	color: white;
@@ -28,7 +26,6 @@
 	border-style: none;
 }
 
-}
 .header {
 	height: 10px;
 	vertical-align: middle;
@@ -45,7 +42,7 @@
 	bottom: 0;
 }
 
-.guest-navbar-button {
+.navbar-button {
 	margin-bottom: 0px !important
 }
 

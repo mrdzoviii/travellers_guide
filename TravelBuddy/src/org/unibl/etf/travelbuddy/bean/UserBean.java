@@ -7,7 +7,10 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
+import javax.servlet.http.HttpSession;
 
+import org.primefaces.PrimeFaces;
 import org.unibl.etf.travelbuddy.mysql.UserDao;
 import org.unibl.etf.travelbuddy.mysql.UserDto;
 
@@ -20,6 +23,21 @@ public class UserBean implements Serializable{
 	private String password;
 	private String passwordConfirmation;
 	private Date today;
+	private String messages;
+	private boolean loggedIn;
+	
+	public String getMessages() {
+		return messages;
+	}
+	public void setMessages(String messages) {
+		this.messages = messages;
+	}
+	public boolean isLoggedIn() {
+		return loggedIn;
+	}
+	public void setLoggedIn(boolean loggedIn) {
+		this.loggedIn = loggedIn;
+	}
 	public Date getToday() {
 		return today;
 	}
@@ -54,10 +72,10 @@ public class UserBean implements Serializable{
 		super();
 		user=new UserDto();
 		today=new Date();
+		loggedIn=false;
+		messages="5";
 	}
-	public void login() {
-		
-	}
+	
 	public String registration() {
 		System.out.println(user.getPassword()+" : "+passwordConfirmation);
 		if (user.getPassword() != null && !user.getPassword().equals(passwordConfirmation)) {
@@ -103,5 +121,51 @@ public class UserBean implements Serializable{
 		passwordConfirmation = "";
 		return null;
 	}
+	
+	public void login(ActionEvent event) {
+		boolean logged = false;
+		user = UserDao.selectActive(username);
+		if (user != null && user.getPassword().equals(password)) {
+			logged = true;
+			PrimeFaces.current().ajax().addCallbackParam("loggedIn", logged);
+			if (user.getType()==1) {
+				FacesContext.getCurrentInstance().getApplication().getNavigationHandler().handleNavigation(
+						FacesContext.getCurrentInstance(), null, "/user/user_home.xhtml?faces-redirect=true");
+				/* messages not implemented yet
+				int count = MessageDAO.countNotSeenMessagesAll(user.getId());
+				notSeenMessages = count==0?"":""+count;
+				*/
+			} else {
+				FacesContext.getCurrentInstance().getApplication().getNavigationHandler().handleNavigation(
+						FacesContext.getCurrentInstance(), null, "/admin/admin_home.xhtml?faces-redirect=true");
+			}
+			
+			loggedIn = logged;
+			HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
+			session.setAttribute("user", this);
+		} else {
+			logged = false;
+			user = null;
+			PrimeFaces.current().ajax().addCallbackParam("loggedIn", logged);
+		}
+		username = "";
+		password = "";
+		passwordConfirmation="";
+		System.out.println("Clean up:"+username+password);
+	}
+	
+	public void logout(ActionEvent event) {
+		if(loggedIn) {
+			loggedIn = false;
+			user = new UserDto();
+			FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+			FacesContext.getCurrentInstance().getApplication().getNavigationHandler().handleNavigation(
+					FacesContext.getCurrentInstance(), null, "/index.xhtml?faces-redirect=true");
+			HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
+			session.removeAttribute("user");
+			messages = "";
+		}
+	}
+
 	
 }

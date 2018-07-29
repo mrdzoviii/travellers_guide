@@ -11,12 +11,12 @@ import org.unibl.etf.travelbuddy.util.ServiceUtility;
 
 
 public class UserDao {
-	private static final String SQL_SELECT_ACTIVE = "SELECT * FROM user WHERE status=4 AND username=?";
+	private static final String SQL_SELECT_ACTIVE = "SELECT * FROM user WHERE status=3 AND username=?";
 	private static final String SQL_SELECT_ALL = "SELECT * FROM user";
 	private static final String SQL_SELECT_BY_USERNAME = "SELECT * FROM user WHERE username= ?";
 	private static final String SQL_INSERT = "INSERT INTO user VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     private static final String SQL_UPDATE = "UPDATE user SET status=? WHERE id= ?";
-	private static final String SQL_SELECT_REPORT = "SELECT COUNT(*) as count FROM `user` WHERE status!='REJECTED' AND create_time LIKE ?";
+	private static final String SQL_SELECT_REPORT = "SELECT COUNT(*) as count FROM `user` WHERE status!=1 AND create_time LIKE ?";
 	
 	
 	private static final String ID=ServiceUtility.bundle.getString("user.id");
