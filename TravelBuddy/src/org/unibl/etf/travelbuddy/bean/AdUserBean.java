@@ -16,6 +16,12 @@ import javax.servlet.http.HttpSession;
 
 import org.primefaces.PrimeFaces;
 import org.primefaces.context.RequestContext;
+import org.primefaces.event.map.GeocodeEvent;
+import org.primefaces.model.map.DefaultMapModel;
+import org.primefaces.model.map.GeocodeResult;
+import org.primefaces.model.map.LatLng;
+import org.primefaces.model.map.MapModel;
+import org.primefaces.model.map.Marker;
 import org.unibl.etf.travelbuddy.model.Weather;
 import org.unibl.etf.travelbuddy.mysql.AdDao;
 import org.unibl.etf.travelbuddy.mysql.AdDto;
@@ -28,8 +34,44 @@ public class AdUserBean implements Serializable {
 
 	private AdDto ad;
 	private Date today;
+	private MapModel fromModel;
+	private MapModel toModel;
+	private String centerFromMap;
+	private String centerToMap;
 	
-	 
+	
+	public MapModel getFromModel() {
+		return fromModel;
+	}
+
+	public void setFromModel(MapModel fromModel) {
+		this.fromModel = fromModel;
+	}
+
+	public MapModel getToModel() {
+		return toModel;
+	}
+
+	public void setToModel(MapModel toModel) {
+		this.toModel = toModel;
+	}
+
+	public String getCenterFromMap() {
+		return centerFromMap;
+	}
+
+	public void setCenterFromMap(String centerFromMap) {
+		this.centerFromMap = centerFromMap;
+	}
+
+	public String getCenterToMap() {
+		return centerToMap;
+	}
+
+	public void setCenterToMap(String centerToMap) {
+		this.centerToMap = centerToMap;
+	}
+
 	public Date getToday() {
 		return today;
 	}
@@ -48,6 +90,10 @@ public class AdUserBean implements Serializable {
 
 	public AdUserBean() {
 		super();
+		fromModel=new DefaultMapModel();
+		toModel=new DefaultMapModel();
+		centerFromMap="41.850033, -87.6500523";
+		centerToMap="41.850033, -87.6500523";
 		HttpServletRequest req = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext()
 				.getRequest();
 		String param = req.getParameter("adId");
@@ -82,6 +128,20 @@ public class AdUserBean implements Serializable {
 
 	@PostConstruct
 	public void init() {
+		
+	}
+	
+	public void onGeocodeFrom(GeocodeEvent event) {
+		List<GeocodeResult> results=event.getResults();
+		if(results!=null && !results.isEmpty()) {
+			LatLng center=results.get(0).getLatLng();
+			centerFromMap=center.getLat()+","+center.getLng();
+			for(int i=0;i<results.size();i++) {
+				GeocodeResult result=results.get(i);
+				fromModel.addOverlay(new Marker(result.getLatLng(),result.getAddress()));
+			}
+		}
+		System.out.println("Geocode from");
 	}
 
 	public void saveAd(ActionEvent event) {

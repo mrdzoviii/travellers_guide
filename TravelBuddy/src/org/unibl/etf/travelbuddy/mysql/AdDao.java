@@ -20,8 +20,10 @@ public class AdDao {
 	private static final String STARTING_POINT=ServiceUtility.bundle.getString("ad.startingPoint");
 	private static final String DESTINATION=ServiceUtility.bundle.getString("ad.destination");
 	private static final String NUMBER_OF_PERSONS=ServiceUtility.bundle.getString("ad.numberOfPersons");
-	private static final String GOOGLE_MAP_STARTING_POINT=ServiceUtility.bundle.getString("ad.googleMapStartingPoint");
-	private static final String GOOGLE_MAP_DESTINATION=ServiceUtility.bundle.getString("ad.googleMapDestination");
+	private static final String LOCATION_FROM_LATITUDE=ServiceUtility.bundle.getString("ad.locationFromLatitude");
+	private static final String LOCATION_TO_LATITUDE=ServiceUtility.bundle.getString("ad.locationToLatitude");
+	private static final String LOCATION_FROM_LONGITUDE=ServiceUtility.bundle.getString("ad.locationFromLongitude");
+	private static final String LOCATION_TO_LONGITUDE=ServiceUtility.bundle.getString("ad.locationToLongitude");
 	private static final String GOOGLE_MAP_LOCATION=ServiceUtility.bundle.getString("ad.googleMapLocation");
 	private static final String STATUS=ServiceUtility.bundle.getString("ad.status");
 	private static final String USER_ID=ServiceUtility.bundle.getString("ad.userId");
@@ -66,8 +68,10 @@ public class AdDao {
 					ad.getCategory(),
 					ad.getDestination(),
 					ad.getNumberOfPersons(),
-					ad.getGoogleMapStartingPoint(),
-					ad.getGoogleMapDestination(),
+					ad.getLocationFromLatitude(),
+					ad.getLocationFromLongitude(),
+					ad.getLocationToLatitude(),
+					ad.getLocationToLongitude(),
 					ad.getGoogleMapLocation(),
 					ad.getId() };
 			ps = ConnectionPool.prepareStatement(c,SQL_UPDATE,false, pom);
@@ -97,8 +101,10 @@ public class AdDao {
 					ad.getCategory(),
 					ad.getDestination(),
 					ad.getNumberOfPersons(),
-					ad.getGoogleMapStartingPoint(),
-					ad.getGoogleMapDestination(),
+					ad.getLocationFromLatitude(),
+					ad.getLocationFromLongitude(),
+					ad.getLocationToLatitude(),
+					ad.getLocationToLongitude(),
 					ad.getGoogleMapLocation(),
 					ad.getStatus(),
 					ad.getUserId()
@@ -142,7 +148,9 @@ public class AdDao {
 			rs = ps.executeQuery();
 			while (rs.next()) {
 				AdDto advertisment = new AdDto(rs.getInt(ID), rs.getInt(CATEGORY),rs.getDate(CREATE_TIME),rs.getString(TITLE),rs.getDate(DEPARTURE_TIME),
-						rs.getString(STARTING_POINT),rs.getString(DESTINATION),rs.getInt(NUMBER_OF_PERSONS),rs.getString(GOOGLE_MAP_STARTING_POINT), rs.getString(GOOGLE_MAP_DESTINATION),rs.getInt(GOOGLE_MAP_LOCATION), rs.getInt(STATUS),rs.getInt(USER_ID),null);
+						rs.getString(STARTING_POINT),rs.getString(DESTINATION),rs.getInt(NUMBER_OF_PERSONS),
+						rs.getDouble(LOCATION_FROM_LATITUDE), rs.getDouble(LOCATION_FROM_LONGITUDE),
+						rs.getDouble(LOCATION_TO_LATITUDE), rs.getDouble(LOCATION_TO_LONGITUDE),rs.getInt(GOOGLE_MAP_LOCATION), rs.getInt(STATUS),rs.getInt(USER_ID),null);
 				result.add(advertisment);
 			}
 			ps.close();
@@ -167,7 +175,9 @@ public class AdDao {
 			rs = ps.executeQuery();
 			while (rs.next()) {
 				AdDto advertisment = new AdDto(rs.getInt(ID), rs.getInt(CATEGORY),rs.getDate(CREATE_TIME),rs.getString(TITLE),rs.getDate(DEPARTURE_TIME),
-						rs.getString(STARTING_POINT),rs.getString(DESTINATION),rs.getInt(NUMBER_OF_PERSONS),rs.getString(GOOGLE_MAP_STARTING_POINT), rs.getString(GOOGLE_MAP_DESTINATION),rs.getInt(GOOGLE_MAP_LOCATION), rs.getInt(STATUS),rs.getInt(USER_ID),null);
+						rs.getString(STARTING_POINT),rs.getString(DESTINATION),rs.getInt(NUMBER_OF_PERSONS),
+						rs.getDouble(LOCATION_FROM_LATITUDE), rs.getDouble(LOCATION_FROM_LONGITUDE),
+						rs.getDouble(LOCATION_TO_LATITUDE), rs.getDouble(LOCATION_TO_LONGITUDE),rs.getInt(GOOGLE_MAP_LOCATION), rs.getInt(STATUS),rs.getInt(USER_ID),null);
 				result.add(advertisment);
 			}
 			ps.close();
@@ -192,7 +202,9 @@ public class AdDao {
 			rs = ps.executeQuery();
 			while (rs.next()) {
 				AdDto advertisment = new AdDto(rs.getInt(ID), rs.getInt(CATEGORY),rs.getDate(CREATE_TIME),rs.getString(TITLE),rs.getDate(DEPARTURE_TIME),
-						rs.getString(STARTING_POINT),rs.getString(DESTINATION),rs.getInt(NUMBER_OF_PERSONS),rs.getString(GOOGLE_MAP_STARTING_POINT), rs.getString(GOOGLE_MAP_DESTINATION),rs.getInt(GOOGLE_MAP_LOCATION), rs.getInt(STATUS),rs.getInt(USER_ID),null);
+						rs.getString(STARTING_POINT),rs.getString(DESTINATION),rs.getInt(NUMBER_OF_PERSONS),
+						rs.getDouble(LOCATION_FROM_LATITUDE), rs.getDouble(LOCATION_FROM_LONGITUDE),
+						rs.getDouble(LOCATION_TO_LATITUDE), rs.getDouble(LOCATION_TO_LONGITUDE),rs.getInt(GOOGLE_MAP_LOCATION), rs.getInt(STATUS),rs.getInt(USER_ID),null);
 				result.add(advertisment);
 			}
 			ps.close();
@@ -217,7 +229,9 @@ public class AdDao {
 			rs = ps.executeQuery();
 			while (rs.next()) {
 				AdDto advertisment = new AdDto(rs.getInt(ID), rs.getInt(CATEGORY),rs.getDate(CREATE_TIME),rs.getString(TITLE),rs.getDate(DEPARTURE_TIME),
-						rs.getString(STARTING_POINT),rs.getString(DESTINATION),rs.getInt(NUMBER_OF_PERSONS),rs.getString(GOOGLE_MAP_STARTING_POINT), rs.getString(GOOGLE_MAP_DESTINATION),rs.getInt(GOOGLE_MAP_LOCATION), rs.getInt(STATUS),rs.getInt(USER_ID),null);
+						rs.getString(STARTING_POINT),rs.getString(DESTINATION),rs.getInt(NUMBER_OF_PERSONS),
+						rs.getDouble(LOCATION_FROM_LATITUDE), rs.getDouble(LOCATION_FROM_LONGITUDE),
+						rs.getDouble(LOCATION_TO_LATITUDE), rs.getDouble(LOCATION_TO_LONGITUDE),rs.getInt(GOOGLE_MAP_LOCATION), rs.getInt(STATUS),rs.getInt(USER_ID),null);
 				result.add(advertisment);
 			}
 			ps.close();
@@ -265,7 +279,9 @@ public class AdDao {
 			rs = ps.executeQuery();
 			while (rs.next()) {
 				AdDto advertisment = new AdDto(rs.getInt(ID), rs.getInt(CATEGORY),rs.getDate(CREATE_TIME),rs.getString(TITLE),rs.getDate(DEPARTURE_TIME),
-						rs.getString(STARTING_POINT),rs.getString(DESTINATION),rs.getInt(NUMBER_OF_PERSONS),rs.getString(GOOGLE_MAP_STARTING_POINT), rs.getString(GOOGLE_MAP_DESTINATION),rs.getInt(GOOGLE_MAP_LOCATION), rs.getInt(STATUS),rs.getInt(USER_ID),null);
+						rs.getString(STARTING_POINT),rs.getString(DESTINATION),rs.getInt(NUMBER_OF_PERSONS),
+						rs.getDouble(LOCATION_FROM_LATITUDE), rs.getDouble(LOCATION_FROM_LONGITUDE),
+						rs.getDouble(LOCATION_TO_LATITUDE), rs.getDouble(LOCATION_TO_LONGITUDE),rs.getInt(GOOGLE_MAP_LOCATION), rs.getInt(STATUS),rs.getInt(USER_ID),null);
 				result.add(advertisment);
 			}
 			ps.close();

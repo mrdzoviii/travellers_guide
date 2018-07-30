@@ -25,8 +25,11 @@ public class AdDto implements Serializable {
 	private String startingPoint;
 	private String destination;
 	private int numberOfPersons;
-	private String googleMapStartingPoint;
-	private String googleMapDestination;
+	private Double locationFromLatitude;
+	private Double locationFromLongitude;
+	private Double locationToLatitude;
+	private Double locationToLongitude;
+	
 	private int googleMapLocation;
 	private int status;
 	private int userId;
@@ -67,17 +70,30 @@ public class AdDto implements Serializable {
 	public void setNumberOfPersons(int numberOfPersons) {
 		this.numberOfPersons = numberOfPersons;
 	}
-	public String getGoogleMapStartingPoint() {
-		return googleMapStartingPoint;
+	
+	public Double getLocationFromLatitude() {
+		return locationFromLatitude;
 	}
-	public void setGoogleMapStartingPoint(String googleMapStartingPoint) {
-		this.googleMapStartingPoint = googleMapStartingPoint;
+	public void setLocationFromLatitude(Double locationFromLatitude) {
+		this.locationFromLatitude = locationFromLatitude;
 	}
-	public String getGoogleMapDestination() {
-		return googleMapDestination;
+	public Double getLocationFromLongitude() {
+		return locationFromLongitude;
 	}
-	public void setGoogleMapDestination(String googleMapDestination) {
-		this.googleMapDestination = googleMapDestination;
+	public void setLocationFromLongitude(Double locationFromLongitude) {
+		this.locationFromLongitude = locationFromLongitude;
+	}
+	public Double getLocationToLatitude() {
+		return locationToLatitude;
+	}
+	public void setLocationToLatitude(Double locationToLatitude) {
+		this.locationToLatitude = locationToLatitude;
+	}
+	public Double getLocationToLongitude() {
+		return locationToLongitude;
+	}
+	public void setLocationToLongitude(Double locationToLongitude) {
+		this.locationToLongitude = locationToLongitude;
 	}
 	public int getGoogleMapLocation() {
 		return googleMapLocation;
@@ -110,8 +126,9 @@ public class AdDto implements Serializable {
 		this.user = user;
 	}
 	public AdDto(int id, int category, Date createTime, String title, Date departureTime, String startingPoint,
-			String destination, int numberOfPersons, String googleMapStartingPoint, String googleMapDestination,
-			int googleMapLocation, int status, int userId, UserDto user) {
+			String destination, int numberOfPersons, Double locationFromLatitude, Double locationFromLongitude,
+			Double locationToLatitude, Double locationToLongitude, int googleMapLocation, int status, int userId,
+			UserDto user) {
 		super();
 		this.id = id;
 		this.category = category;
@@ -121,21 +138,16 @@ public class AdDto implements Serializable {
 		this.startingPoint = startingPoint;
 		this.destination = destination;
 		this.numberOfPersons = numberOfPersons;
-		this.googleMapStartingPoint = googleMapStartingPoint;
-		this.googleMapDestination = googleMapDestination;
+		this.locationFromLatitude = locationFromLatitude;
+		this.locationFromLongitude = locationFromLongitude;
+		this.locationToLatitude = locationToLatitude;
+		this.locationToLongitude = locationToLongitude;
 		this.googleMapLocation = googleMapLocation;
 		this.status = status;
 		this.userId = userId;
 		this.user = user;
 	}
-	@Override
-	public String toString() {
-		return "AdDto [id=" + id + ", category=" + category + ", createTime=" + createTime + ", title=" + title
-				+ ", departureTime=" + departureTime + ", startingPoint=" + startingPoint + ", destination="
-				+ destination + ", numberOfPersons=" + numberOfPersons + ", googleMapStartingPoint="
-				+ googleMapStartingPoint + ", googleMapDestination=" + googleMapDestination + ", googleMapLocation="
-				+ googleMapLocation + ", status=" + status + ", userId=" + userId + "]";
-	}
+	
 	
 	
 	
