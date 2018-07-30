@@ -7,44 +7,79 @@
 <h:head>
 	<title>Travel Buddy</title>
 	<h:outputStylesheet library="css" name="style.css"></h:outputStylesheet>
-	<h:outputScript library="js" name="source.js"></h:outputScript>
 	<script type="text/javascript">
-		function alo(){
-			alert("alo")
+	function handleSaveRequest(xhr, status, args) {
+		if(args.saved) {
+			getWeather();
+			PF('forecast').show();
 		}
+	}
+	function getWeather() {
+		var req = new XMLHttpRequest();
+		var error=document.getElementById("error");
+		var date=document.getElementById("weather-table");
+		req.onreadystatechange = function () {
+			if(this.readyState == 4 &amp;&amp; this.status == 200) {
+				var jsonObj = JSON.parse(this.responseText);
+				document.getElementById("icon").src = "http://openweathermap.org/img/w/" + jsonObj.weather[0].icon + ".png";
+				document.getElementById("countryIcon").src = "https://www.countryflags.io/" + jsonObj.sys.country.toLowerCase() + "/flat/64.png";
+				document.getElementById("city").innerHTML = jsonObj.name + ", " + jsonObj.sys.country;
+				document.getElementById("weather").innerHTML = jsonObj.weather[0].description;
+				document.getElementById("temperature").innerHTML = jsonObj.main.temp + " °С"; 
+				document.getElementById("minMaxTemperature").innerHTML = "Min/max temperature:  [" + jsonObj.main.temp_min+ " / " + jsonObj.main.temp_max + "] °С";
+				document.getElementById("humidity").innerHTML = "Humidity: " + jsonObj.main.humidity + "%";
+				document.getElementById("pressure").innerHTML = "Pressure: " + jsonObj.main.pressure + "mb";
+			}
+		};
+		var city = document.getElementsByClassName("citySelector")[0].value;
+		var url="http://api.openweathermap.org/data/2.5/weather?q=Belgrade&amp;appid=c0da9ddb7d9cd1a5b9c619a22766fe4b&amp;units=metric";
+		var url2="http://api.openweathermap.org/data/2.5/weather?q=" + city +"&amp;units=metric&amp;lang=en&amp;APPID=c0da9ddb7d9cd1a5b9c619a22766fe4b"
+		req.open("GET",url2 , false);
+		req.send();
+		clear();
+		if(req.status !=200){
+			date.style.display="none";
+			error.style.display="block";
+		}else{
+			error.style.display="none";
+			date.style.display="block";
+		}
+		alert("city:"+city+"status:"+req.status+"response:"+req.responseText);
+	}
+	function show(){
+		alert("CAOOO")
+	}
 	</script>
 </h:head>
 
 <body style="padding: 0; margin: 0;">
 	<div>
-		<p:dialog styleClass="weather-modal-dialog" class="weather-modal-dialog"
+		<p:dialog styleClass="weather-modal-dialog" class="weather-modal-dialog" 
 			header="Weather forecast" widgetVar="forecast"
 			footer="Powered by OpenWeatherAPI">
-			<table class="weather-table">
-				<tbody>
-					<tr>
-						<td><img id="icon" src="" alt="error loading" ></img></td>
-						<td>
+			<div id="error">
+			<b> City not found.</b>
+			</div>
+			<div id="weather-table">
 							<b id="city"></b> 
-							<img id="countryIcon" src=""></img>
+							<img id="countryIcon" src="" class="weather-img"></img>
+							<br/>
 							<b><i id="weather"></i></b>
+						     <img id="icon" src="" alt="error loading" class="weather-img" ></img>
 							<p>
-								<span id="temperature" class="weather-badge"></span>
+								<span id="temperature" class="weather-badge"></span><br/>
 								<span id="minMaxTemperature"></span>
 							</p>
 							<p id="humidity">
 							</p>
 							<p id="pressure">
 							</p>
-						</td>
-					</tr>
-				</tbody>
-			</table>
+				</div>
 		</p:dialog>
 		<div>
 		<h:form id="post_form">
 		    <p:growl id="error" life="5800" showDetail="true" globalOnly="true"></p:growl>
-		    <p:panel header="Post new ad">
+		    <p:panel header="Send new ad">
 			<h:panelGrid columns="3" cellpadding="5">
 				<p:outputLabel styleClass="output" for="title" 
 					value="Title:" />
@@ -75,7 +110,7 @@
 
 				<p:outputLabel styleClass="output" for="destination"
 					value="Location to:"  />
-				<p:inputText widgetVar="location" styleClass="input destination" id="destination"
+				<p:inputText widgetVar="location" styleClass="input citySelector" id="destination"
 					value="#{adUserBean.ad.destination}" required="true"
 					requiredMessage="Destination required." label="destination">
 				</p:inputText>
@@ -87,7 +122,7 @@
 					value="#{adUserBean.ad.departureTime}" required="true"
 					label="departure_time" navigator="true"
 					requiredMessage="Departure time required." yearRange="1900:2050"
-					pattern="dd/MM/yyyy HH:mm" mask="true" />
+					pattern="dd/MM/yyyy HH:mm" mindate="#{adUserBean.today}" mask="true" />
 				<p:message styleClass="output" for="departure_time" display="text"></p:message>
 
 				<p:outputLabel styleClass="output" for="persons"
@@ -96,13 +131,12 @@
 					value="#{adUserBean.ad.numberOfPersons}" label="persons"
 					required="true" requiredMessage="Number of persons required." min="1" />
 				<p:message styleClass="outputLabel" for="persons" display="text"></p:message>
-
+				<p:remoteCommand name="clear" actionListener="#{adUserBean.clear}" update="post_form" ></p:remoteCommand>
 				<p:outputLabel styleClass="output" value=""></p:outputLabel>
 				<p:commandButton oncomplete="handleSaveRequest(xhr, status, args)"
-					id="post_ad" styleClass="output" style="width: 100%;"
-					value="Post ad" actionListener="#{adUserBean.saveAd}"
-					update="error">
-					</p:commandButton>
+					id="post_button" styleClass="output" style="width: 100%;"
+					value="Send" actionListener="#{adUserBean.saveAd}"
+					update="post_form"></p:commandButton>
 				<p:outputLabel value=""></p:outputLabel>
 			</h:panelGrid>
 			</p:panel>

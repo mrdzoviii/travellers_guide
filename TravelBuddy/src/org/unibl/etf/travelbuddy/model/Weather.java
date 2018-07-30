@@ -1,16 +1,16 @@
 package org.unibl.etf.travelbuddy.model;
 
 public class Weather {
-	private String temperature;
+	private int temperature;
 	private int pressure;
 	private int humidity;
-	private String tempMin;
-	private String tempMax;
+	private int tempMin;
+	private int tempMax;
 	private double windSpeed;
-	public String getTemperature() {
+	public int getTemperature() {
 		return temperature;
 	}
-	public void setTemperature(String temperature) {
+	public void setTemperature(int temperature) {
 		this.temperature = temperature;
 	}
 	public int getPressure() {
@@ -25,16 +25,16 @@ public class Weather {
 	public void setHumidity(int humidity) {
 		this.humidity = humidity;
 	}
-	public String getTempMin() {
+	public int getTempMin() {
 		return tempMin;
 	}
-	public void setTempMin(String tempMin) {
+	public void setTempMin(int tempMin) {
 		this.tempMin = tempMin;
 	}
-	public String getTempMax() {
+	public int getTempMax() {
 		return tempMax;
 	}
-	public void setTempMax(String tempMax) {
+	public void setTempMax(int tempMax) {
 		this.tempMax = tempMax;
 	}
 	public double getWindSpeed() {
@@ -43,10 +43,7 @@ public class Weather {
 	public void setWindSpeed(double windSpeed) {
 		this.windSpeed = windSpeed;
 	}
-	public Weather() {
-		super();
-	}
-	public Weather(String temperature, int pressure, int humidity, String tempMin, String tempMax, double windSpeed) {
+	public Weather(int temperature, int pressure, int humidity, int tempMin, int tempMax, double windSpeed) {
 		super();
 		this.temperature = temperature;
 		this.pressure = pressure;
@@ -55,11 +52,10 @@ public class Weather {
 		this.tempMax = tempMax;
 		this.windSpeed = windSpeed;
 	}
-	@Override
-	public String toString() {
-		return "Weather [temperature=" + temperature + ", pressure=" + pressure + ", humidity=" + humidity
-				+ ", tempMin=" + tempMin + ", tempMax=" + tempMax + ", windSpeed=" + windSpeed + "]";
+	public Weather() {
+		super();
 	}
+	
 	
 	
 

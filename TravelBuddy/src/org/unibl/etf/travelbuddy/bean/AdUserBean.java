@@ -1,11 +1,13 @@
 package org.unibl.etf.travelbuddy.bean;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
@@ -20,11 +22,21 @@ import org.unibl.etf.travelbuddy.mysql.AdDto;
 import org.unibl.etf.travelbuddy.util.ServiceUtility;
 
 @ManagedBean
-@ViewScoped
+@RequestScoped
 public class AdUserBean implements Serializable {
 	private static final long serialVersionUID = 9034206682795507344L;
 
 	private AdDto ad;
+	private Date today;
+	
+	 
+	public Date getToday() {
+		return today;
+	}
+
+	public void setToday(Date today) {
+		this.today = today;
+	}
 
 	public AdDto getAd() {
 		return ad;
@@ -61,6 +73,7 @@ public class AdUserBean implements Serializable {
 		} else {
 			ad = new AdDto();
 		}
+		today=new Date();
 		UserBean bean = (UserBean) FacesContext.getCurrentInstance().getExternalContext().getSessionMap()
 				.get("userBean");
 		ad.setUser(bean.getUser());
@@ -87,23 +100,16 @@ public class AdUserBean implements Serializable {
 		 */
 		ad.setStatus(1);
 		AdDao.insert(ad);
-		Weather weather = ServiceUtility.getWeather(ad.getDestination());
-		FacesMessage message = null;
-		if (weather != null) {
-			message = new FacesMessage("Successfull", "Temperature for:"+ad.getDestination()+" current:"+weather.getTemperature()+" °С ["+
-		weather.getTempMin()+" /"+weather.getTempMax()+" ] °С");
-			message.setSeverity(FacesMessage.SEVERITY_INFO);
-		} else {
-			message = new FacesMessage("Successfull", "Forecast for:"+ad.getDestination()+" can't be found");
-			message.setSeverity(FacesMessage.SEVERITY_INFO);
-		}
-		FacesContext.getCurrentInstance().addMessage(null, message);
+		FacesMessage message = new FacesMessage("Successfull", "Ad successfully posted");
+		message.setSeverity(FacesMessage.SEVERITY_INFO);
 		PrimeFaces.current().ajax().addCallbackParam("saved", true);
-
-		ad = new AdDto();
+		System.out.println(ad);
+		FacesContext.getCurrentInstance().addMessage(null, message);
 		// }
 	}
-
+	public void clear() {
+		ad=new AdDto();
+	}
 	public void closeAd(ActionEvent event) {
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
 		AdDto ad = (AdDto) session.getAttribute("updateAd");

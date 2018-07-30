@@ -181,7 +181,7 @@ body {
 	font-weight: bold;
 }
 .weather-modal-dialog {
-	font-family: 'Raleway', sans-serif;
+	resize: none;
 }
 
 .ui-dialog-footer.ui-widget-content {
@@ -207,4 +207,7 @@ body {
 }
 .weather-table>tbody>tr>td:first-of-type {
 	width: 100px;
+}
+.weather-img{
+	width:30px !important;
 }

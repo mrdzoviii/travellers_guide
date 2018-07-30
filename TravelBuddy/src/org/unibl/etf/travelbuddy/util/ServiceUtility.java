@@ -6,7 +6,6 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -76,19 +75,15 @@ public class ServiceUtility {
 				}
 				JSONObject json=new JSONObject(buffer.toString());
 				JSONObject main=json.getJSONObject("main");
-				double temp = main.getDouble("temp");
-				DecimalFormat dc = new DecimalFormat("#0.0");
-			    String temperature = dc.format(temp);
+				int temp = main.getInt("temp");
 				int pressure = main.getInt("pressure");
 				int humidity = main.getInt("humidity");
-				double tmpMin = main.getDouble("temp_min");
-				String tempMin = dc.format(tmpMin);
-				double tmpMax = main.getDouble("temp_max");
-				String tempMax = dc.format(tmpMax);
+				int tempMin = main.getInt("temp_min");
+				int tempMax = main.getInt("temp_max");
 				JSONObject wind = json.getJSONObject("wind");
 				double windSpeed = wind.getDouble("speed");
 				
-				return new Weather(temperature, pressure, humidity, tempMin, tempMax, windSpeed);
+				return new Weather(temp, pressure, humidity, tempMin, tempMax, windSpeed);
 				
 			}
 		} catch (MalformedURLException e) {
