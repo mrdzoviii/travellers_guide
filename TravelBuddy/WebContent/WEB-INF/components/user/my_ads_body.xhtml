@@ -34,10 +34,10 @@
 				</p:selectBooleanCheckbox>
 
 				<p:button style="float: right;" value="New ad"
-					outcome="/user/new_addfsfsfdfsd" />
+					outcome="/user/new_ad" />
 			</div>
 			<p:dataScroller id="ads" value="#{myAdsBean.ads}" var="ad"
-				chunkSize="10" mode="inline">
+				chunkSize="10" mode="inline" scrollHeight="400">
 				<f:facet name="header">Scroll for more ads</f:facet>
 				<h:panelGrid columns="1" style="width:100%;">
 					<p:outputPanel>
@@ -74,7 +74,7 @@
 						</h:panelGrid>
 
 						<p:button style="float: right; margin-top: 150px;"
-							outcome="user_oglasi_update" value="Update">
+						  value="Update">
 							<f:param name="adId" value="#{ad.id}" />
 						</p:button>
 						<p:commandButton process="ads" update="ads"

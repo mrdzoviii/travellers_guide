@@ -7,7 +7,23 @@
 <h:head>
     <title>Travel Buddy</title>
 	<h:outputScript library="js" name="source.js"></h:outputScript>
+	<script type="text/javascript">
+	function showLogin(){
+		PF('loginVar').show();
+	}
+
+	function handleLoginRequest(xhr, status, args) {
+		if (args.validationFailed || !args.loggedIn) {
+			PF('loginVar').jq.effect("shake", {
+				times : 5
+			}, 100);
+		} else {
+			PF('loginVar').hide();
+		}
+	}
+	</script>
 	<h:outputStylesheet library="css" name="style.css"></h:outputStylesheet>
+	<h:outputScript library="js" name="source.js"/>
 </h:head>
 
 <body style="padding: 0; margin: 0;">
@@ -31,7 +47,6 @@
 		</p:toolbar>
 		<p:sticky target="navbar"></p:sticky>
 	</h:form>
-	</div>
 	<h:form id="login-form">
 		<p:dialog header="Login" widgetVar="loginVar" resizable="false"
 			modal="true">
@@ -52,6 +67,8 @@
 			</h:panelGrid>
 		</p:dialog>
 	</h:form>
+	</div>
+	
 </body>
 
 </html>

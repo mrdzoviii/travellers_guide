@@ -123,6 +123,7 @@ public class UserBean implements Serializable{
 	}
 	
 	public void login(ActionEvent event) {
+		System.out.println("LOGINNNNN "+username+" :"+password);
 		boolean logged = false;
 		user = UserDao.selectActive(username);
 		if (user != null && user.getPassword().equals(password)) {

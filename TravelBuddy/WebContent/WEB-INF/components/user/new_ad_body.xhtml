@@ -7,7 +7,12 @@
 <h:head>
 	<title>Travel Buddy</title>
 	<h:outputStylesheet library="css" name="style.css"></h:outputStylesheet>
-	<h:outputScript library="js" name="user.js"></h:outputScript>
+	<h:outputScript library="js" name="source.js"></h:outputScript>
+	<script type="text/javascript">
+		function alo(){
+			alert("alo")
+		}
+	</script>
 </h:head>
 
 <body style="padding: 0; margin: 0;">
@@ -36,8 +41,9 @@
 				</tbody>
 			</table>
 		</p:dialog>
+		<div>
 		<h:form id="post_form">
-		    <p:growl id="error" life="1800" showDetail="true" globalOnly="true"></p:growl>
+		    <p:growl id="error" life="5800" showDetail="true" globalOnly="true"></p:growl>
 		    <p:panel header="Post new ad">
 			<h:panelGrid columns="3" cellpadding="5">
 				<p:outputLabel styleClass="output" for="title" 
@@ -95,11 +101,13 @@
 				<p:commandButton oncomplete="handleSaveRequest(xhr, status, args)"
 					id="post_ad" styleClass="output" style="width: 100%;"
 					value="Post ad" actionListener="#{adUserBean.saveAd}"
-					update="post_form"></p:commandButton>
+					update="error">
+					</p:commandButton>
 				<p:outputLabel value=""></p:outputLabel>
 			</h:panelGrid>
 			</p:panel>
 		</h:form>
+		</div>
 	</div>
 </body>
 

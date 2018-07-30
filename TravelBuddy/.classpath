@@ -26,5 +26,6 @@
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/rome-utils-1.9.0.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jdom2-2.0.5.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/slf4j-api-1.7.25.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/cdi-api-1.2.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
