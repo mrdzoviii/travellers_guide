@@ -17,14 +17,14 @@
 						listener="#{myAdsBean.filterAds}" />
 				</p:inputText>
 
-				<p:outputLabel for="@next" value="Need"></p:outputLabel>
+				<p:outputLabel for="@next" value="Need" styleClass="md"></p:outputLabel>
 				<p:selectBooleanCheckbox styleClass="md" id="need"
 					value="#{myAdsBean.need}">
 					<p:ajax update="ads" process="search, need, offer"
 						listener="#{myAdsBean.filterAds}" />
 				</p:selectBooleanCheckbox>
 
-				<p:outputLabel style="margin-left: 10px;" for="@next" value="Offer"></p:outputLabel>
+				<p:outputLabel style="margin-left: 10px;" for="@next" value="Offer" styleClass="md"></p:outputLabel>
 				<p:selectBooleanCheckbox styleClass="md" id="offer"
 					value="#{myAdsBean.offer}">
 					<p:ajax update="ads" process="search, need , offer"
@@ -32,7 +32,7 @@
 				</p:selectBooleanCheckbox>
 			</div>
 			<p:dataScroller id="ads" value="#{myAdsBean.ads}" var="ad"
-				chunkSize="10" mode="inline" scrollHeight="400">
+				chunkSize="10" styleClass="datascroller">
 				<f:facet name="header">Scroll for more ads</f:facet>
 				<h:panelGrid columns="1" style="width:100%;">
 					<p:outputPanel>

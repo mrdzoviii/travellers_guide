@@ -1,7 +1,9 @@
 package org.unibl.etf.travelbuddy.bean;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -62,7 +64,30 @@ public class MyAdsBean implements Serializable {
 	}
 	
 	public void filterAds(){
-		
+		ads.clear();
+		if (need == false && offer == false)
+			return;
+		SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+		for (AdDto ad : data) {
+			String departureTime = df.format(ad.getDepartureTime());
+			String createDate = df.format(ad.getCreateTime());
+			if (ad.getStartingPoint().contains(query == null ? "" : query)
+					|| ad.getDestination().contains(query == null ? "" : query) 
+					|| departureTime.contains(query == null ? "" : query)
+					|| createDate.contains(query == null ? "" : query)
+					|| ad.getTitle().contains(query == null ? "" : query))
+				ads.add(ad);
+		}
+		if (need && offer)
+			return;
+		if (need) {
+			ads = ads.stream().filter(x -> x.getCategory()==1)
+					.collect(Collectors.toList());
+		}
+		if (offer) {
+			ads = ads.stream().filter(x -> x.getCategory()==0)
+					.collect(Collectors.toList());
+		}
 	}
 	public void delete() {
 		
