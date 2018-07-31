@@ -41,10 +41,11 @@
 							align="center">
 							<p:outputLabel value="#{ad.category == 0? 'Offer:' : 'Need:'}" style="font-weight:bold;float:left"></p:outputLabel>
 							<h:outputText value="#{ad.title}" styleClass="ad-font" style="float:left" />
-							<p:button style="float: right;margin-right:5px;margin-top:-3px;"
-						  value="Update">
-							<f:param name="adId" value="#{ad.id}" />
-						</p:button>
+							<p:commandButton style="float: right;margin-right:5px;margin-top:-3px;"
+						  value="Update" action="/user/update_ad.xhtml?faces-redirect=true" ajax="false">
+							<f:setPropertyActionListener value="#{ad}"
+							target="#{adUserBean.ad}" />
+						</p:commandButton>
 						</div>
 
 						<h:panelGrid columns="4" cellpadding="5">

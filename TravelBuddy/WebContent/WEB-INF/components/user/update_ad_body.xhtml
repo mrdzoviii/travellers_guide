@@ -142,12 +142,14 @@
 			<p:outputLabel value=""></p:outputLabel>
 				
 				<p:outputLabel styleClass="output" value=""></p:outputLabel>
-				<p:commandButton oncomplete="handleSaveRequest(xhr, status, args)"
-					id="post_button" styleClass="output" style="width: 100%;"
-					value="Send" actionListener="#{adUserBean.saveAd}"
+				<p:commandButton 
+					id="save_button" styleClass="output" style="width: 100%;"
+					value="Save changes" actionListener="#{adUserBean.editAd}"
 					update="post_form"></p:commandButton>
-				<p:remoteCommand name="clear" actionListener="#{adUserBean.clear}" update="post_form" ></p:remoteCommand>
-				<p:outputLabel value=""></p:outputLabel>
+				<p:commandButton
+					id="close_button" styleClass="output" style="width: 100%;"
+					value="Close ad" actionListener="#{adUserBean.closeAd}"
+					update="post_form"></p:commandButton>
 			</h:panelGrid>
 			</p:panel>
 		</h:form>

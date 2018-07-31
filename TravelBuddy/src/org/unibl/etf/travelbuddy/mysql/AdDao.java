@@ -35,7 +35,7 @@ public class AdDao {
 	private static final String SQL_SELECT_BY_ID = "SELECT * FROM advertisement WHERE id=? and status=1";
 	private static final String SQL_DELETE = "UPDATE advertisement SET status=0 WHERE id=?";
 	private static final String SQL_INSERT = "INSERT INTO advertisement VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-	private static final String SQL_UPDATE = "UPDATE advertisement SET title=?, departure_time=?, starting_point=?, category=?, destination=?, number_of_persons=? ,google_map_starting_point=?, google_map_destination=?, google_map_location=?  WHERE id=?";
+	private static final String SQL_UPDATE = "UPDATE advertisement SET title=?, departure_time=?, starting_point=?, category=?, destination=?, number_of_persons=? ,location_from_latitude=?, location_from_longitude=?, location_to_latitude=?, location_to_longitude=?, `from`=?, `to`=?  WHERE id=?";
 	private static final String SQL_UPDATE_STATUS = "UPDATE advertisement SET status=? WHERE id=?";
 	private static final String SQL_SELECT_DISTINCT = "SELECT DISTINCT a.* FROM advertisement a INNER JOIN content_report c on a.id=c.advertisment_id WHERE a.status=1 AND c.status=1";
 	private static final String SQL_SELECT_REPORT = "SELECT COUNT(*) as count FROM `advertisement` WHERE create_time LIKE ?";
@@ -58,17 +58,19 @@ public class AdDao {
 		}
 	}
 
-	public static void update(AdDto ad) {
+	public static boolean update(AdDto ad) {
 		PreparedStatement ps = null;
 		Connection c = null;
+		boolean result=false;
 		try {
 			c = ConnectionPool.getInstance().checkOut();
 			Object pom[] = { ad.getTitle(), ad.getDepartureTime(), ad.getStartingPoint(), ad.getCategory(),
-					ad.getDestination(), ad.getNumberOfPersons(), ad.getLocationFromLatitude(),
-					ad.getLocationFromLongitude(), ad.getLocationToLatitude(), ad.getLocationToLongitude(),
-					ad.getId(),ad.isFrom(),ad.isTo() };
+					ad.getDestination(), ad.getNumberOfPersons(), ad.isFrom()==false?null:ad.getLocationFromLatitude(),
+							ad.isFrom()==false?null:ad.getLocationFromLongitude(), ad.isTo()==false?null:ad.getLocationToLatitude(), ad.isTo()==false?null:ad.getLocationToLongitude(),
+					ad.isFrom(),ad.isTo(),ad.getId()};
 			ps = ConnectionPool.prepareStatement(c, SQL_UPDATE, false, pom);
-			ps.executeUpdate();
+			int rows=ps.executeUpdate();
+			result=rows>0;
 			ps.close();
 		} catch (Exception exp) {
 			exp.printStackTrace();
@@ -76,6 +78,7 @@ public class AdDao {
 			ConnectionPool.close(ps);
 			ConnectionPool.getInstance().checkIn(c);
 		}
+		return result;
 	}
 
 	public static boolean insert(AdDto ad) {
@@ -131,8 +134,8 @@ public class AdDao {
 			ps = c.prepareStatement(SQL_SELECT_ALL);
 			rs = ps.executeQuery();
 			while (rs.next()) {
-				AdDto advertisment = new AdDto(rs.getInt(ID), rs.getInt(CATEGORY), rs.getDate(CREATE_TIME),
-						rs.getString(TITLE), rs.getDate(DEPARTURE_TIME), rs.getString(STARTING_POINT),
+				AdDto advertisment = new AdDto(rs.getInt(ID), rs.getInt(CATEGORY), rs.getTimestamp(CREATE_TIME),
+						rs.getString(TITLE), rs.getTimestamp(DEPARTURE_TIME), rs.getString(STARTING_POINT),
 						rs.getString(DESTINATION), rs.getInt(NUMBER_OF_PERSONS), rs.getDouble(LOCATION_FROM_LATITUDE),
 						rs.getDouble(LOCATION_FROM_LONGITUDE), rs.getDouble(LOCATION_TO_LATITUDE),
 						rs.getDouble(LOCATION_TO_LONGITUDE), rs.getInt(STATUS),
@@ -160,8 +163,8 @@ public class AdDao {
 			ps = ConnectionPool.prepareStatement(c, SQL_SELECT_STATUS, false, pom);
 			rs = ps.executeQuery();
 			while (rs.next()) {
-				AdDto advertisment = new AdDto(rs.getInt(ID), rs.getInt(CATEGORY), rs.getDate(CREATE_TIME),
-						rs.getString(TITLE), rs.getDate(DEPARTURE_TIME), rs.getString(STARTING_POINT),
+				AdDto advertisment = new AdDto(rs.getInt(ID), rs.getInt(CATEGORY), rs.getTimestamp(CREATE_TIME),
+						rs.getString(TITLE), rs.getTimestamp(DEPARTURE_TIME), rs.getString(STARTING_POINT),
 						rs.getString(DESTINATION), rs.getInt(NUMBER_OF_PERSONS), rs.getDouble(LOCATION_FROM_LATITUDE),
 						rs.getDouble(LOCATION_FROM_LONGITUDE), rs.getDouble(LOCATION_TO_LATITUDE),
 						rs.getDouble(LOCATION_TO_LONGITUDE), rs.getInt(STATUS),
@@ -189,8 +192,8 @@ public class AdDao {
 			ps = ConnectionPool.prepareStatement(c, SQL_SELECT_BY_USER_ID, false, pom);
 			rs = ps.executeQuery();
 			while (rs.next()) {
-				AdDto advertisment = new AdDto(rs.getInt(ID), rs.getInt(CATEGORY), rs.getDate(CREATE_TIME),
-						rs.getString(TITLE), rs.getDate(DEPARTURE_TIME), rs.getString(STARTING_POINT),
+				AdDto advertisment = new AdDto(rs.getInt(ID), rs.getInt(CATEGORY), rs.getTimestamp(CREATE_TIME),
+						rs.getString(TITLE), rs.getTimestamp(DEPARTURE_TIME), rs.getString(STARTING_POINT),
 						rs.getString(DESTINATION), rs.getInt(NUMBER_OF_PERSONS), rs.getDouble(LOCATION_FROM_LATITUDE),
 						rs.getDouble(LOCATION_FROM_LONGITUDE), rs.getDouble(LOCATION_TO_LATITUDE),
 						rs.getDouble(LOCATION_TO_LONGITUDE), rs.getInt(STATUS),
@@ -218,8 +221,8 @@ public class AdDao {
 			ps = ConnectionPool.prepareStatement(c, SQL_SELECT_BY_ID, false, pom);
 			rs = ps.executeQuery();
 			while (rs.next()) {
-				AdDto advertisment = new AdDto(rs.getInt(ID), rs.getInt(CATEGORY), rs.getDate(CREATE_TIME),
-						rs.getString(TITLE), rs.getDate(DEPARTURE_TIME), rs.getString(STARTING_POINT),
+				AdDto advertisment = new AdDto(rs.getInt(ID), rs.getInt(CATEGORY), rs.getTimestamp(CREATE_TIME),
+						rs.getString(TITLE), rs.getTimestamp(DEPARTURE_TIME), rs.getString(STARTING_POINT),
 						rs.getString(DESTINATION), rs.getInt(NUMBER_OF_PERSONS), rs.getDouble(LOCATION_FROM_LATITUDE),
 						rs.getDouble(LOCATION_FROM_LONGITUDE), rs.getDouble(LOCATION_TO_LATITUDE),
 						rs.getDouble(LOCATION_TO_LONGITUDE), rs.getInt(STATUS),
@@ -293,8 +296,8 @@ public class AdDao {
 			ps = c.prepareStatement(SQL_SELECT_DISTINCT);
 			rs = ps.executeQuery();
 			while (rs.next()) {
-				AdDto advertisment = new AdDto(rs.getInt(ID), rs.getInt(CATEGORY), rs.getDate(CREATE_TIME),
-						rs.getString(TITLE), rs.getDate(DEPARTURE_TIME), rs.getString(STARTING_POINT),
+				AdDto advertisment = new AdDto(rs.getInt(ID), rs.getInt(CATEGORY), rs.getTimestamp(CREATE_TIME),
+						rs.getString(TITLE), rs.getTimestamp(DEPARTURE_TIME), rs.getString(STARTING_POINT),
 						rs.getString(DESTINATION), rs.getInt(NUMBER_OF_PERSONS), rs.getDouble(LOCATION_FROM_LATITUDE),
 						rs.getDouble(LOCATION_FROM_LONGITUDE), rs.getDouble(LOCATION_TO_LATITUDE),
 						rs.getDouble(LOCATION_TO_LONGITUDE), rs.getInt(STATUS),

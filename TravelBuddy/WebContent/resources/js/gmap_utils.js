@@ -54,7 +54,8 @@ var markerFrom = null;
 	
 	function initMe(){
 		if (document.getElementById('count').value=='0'){
-			document.getElementById('count').value='1'
+			document.getElementById('count').value='1';
+			
 		var fromX=document.getElementById('fromX').value;
 		var fromY=document.getElementById('fromY').value;
 		var toX=document.getElementById('toX').value;
