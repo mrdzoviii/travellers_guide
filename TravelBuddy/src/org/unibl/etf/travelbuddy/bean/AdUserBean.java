@@ -7,6 +7,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
@@ -25,6 +26,14 @@ import org.unibl.etf.travelbuddy.mysql.AdDto;
 @SessionScoped
 public class AdUserBean implements Serializable {
 	private static final long serialVersionUID = 9034206682795507344L;
+	
+	@ManagedProperty("#{userBean}")
+	UserBean userBean;
+	
+
+	public void setUserBean(UserBean userBean) {
+		this.userBean = userBean;
+	}
 
 	private boolean from;
 	private boolean to;
@@ -159,11 +168,10 @@ public class AdUserBean implements Serializable {
 		 * FacesContext.getCurrentInstance().addMessage(null, message); } else {
 		 */
 		ad.setStatus(1);
+		System.out.println(ad);
 		if (AdDao.insert(ad)) {
-			FacesMessage message = new FacesMessage("Successfull", "Ad successfully posted");
-			message.setSeverity(FacesMessage.SEVERITY_INFO);
 			PrimeFaces.current().ajax().addCallbackParam("saved", true);
-			FacesContext.getCurrentInstance().addMessage(null, message);
+			
 		} else {
 			FacesMessage message = new FacesMessage("Error", "Ad not posted");
 			message.setSeverity(FacesMessage.SEVERITY_ERROR);
@@ -174,6 +182,11 @@ public class AdUserBean implements Serializable {
 
 	public void clear() {
 		ad = new AdDto();
+		ad.setUserId(userBean.getUser().getId());
+		ad.setUser(userBean.getUser());
+		FacesMessage message = new FacesMessage("Successfull", "Ad successfully posted");
+		message.setSeverity(FacesMessage.SEVERITY_INFO);
+		FacesContext.getCurrentInstance().addMessage(null, message);
 		System.out.println("Clear form");
 	}
 

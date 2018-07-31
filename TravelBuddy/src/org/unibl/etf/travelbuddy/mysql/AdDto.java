@@ -147,6 +147,17 @@ public class AdDto implements Serializable {
 		this.userId = userId;
 		this.user = user;
 	}
+	@Override
+	public String toString() {
+		return "AdDto [id=" + id + ", category=" + category + ", createTime=" + createTime + ", title=" + title
+				+ ", departureTime=" + departureTime + ", startingPoint=" + startingPoint + ", destination="
+				+ destination + ", numberOfPersons=" + numberOfPersons + ", locationFromLatitude="
+				+ locationFromLatitude + ", locationFromLongitude=" + locationFromLongitude + ", locationToLatitude="
+				+ locationToLatitude + ", locationToLongitude=" + locationToLongitude + ", googleMapLocation="
+				+ googleMapLocation + ", status=" + status + ", userId=" + userId + ", user=" + user + "]";
+	}
+	
+	
 	
 	
 	
