@@ -3,6 +3,11 @@ package org.unibl.etf.travelbuddy.mysql;
 import java.io.Serializable;
 import java.util.Date;
 
+import org.primefaces.model.map.DefaultMapModel;
+import org.primefaces.model.map.LatLng;
+import org.primefaces.model.map.MapModel;
+import org.primefaces.model.map.Marker;
+
 public class AdDto implements Serializable {
 	private static final long serialVersionUID = 6705790616384928976L;
 	private int id;
@@ -34,8 +39,50 @@ public class AdDto implements Serializable {
 	private UserDto user;
 	private boolean from;
 	private boolean to;
+	private String centerFrom;
+	private String centerTo;
+	private MapModel mapFrom;
+	private MapModel mapTo;
 	
 	
+	
+	public String getCenterFrom() {
+		return centerFrom;
+	}
+	public void setCenterFrom(String centerFrom) {
+		this.centerFrom = centerFrom;
+	}
+	public String getCenterTo() {
+		return centerTo;
+	}
+	public void setCenterTo(String centerTo) {
+		this.centerTo = centerTo;
+	}
+	public void updateFrom() {
+		mapFrom=new DefaultMapModel();
+		LatLng cord=new LatLng(locationFromLatitude, locationFromLongitude);
+		mapFrom.addOverlay(new Marker(cord));
+		centerFrom=cord.getLat()+","+cord.getLng();
+	}
+	public void updateTo() {
+		mapTo=new DefaultMapModel();
+		LatLng cord=new LatLng(locationToLatitude, locationToLongitude);
+		mapTo.addOverlay(new Marker(cord));
+		centerTo=cord.getLat()+","+cord.getLng();
+	}
+	
+	public MapModel getMapFrom() {
+		return mapFrom;
+	}
+	public void setMapFrom(MapModel mapFrom) {
+		this.mapFrom = mapFrom;
+	}
+	public MapModel getMapTo() {
+		return mapTo;
+	}
+	public void setMapTo(MapModel mapTo) {
+		this.mapTo = mapTo;
+	}
 	public boolean isFrom() {
 		return from;
 	}
@@ -155,6 +202,12 @@ public class AdDto implements Serializable {
 		this.user = user;
 		this.from = from;
 		this.to = to;
+		if(to) {
+			updateTo();
+		}
+		if(from) {
+			updateFrom();
+		}
 	}
 	@Override
 	public String toString() {

@@ -8,6 +8,7 @@
 
 <ui:composition>
 <h:outputStylesheet  name="style.css"></h:outputStylesheet>
+<h:outputScript name="js/gmap_utils.js" />
 	<div class="dashboard">
 		<h:form>
 			<div class="filter-area">
@@ -66,7 +67,18 @@
 							
 							<h:outputText value="Seats left:" />
 							<h:outputText value="#{ad.numberOfPersons}" styleClass="ad-font" />
-
+							<h:outputText value="" />
+							<h:outputText value="" />
+							
+							<h:outputText value="Map from:" rendered="#{ad.from}"></h:outputText>
+							<p:gmap type="ROADMAP" styleClass="small-map" zoom="4"
+								center="#{ad.centerFrom}" rendered="#{ad.from}" model="#{ad.mapFrom}" navigationControl="false" disableDoubleClickZoom="true">
+							</p:gmap>
+							<h:outputText value="Map to:" rendered="#{ad.to}"></h:outputText>
+							<p:gmap type="ROADMAP" styleClass="small-map" zoom="4"
+							 	center="#{ad.centerTo}" rendered="#{ad.to}" model="#{ad.mapTo}" navigationControl="false" disableDoubleClickZoom="true" >
+							</p:gmap>
+							
 
 						</h:panelGrid>
 					</p:outputPanel>

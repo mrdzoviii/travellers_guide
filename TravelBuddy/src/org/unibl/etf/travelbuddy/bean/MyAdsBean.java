@@ -10,6 +10,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 
+import org.primefaces.model.map.DefaultMapModel;
+import org.primefaces.model.map.MapModel;
 import org.unibl.etf.travelbuddy.mysql.AdDao;
 import org.unibl.etf.travelbuddy.mysql.AdDto;
 
@@ -23,6 +25,14 @@ public class MyAdsBean implements Serializable {
 	private List<AdDto> ads;
 	private List<AdDto> data;
 	private AdDto selectedAd;
+	private MapModel showModel;
+	
+	public MapModel getShowModel() {
+		return showModel;
+	}
+	public void setShowModel(MapModel showModel) {
+		this.showModel = showModel;
+	}
 	public boolean isNeed() {
 		return need;
 	}
@@ -101,5 +111,6 @@ public class MyAdsBean implements Serializable {
 		need = true;
 		offer = true;
 		selectedAd = new AdDto();
+		showModel=new DefaultMapModel();
 	}
 }
