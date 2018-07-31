@@ -142,24 +142,24 @@ body {
 
 .offer-title {
 	width: 100%;
-	background-color: #F9B569;
+	background-color: #424548;
 	color: white;
-	border: 1px solid;
+	border: 3px solid;
 	border-color: orange;
 	border-radius: 4px;
 	padding-top: 10px;
-	padding-bottom: 10px;
+	padding-bottom: 40px;
 }
 
 .need-title {
 	width: 100%;
-	background-color: #38C28C;
+	background-color: #424548;
 	color: white;
-	border: 1px solid;
+	border: 3px solid;
 	border-color: green;
 	border-radius: 4px;
 	padding-top: 10px;
-	padding-bottom: 10px;
+	padding-bottom: 40px;
 }
 
 .filter-area {

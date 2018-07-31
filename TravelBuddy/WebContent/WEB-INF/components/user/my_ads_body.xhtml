@@ -38,46 +38,37 @@
 					<p:outputPanel>
 						<div class="#{ad.category == 0 ? 'offer-title' : 'need-title'}"
 							align="center">
-							<p:outputLabel value="#{ad.category == 0? 'Offer' : 'Need'}"></p:outputLabel>
-						</div>
-
-						<h:panelGrid columns="2" cellpadding="5">
-							<h:outputText value="Title:" />
-							<h:outputText value="#{ad.title}" styleClass="ad-font" />
-
-							<h:outputText value="Location from:" />
-							<h:outputText value="#{ad.startingPoint}" styleClass="ad-font" />
-
-							<h:outputText value="Location to:" />
-							<h:outputText value="#{ad.destination}" styleClass="ad-font" />
-
-							<h:outputText value="Departure time:" />
-							<h:outputText value="#{ad.departureTime}" styleClass="ad-font">
-								<f:convertDateTime type="date" pattern="dd/MM/yyyy HH:mm:ss"
-									timeZone="Europe/Berlin" />
-							</h:outputText>
-
-							<h:outputText value="Number of persons:" />
-							<h:outputText value="#{ad.numberOfPersons}" styleClass="ad-font" />
-
-
-							<h:outputText value="Create time:" />
-							<h:outputText value="#{ad.createTime}" styleClass="ad-font">
-								<f:convertDateTime type="date" pattern="dd/MM/yyyy HH:mm:ss"
-									timeZone="Europe/Berlin" />
-							</h:outputText>
-						</h:panelGrid>
-
-						<p:button style="float: right; margin-top: 150px;"
+							<p:outputLabel value="#{ad.category == 0? 'Offer:' : 'Need:'}" style="font-weight:bold;float:left"></p:outputLabel>
+							<h:outputText value="#{ad.title}" styleClass="ad-font" style="float:left" />
+							<p:button style="float: right;margin-right:5px;margin-top:-3px;"
 						  value="Update">
 							<f:param name="adId" value="#{ad.id}" />
 						</p:button>
-						<p:commandButton process="ads" update="ads"
-							style="float: right; margin-top: 150px;" value="Delete"
-							action="#{myAdsBean.delete}">
-							<f:setPropertyActionListener value="#{ad}"
-								target="#{myAdsBean.selectedAd}" />
-						</p:commandButton>
+						</div>
+
+						<h:panelGrid columns="4" cellpadding="5">
+							<h:outputText value="Created:" />
+							<h:outputText value="#{ad.createTime}" styleClass="ad-font">
+								<f:convertDateTime type="date" pattern="dd/MM/yyyy HH:mm"
+									timeZone="Europe/Berlin" />
+							</h:outputText>
+							<h:outputText value="Start:" />
+							<h:outputText value="#{ad.departureTime}" styleClass="ad-font">
+								<f:convertDateTime type="date" pattern="dd/MM/yyyy HH:mm"
+									timeZone="Europe/Berlin" />
+							</h:outputText>
+							<h:outputText value="Location from:" />
+							<h:outputText value="#{ad.startingPoint}" styleClass="ad-font" />
+							
+							<h:outputText value="Location to:" />
+							<h:outputText value="#{ad.destination}" styleClass="ad-font" />
+
+							
+							<h:outputText value="Seats left:" />
+							<h:outputText value="#{ad.numberOfPersons}" styleClass="ad-font" />
+
+
+						</h:panelGrid>
 					</p:outputPanel>
 				</h:panelGrid>
 				<hr></hr>

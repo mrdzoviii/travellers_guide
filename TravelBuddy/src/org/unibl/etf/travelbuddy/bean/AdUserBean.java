@@ -35,24 +35,7 @@ public class AdUserBean implements Serializable {
 		this.userBean = userBean;
 	}
 
-	private boolean from;
-	private boolean to;
-
-	public boolean isFrom() {
-		return from;
-	}
-
-	public void setFrom(boolean from) {
-		this.from = from;
-	}
-
-	public boolean isTo() {
-		return to;
-	}
-
-	public void setTo(boolean to) {
-		this.to = to;
-	}
+   
 
 	private AdDto ad;
 	private Date today;
@@ -201,23 +184,26 @@ public class AdUserBean implements Serializable {
 	public void onPointSelectFrom(PointSelectEvent event) {
 		ad.setLocationFromLatitude(event.getLatLng().getLat());
 		ad.setLocationFromLongitude(event.getLatLng().getLng());
+		ad.setFrom(true);
 	}
 
 	public void onGeocodeFrom(GeocodeEvent event) {
 		ad.setLocationFromLatitude(event.getResults().get(0).getLatLng().getLat());
 		ad.setLocationFromLongitude(event.getResults().get(0).getLatLng().getLng());
-
+		ad.setFrom(true);
 	}
 
 	public void onPointSelectTo(PointSelectEvent event) {
 		ad.setLocationToLatitude(event.getLatLng().getLat());
 		ad.setLocationToLongitude(event.getLatLng().getLng());
+		ad.setTo(true);
 
 	}
 
 	public void onGeocodeTo(GeocodeEvent event) {
 		ad.setLocationToLatitude(event.getResults().get(0).getLatLng().getLat());
 		ad.setLocationToLongitude(event.getResults().get(0).getLatLng().getLng());
+		ad.setTo(true);
 	}
 	
 	public List<String> complete(String query) {

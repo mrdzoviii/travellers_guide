@@ -50,9 +50,10 @@ CREATE TABLE IF NOT EXISTS `travel_buddy_db`.`advertisement` (
   `location_to_longitude` DOUBLE NULL,
   `location_to_latitude` DOUBLE NULL,
   `location_from_longitude` DOUBLE NULL,
-  `google_map_location` INT NOT NULL DEFAULT 0,
   `status` INT NOT NULL,
   `user_id` INT NOT NULL,
+  `from` TINYINT NOT NULL DEFAULT 0,
+  `to` TINYINT NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`),
   INDEX `fk_advertisement_user_idx` (`user_id` ASC),
   CONSTRAINT `fk_advertisement_user`

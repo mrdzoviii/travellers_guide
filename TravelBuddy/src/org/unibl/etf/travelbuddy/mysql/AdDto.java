@@ -29,11 +29,25 @@ public class AdDto implements Serializable {
 	private Double locationFromLongitude;
 	private Double locationToLatitude;
 	private Double locationToLongitude;
-	
-	private int googleMapLocation;
 	private int status;
 	private int userId;
 	private UserDto user;
+	private boolean from;
+	private boolean to;
+	
+	
+	public boolean isFrom() {
+		return from;
+	}
+	public void setFrom(boolean from) {
+		this.from = from;
+	}
+	public boolean isTo() {
+		return to;
+	}
+	public void setTo(boolean to) {
+		this.to = to;
+	}
 	public int getId() {
 		return id;
 	}
@@ -95,12 +109,6 @@ public class AdDto implements Serializable {
 	public void setLocationToLongitude(Double locationToLongitude) {
 		this.locationToLongitude = locationToLongitude;
 	}
-	public int getGoogleMapLocation() {
-		return googleMapLocation;
-	}
-	public void setGoogleMapLocation(int googleMapLocation) {
-		this.googleMapLocation = googleMapLocation;
-	}
 	public int getStatus() {
 		return status;
 	}
@@ -127,8 +135,8 @@ public class AdDto implements Serializable {
 	}
 	public AdDto(int id, int category, Date createTime, String title, Date departureTime, String startingPoint,
 			String destination, int numberOfPersons, Double locationFromLatitude, Double locationFromLongitude,
-			Double locationToLatitude, Double locationToLongitude, int googleMapLocation, int status, int userId,
-			UserDto user) {
+			Double locationToLatitude, Double locationToLongitude, int status, int userId, UserDto user, boolean from,
+			boolean to) {
 		super();
 		this.id = id;
 		this.category = category;
@@ -142,10 +150,11 @@ public class AdDto implements Serializable {
 		this.locationFromLongitude = locationFromLongitude;
 		this.locationToLatitude = locationToLatitude;
 		this.locationToLongitude = locationToLongitude;
-		this.googleMapLocation = googleMapLocation;
 		this.status = status;
 		this.userId = userId;
 		this.user = user;
+		this.from = from;
+		this.to = to;
 	}
 	@Override
 	public String toString() {
@@ -153,9 +162,10 @@ public class AdDto implements Serializable {
 				+ ", departureTime=" + departureTime + ", startingPoint=" + startingPoint + ", destination="
 				+ destination + ", numberOfPersons=" + numberOfPersons + ", locationFromLatitude="
 				+ locationFromLatitude + ", locationFromLongitude=" + locationFromLongitude + ", locationToLatitude="
-				+ locationToLatitude + ", locationToLongitude=" + locationToLongitude + ", googleMapLocation="
-				+ googleMapLocation + ", status=" + status + ", userId=" + userId + ", user=" + user + "]";
+				+ locationToLatitude + ", locationToLongitude=" + locationToLongitude + ", status=" + status
+				+ ", userId=" + userId + ", user=" + user + ", from=" + from + ", to=" + to + "]";
 	}
+	
 	
 	
 	
