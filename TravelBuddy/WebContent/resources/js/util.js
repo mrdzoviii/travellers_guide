@@ -24,12 +24,10 @@ function getWeather() {
 				document.getElementById("pressure").innerHTML = "Pressure: " + jsonObj.main.pressure + "mb";
 			}
 		};
-		//var city = document.getElementByClass('citySelector')[0].value;
-		var city = document.getElementById('destination').value;
+		var city = document.getElementById('destination_input').value;
 		var url="http://api.openweathermap.org/data/2.5/weather?q=" + city +"&units=metric&lang=en&APPID=c0da9ddb7d9cd1a5b9c619a22766fe4b"
 		req.open("GET",url , false);
 		req.send();
-		alert("city :"+city+req.responseText);
 		clear();
 		if(req.status !=200){
 			date.style.display="none";

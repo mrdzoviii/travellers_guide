@@ -22,6 +22,7 @@
 					<p:commandButton ajax="false" value="Ads" />
 				</p:toolbarGroup>
 				<p:toolbarGroup align="right">
+				<p:commandButton ajax="false" value="Post ad" action="/user/new_ad.xhtml?faces-redirect=true" styleClass="navbar-button" />
 				<p:commandButton ajax="false" value="My ads" action="/user/my_ads.xhtml?faces-redirect=true" styleClass="navbar-button" />
 				<p:commandButton ajax="false" value="Messages #{userBean.messages}"></p:commandButton>
 				<p:commandButton value="Logout #{userBean.user.username}" actionListener="#{userBean.logout}"/>

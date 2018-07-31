@@ -21,7 +21,6 @@ import org.primefaces.model.map.MapModel;
 import org.unibl.etf.travelbuddy.mysql.AdDao;
 import org.unibl.etf.travelbuddy.mysql.AdDto;
 
-
 @ManagedBean
 @SessionScoped
 public class AdUserBean implements Serializable {
@@ -29,8 +28,7 @@ public class AdUserBean implements Serializable {
 
 	private boolean from;
 	private boolean to;
-	
-	
+
 	public boolean isFrom() {
 		return from;
 	}
@@ -46,14 +44,14 @@ public class AdUserBean implements Serializable {
 	public void setTo(boolean to) {
 		this.to = to;
 	}
+
 	private AdDto ad;
 	private Date today;
 	private MapModel fromModel;
 	private MapModel toModel;
 	private String centerFromMap;
 	private String centerToMap;
-	
-	
+
 	public MapModel getFromModel() {
 		return fromModel;
 	}
@@ -104,10 +102,10 @@ public class AdUserBean implements Serializable {
 
 	public AdUserBean() {
 		super();
-		fromModel=new DefaultMapModel();
-		toModel=new DefaultMapModel();
-		centerFromMap="41.850033, -87.6500523";
-		centerToMap="41.850033, -87.6500523";
+		fromModel = new DefaultMapModel();
+		toModel = new DefaultMapModel();
+		centerFromMap = "41.850033, -87.6500523";
+		centerToMap = "41.850033, -87.6500523";
 		HttpServletRequest req = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext()
 				.getRequest();
 		String param = req.getParameter("adId");
@@ -133,19 +131,18 @@ public class AdUserBean implements Serializable {
 		} else {
 			ad = new AdDto();
 		}
-		today=new Date();
+		today = new Date();
 		UserBean bean = (UserBean) FacesContext.getCurrentInstance().getExternalContext().getSessionMap()
 				.get("userBean");
 		ad.setUser(bean.getUser());
 		ad.setUserId(bean.getUser().getId());
+		
 	}
 
 	@PostConstruct
 	public void init() {
 		
 	}
-	
-	
 
 	public void saveAd(ActionEvent event) {
 		/*
@@ -162,18 +159,24 @@ public class AdUserBean implements Serializable {
 		 * FacesContext.getCurrentInstance().addMessage(null, message); } else {
 		 */
 		ad.setStatus(1);
-		AdDao.insert(ad);
-		FacesMessage message = new FacesMessage("Successfull", "Ad successfully posted");
-		message.setSeverity(FacesMessage.SEVERITY_INFO);
-		PrimeFaces.current().ajax().addCallbackParam("saved", true);
-		System.out.println(ad);
-		FacesContext.getCurrentInstance().addMessage(null, message);
-        //}
+		if (AdDao.insert(ad)) {
+			FacesMessage message = new FacesMessage("Successfull", "Ad successfully posted");
+			message.setSeverity(FacesMessage.SEVERITY_INFO);
+			PrimeFaces.current().ajax().addCallbackParam("saved", true);
+			FacesContext.getCurrentInstance().addMessage(null, message);
+		} else {
+			FacesMessage message = new FacesMessage("Error", "Ad not posted");
+			message.setSeverity(FacesMessage.SEVERITY_ERROR);
+			FacesContext.getCurrentInstance().addMessage(null, message);
+		}
+		// }
 	}
+
 	public void clear() {
-		ad=new AdDto();
+		ad = new AdDto();
 		System.out.println("Clear form");
 	}
+
 	public void closeAd(ActionEvent event) {
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
 		AdDto ad = (AdDto) session.getAttribute("updateAd");
@@ -181,7 +184,7 @@ public class AdUserBean implements Serializable {
 		FacesContext.getCurrentInstance().getApplication().getNavigationHandler()
 				.handleNavigation(FacesContext.getCurrentInstance(), null, "user/my_ads.xhtml?faces-redirect=true");
 	}
-	
+
 	public void onPointSelectFrom(PointSelectEvent event) {
 		ad.setLocationFromLatitude(event.getLatLng().getLat());
 		ad.setLocationFromLongitude(event.getLatLng().getLng());
@@ -202,6 +205,10 @@ public class AdUserBean implements Serializable {
 	public void onGeocodeTo(GeocodeEvent event) {
 		ad.setLocationToLatitude(event.getResults().get(0).getLatLng().getLat());
 		ad.setLocationToLongitude(event.getResults().get(0).getLatLng().getLng());
+	}
+	
+	public List<String> complete(String query) {
+		return AdDao.getLocations(query);
 	}
 
 }

@@ -30,9 +30,6 @@
 					<p:ajax update="ads" process="search, need , offer"
 						listener="#{myAdsBean.filterAds}" />
 				</p:selectBooleanCheckbox>
-
-				<p:button style="float: right;" value="New ad"
-					outcome="/user/new_ad" />
 			</div>
 			<p:dataScroller id="ads" value="#{myAdsBean.ads}" var="ad"
 				chunkSize="10" mode="inline" scrollHeight="400">

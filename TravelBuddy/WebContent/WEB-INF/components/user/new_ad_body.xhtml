@@ -50,7 +50,7 @@
 		</h:form>
 		
 		<h:form id="post_form" prependId="false">
-		    <p:growl id="error" life="5800" showDetail="true" globalOnly="true"></p:growl>
+		    <p:growl id="error" sticky="true" showDetail="true" globalOnly="true"></p:growl>
 		   <p:panel header="Send new ad">
 			<h:panelGrid columns="3" cellpadding="5">
 				<p:outputLabel styleClass="output" for="title" 
@@ -88,15 +88,15 @@
 					required="true" requiredMessage="Number of persons required." min="1" />
 				<p:message styleClass="outputLabel" for="persons" display="text"></p:message>
 
-
+				
   				
 				
 				<p:outputLabel styleClass="output" for="starting_point"
 					value="Location from:" />
-				<p:inputText styleClass="input" id="starting_point"
-					value="#{adUserBean.ad.startingPoint}" required="true"
+				<p:autoComplete styleClass="input" id="starting_point" minQueryLength="3" queryDelay="100" queryEvent="keyup"
+					value="#{adUserBean.ad.startingPoint}" required="true" completeMethod="#{adUserBean.complete}"
 					requiredMessage="Location from required." label="starting_point">
-				</p:inputText>
+				</p:autoComplete>
 				<p:message styleClass="output" for="starting_point" display="text"></p:message>
 				
 				
@@ -117,10 +117,10 @@
 					
 				<p:outputLabel styleClass="output" for="destination"
 					value="Location to:"  />
-				<p:inputText widgetVar="location" styleClass="input citySelector" id="destination"
-					value="#{adUserBean.ad.destination}" required="true"
-					requiredMessage="Destination required." label="destination">
-				</p:inputText>
+				<p:autoComplete widgetVar="location" styleClass="input citySelector" id="destination"
+					value="#{adUserBean.ad.destination}" required="true" minQueryLength="3" queryDelay="100" queryEvent="keyup" completeMethod="#{adUserBean.complete}"
+					requiredMessage="Destination required." label="destination" >
+				</p:autoComplete>
 				<p:message styleClass="output" for="destination" display="text"></p:message>
 				
 				

@@ -12,6 +12,7 @@ public class AdBean {
 	private String text;
 	private String image;
 
+
 	public String getText() {
 		return text;
 	}
@@ -27,7 +28,8 @@ public class AdBean {
 	public void setImage(String image) {
 		this.image = image;
 	}
-
+	
+	
 	public AdBean(String text, String image) {
 		super();
 		this.text = text;

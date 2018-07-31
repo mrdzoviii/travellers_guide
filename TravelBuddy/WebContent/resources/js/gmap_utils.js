@@ -9,7 +9,7 @@ var markerFrom = null;
 			 	if (markerFrom != null){
 					markerFrom.setMap(null);
 			 	}
-			 	PF('mapFrom').geocode(document.getElementById('starting_point').value);
+			 	PF('mapFrom').geocode(document.getElementById('starting_point_input').value);
 		    }
 		function handlePointClickFrom(event) {
 			
@@ -37,7 +37,7 @@ var markerFrom = null;
 		 	if (markerTo != null){
 				markerTo.setMap(null);
 		 	}
-		 	PF('mapTo').geocode(document.getElementById('destination').value);
+		 	PF('mapTo').geocode(document.getElementById('destination_input').value);
 	    }
 	function handlePointClickTo(event) {
 		
