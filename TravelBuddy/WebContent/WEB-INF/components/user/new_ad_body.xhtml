@@ -5,92 +5,11 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 <h:head>
-	<title>Travel Buddy</title>
-	<h:outputStylesheet library="css" name="style.css"></h:outputStylesheet>
-	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAptQUSV5ER1TBvT5yBEQAH6QA2x6UBGs0"
- async='async' defer='defer'  />
-	<script type="text/javascript">
-	
-	function handleSaveRequest(xhr, status, args) {
-		if(args.saved) {
-			getWeather();
-			PF('forecast').show();
-		}
-	}
-	function getWeather() {
-		var req = new XMLHttpRequest();
-		var error=document.getElementById("error");
-		var date=document.getElementById("weather-table");
-		req.onreadystatechange = function () {
-			if(this.readyState == 4 &amp;&amp; this.status == 200) {
-				var jsonObj = JSON.parse(this.responseText);
-				document.getElementById("icon").src = "http://openweathermap.org/img/w/" + jsonObj.weather[0].icon + ".png";
-				document.getElementById("countryIcon").src = "https://www.countryflags.io/" + jsonObj.sys.country.toLowerCase() + "/flat/64.png";
-				document.getElementById("city").innerHTML = jsonObj.name + ", " + jsonObj.sys.country;
-				document.getElementById("weather").innerHTML = jsonObj.weather[0].description;
-				document.getElementById("temperature").innerHTML = jsonObj.main.temp + " °С"; 
-				document.getElementById("minMaxTemperature").innerHTML = "Min/max temperature:  [" + jsonObj.main.temp_min+ " / " + jsonObj.main.temp_max + "] °С";
-				document.getElementById("humidity").innerHTML = "Humidity: " + jsonObj.main.humidity + "%";
-				document.getElementById("pressure").innerHTML = "Pressure: " + jsonObj.main.pressure + "mb";
-			}
-		};
-		var city = document.getElementsByClassName("citySelector")[0].value;
-		var url="http://api.openweathermap.org/data/2.5/weather?q=Belgrade&amp;appid=c0da9ddb7d9cd1a5b9c619a22766fe4b&amp;units=metric";
-		var url2="http://api.openweathermap.org/data/2.5/weather?q=" + city +"&amp;units=metric&amp;lang=en&amp;APPID=c0da9ddb7d9cd1a5b9c619a22766fe4b"
-		req.open("GET",url2 , false);
-		req.send();
-		clear();
-		if(req.status !=200){
-			date.style.display="none";
-			error.style.display="block";
-		}else{
-			error.style.display="none";
-			date.style.display="block";
-		}
-		alert("city:"+city+"status:"+req.status+"response:"+req.responseText);
-	}
-	function initMap() {
-        var map = new google.maps.Map(document.getElementById('gmapFrom'), {
-          zoom: 8,
-          center: {lat: -34.397, lng: 150.644}
-        });
-        var geocoder = new google.maps.Geocoder();
-
-        /*document.getElementById('btn').addEventListener('click', function() {
-          geocodeAddress(geocoder, map);
-        });*/
-      }
-
-      function geocodeAddress(geocoder, resultsMap) {
-        var address = document.getElementById('address').value;
-        geocoder.geocode({'address': address}, function(results, status) {
-          if (status === 'OK') {
-            resultsMap.setCenter(results[0].geometry.location);
-            var marker = new google.maps.Marker({
-              map: resultsMap,
-              position: results[0].geometry.location
-            });
-          } else {
-            alert('Geocode was not successful for the following reason: ' + status);
-          }
-        });
-      }
-
-	 function geocode() {
-		
-        alert( PF('gfm').geocode(document.getElementById('starting_point').value));
-         var start=document.getElementById('starting_point').value;
-		 alert(start);
-        
-       }
-	function show(){
-		PF('gfd').show();
-		initMap();
-	}
-	</script>
 </h:head>
-
-<body style="padding: 0; margin: 0;">
+<ui:composition>
+	<h:outputStylesheet name="style.css" />
+	<h:outputScript name="js/util.js" />
+	<h:outputScript name="js/gmap_utils.js" />
 	<div>
 		<p:dialog styleClass="weather-modal-dialog" class="weather-modal-dialog" 
 			header="Weather forecast" widgetVar="forecast"
@@ -114,10 +33,25 @@
 							</p>
 				</div>
 		</p:dialog>
-		<div>
+		</div>
+	<div>
+		<h:form prependId="false">
+		<h:panelGrid id="fromHidden">
+			<h:inputHidden id="fromX" value="#{adUserBean.ad.locationFromLatitude}" />
+			<h:inputHidden id="fromY" value="#{adUserBean.ad.locationFromLongitude}" />
+		</h:panelGrid>
+		</h:form>
+		<h:form prependId="false">
+		<h:panelGrid id="toHidden">
+			<h:inputHidden id="toX" value="#{adUserBean.ad.locationToLatitude}" />
+			<h:inputHidden id="toY" value="#{advertBean.ad.locationToLongitude}" />
+		</h:panelGrid>
+		<h:inputHidden id="count" value="0" ></h:inputHidden>
+		</h:form>
+		
 		<h:form id="post_form" prependId="false">
 		    <p:growl id="error" life="5800" showDetail="true" globalOnly="true"></p:growl>
-		    <p:panel header="Send new ad">
+		   <p:panel header="Send new ad">
 			<h:panelGrid columns="3" cellpadding="5">
 				<p:outputLabel styleClass="output" for="title" 
 					value="Title:" />
@@ -138,21 +72,6 @@
 				</p:selectOneMenu>
 				<p:message styleClass="output" for="category" display="text"></p:message>
 
-				<p:outputLabel styleClass="output" for="starting_point"
-					value="Location from:" />
-				<p:inputText styleClass="input" id="starting_point"
-					value="#{adUserBean.ad.startingPoint}" required="true"
-					requiredMessage="Location from required." label="starting_point">
-				</p:inputText>
-				<p:message styleClass="output" for="starting_point" display="text"></p:message>	
-				<p:outputLabel styleClass="output" for="destination"
-					value="Location to:"  />
-				<p:inputText widgetVar="location" styleClass="input citySelector" id="destination"
-					value="#{adUserBean.ad.destination}" required="true"
-					requiredMessage="Destination required." label="destination">
-				</p:inputText>
-				<p:message styleClass="output" for="destination" display="text"></p:message>
-
 				<p:outputLabel styleClass="output" for="departure_time"
 					value="Departure time:" />
 				<p:calendar styleClass="input" id="departure_time"
@@ -168,6 +87,60 @@
 					value="#{adUserBean.ad.numberOfPersons}" label="persons"
 					required="true" requiredMessage="Number of persons required." min="1" />
 				<p:message styleClass="outputLabel" for="persons" display="text"></p:message>
+
+
+  				
+				
+				<p:outputLabel styleClass="output" for="starting_point"
+					value="Location from:" />
+				<p:inputText styleClass="input" id="starting_point"
+					value="#{adUserBean.ad.startingPoint}" required="true"
+					requiredMessage="Location from required." label="starting_point">
+				</p:inputText>
+				<p:message styleClass="output" for="starting_point" display="text"></p:message>
+				
+				
+				<p:commandButton value="Find on map" icon="ui-icon-search"
+					onclick="geocodeFrom()" type="button" />
+				<h:panelGrid id="mpFrom" onmouseover="initMe()" >
+				<p:gmap type="ROADMAP" styleClass="small-map" zoom="1"
+					center="41.43651688084061,-27.993164060000026"
+					onPointClick="handlePointClickFrom(event);" widgetVar="mapFrom">
+					<p:ajax event="geocode" listener="#{adUserBean.onGeocodeFrom}"
+						oncomplete="finishSearchFrom()" update="fromHidden" />
+					<p:ajax event="pointSelect"
+						listener="#{adUserBean.onPointSelectFrom}" update="fromHidden" />
+				</p:gmap>
+			</h:panelGrid>
+			<p:outputLabel value=""></p:outputLabel>
+				
+					
+				<p:outputLabel styleClass="output" for="destination"
+					value="Location to:"  />
+				<p:inputText widgetVar="location" styleClass="input citySelector" id="destination"
+					value="#{adUserBean.ad.destination}" required="true"
+					requiredMessage="Destination required." label="destination">
+				</p:inputText>
+				<p:message styleClass="output" for="destination" display="text"></p:message>
+				
+				
+
+				<p:commandButton value="Find on map" icon="ui-icon-search"
+					update="mpTo" onclick="geocodeTo()" type="button" />
+
+			<h:panelGrid id="mpTo" onmouseover="initMe()" >
+				<p:gmap type="ROADMAP" zoom="1" 
+					center="41.43651688084061,-27.993164060000026"
+					styleClass="small-map" onPointClick="handlePointClickTo(event);"
+					widgetVar="mapTo"> 
+					<p:ajax event="geocode" listener="#{adUserBean.onGeocodeTo}"
+						oncomplete="finishSearchTo()" update="toHidden" />
+					<p:ajax event="pointSelect"
+						listener="#{adUserBean.onPointSelectTo}" update="toHidden" />
+				</p:gmap>
+			</h:panelGrid>
+			<p:outputLabel value=""></p:outputLabel>
+				
 				<p:outputLabel styleClass="output" value=""></p:outputLabel>
 				<p:commandButton oncomplete="handleSaveRequest(xhr, status, args)"
 					id="post_button" styleClass="output" style="width: 100%;"
@@ -175,16 +148,14 @@
 					update="post_form"></p:commandButton>
 				<p:remoteCommand name="clear" actionListener="#{adUserBean.clear}" update="post_form" ></p:remoteCommand>
 				<p:outputLabel value=""></p:outputLabel>
-				<p:commandButton id="btn1" type="button" icon="ui-icon-pin-s" value="Show Map" onclick="PF('dlg').show();" />
-			<p:dialog id="gmapDialog" widgetVar="dlg" width="625" height="400" modal="true">
-    <p:gmap id="gmap" center="41.381542, 2.122893" zoom="15" type="HYBRID" style="width:100%;height:400px" />
-</p:dialog>
 			</h:panelGrid>
 			</p:panel>
 		</h:form>
 		</div>
-	</div>
-</body>
+		
+		
+	
+</ui:composition>
 
 </html>
 

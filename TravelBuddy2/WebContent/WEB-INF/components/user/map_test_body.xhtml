@@ -1,0 +1,34 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head></h:head>
+<body>
+<ui:composition>
+	<h:outputStylesheet name="style.css" />
+	<h:outputScript name="js/util.js" />
+	<h:outputScript name="js/gmap_utils.js" />
+	<h:form prependId="false">
+		<h:panelGrid id="fromHidden">
+			<h:inputHidden id="fromX"
+				value="#{adUserBean.ad.locationFromLatitude}" />
+			<h:inputHidden id="fromY"
+				value="#{adUserBean.ad.locationFromLongitude}" />
+		</h:panelGrid>
+		<p:gmap type="ROADMAP" styleClass="small-map" zoom="1"
+			center="41.43651688084061,-27.993164060000026"
+			onPointClick="handlePointClickFrom(event);" widgetVar="mapFrom">
+			<p:ajax event="geocode" listener="#{adUserBean.onGeocodeFrom}"
+				oncomplete="finishSearchFrom()" update="fromHidden" />
+			<p:ajax event="pointSelect"
+				listener="#{adUserBean.onPointSelectFrom}" update="fromHidden" />
+		</p:gmap>
+	</h:form>
+</ui:composition>
+</body>
+
+</html>
+
+

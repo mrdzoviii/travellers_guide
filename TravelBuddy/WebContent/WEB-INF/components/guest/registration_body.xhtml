@@ -4,13 +4,12 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
-<h:head>
-	<title>Travel Buddy</title>
-	<h:outputScript library="js" name="source.js"></h:outputScript>
-	<h:outputStylesheet library="css" name="style.css"></h:outputStylesheet>
+<h:head>	
 </h:head>
 
-<body>
+<ui:composition>
+	<h:outputScript  name="js/util.js"></h:outputScript>
+	<h:outputStylesheet  name="style.css"></h:outputStylesheet>
 	<h:form id="registration_form">
 	<p:growl id="error" life="1800" showDetail="true" globalOnly="true"></p:growl>
 	<p:panel header="Registration">
@@ -70,7 +69,7 @@
 	  </p:panel>
 	</h:form>
 	
-</body>
+</ui:composition>
 
 </html>
 

@@ -1,0 +1,159 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+</h:head>
+<ui:composition>
+	<h:outputStylesheet name="css/style.css" />
+	<h:outputScript name="js/util.js" />
+	<h:outputScript name="js/gmap_utils.js" />
+	<div>
+		<h:form prependId="false">
+		<h:panelGrid id="fromHidden">
+			<h:inputHidden id="fromX" value="#{adUserBean.ad.locationFromLatitude}" />
+			<h:inputHidden id="fromY" value="#{adUserBean.ad.locationFromLongitude}" />
+		</h:panelGrid>
+		</h:form>
+		<h:form prependId="false">
+		<h:panelGrid id="toHidden">
+			<h:inputHidden id="toX" value="#{adUserBean.ad.locationToLatitude}" />
+			<h:inputHidden id="toY" value="#{advertBean.ad.locationToLongitude}" />
+		</h:panelGrid>
+		<h:inputHidden id="count" value="0" ></h:inputHidden>
+		</h:form>
+		
+		<h:form id="post_form" prependId="false">
+		    <p:growl id="error" life="5800" showDetail="true" globalOnly="true"></p:growl>
+		   <p:panel header="Send new ad">
+			<h:panelGrid columns="3" cellpadding="5">
+				<p:outputLabel styleClass="output" for="title" 
+					value="Title:" />
+				<p:inputTextarea styleClass="input" id="title"
+					value="#{adUserBean.ad.title}" required="true"
+					requiredMessage="Title required." label="title" />
+				<p:message styleClass="output" for="title" display="text"></p:message>
+
+				<p:outputLabel styleClass="output" for="category"
+					value="Category: " />
+				<p:selectOneMenu styleClass="input" id="category"
+					value="#{adUserBean.ad.category}" required="true"
+					requiredMessage="Category required." label="category">
+					<f:selectItem itemLabel="Need" itemValue="1">
+					</f:selectItem>
+					<f:selectItem itemLabel="Offer" itemValue="0">
+					</f:selectItem>
+				</p:selectOneMenu>
+				<p:message styleClass="output" for="category" display="text"></p:message>
+
+				<p:outputLabel styleClass="output" for="departure_time"
+					value="Departure time:" />
+				<p:calendar styleClass="input" id="departure_time"
+					value="#{adUserBean.ad.departureTime}" required="true"
+					label="departure_time" navigator="true"
+					requiredMessage="Departure time required." yearRange="1900:2050"
+					pattern="dd/MM/yyyy HH:mm" mindate="#{adUserBean.today}" mask="true" />
+				<p:message styleClass="output" for="departure_time" display="text"></p:message>
+
+				<p:outputLabel styleClass="output" for="persons"
+					value="Number of persons:" />
+				<p:spinner id="persons"
+					value="#{adUserBean.ad.numberOfPersons}" label="persons"
+					required="true" requiredMessage="Number of persons required." min="1" />
+				<p:message styleClass="outputLabel" for="persons" display="text"></p:message>
+
+
+  				
+				
+				<p:outputLabel styleClass="output" for="starting_point"
+					value="Location from:" />
+				<p:inputText styleClass="input" id="starting_point"
+					value="#{adUserBean.ad.startingPoint}" required="true"
+					requiredMessage="Location from required." label="starting_point">
+				</p:inputText>
+				<p:message styleClass="output" for="starting_point" display="text"></p:message>
+				
+				<h:inputHidden />
+				<p:commandButton value="Find on map" icon="ui-icon-search"
+					onclick="geocodeFrom()" type="button" />
+				<h:panelGrid id="mpFrom" onmouseover="initMe()" >
+				<p:gmap type="ROADMAP" styleClass="small-map" zoom="1"
+					center="41.43651688084061,-27.993164060000026"
+					onPointClick="handlePointClickFrom(event);" widgetVar="mapFrom">
+					<p:ajax event="geocode" listener="#{adUserBean.onGeocodeFrom}"
+						oncomplete="finishSearchFrom()" update="fromHidden" />
+					<p:ajax event="pointSelect"
+						listener="#{adUserBean.onPointSelectFrom}" update="fromHidden" />
+				</p:gmap>
+			</h:panelGrid>
+				
+					
+				<p:outputLabel styleClass="output" for="destination"
+					value="Location to:"  />
+				<p:inputText widgetVar="location" styleClass="input citySelector" id="destination"
+					value="#{adUserBean.ad.destination}" required="true"
+					requiredMessage="Destination required." label="destination">
+				</p:inputText>
+				<p:message styleClass="output" for="destination" display="text"></p:message>
+				
+				<h:inputHidden />
+
+				<p:commandButton value="Find on map" icon="ui-icon-search"
+					update="mpTo" onclick="geocodeTo()" type="button" />
+
+			<h:panelGrid id="mpTo" onmouseover="initMe()" >
+				<p:gmap type="ROADMAP" zoom="1" 
+					center="41.43651688084061,-27.993164060000026"
+					styleClass="small-map" onPointClick="handlePointClickTo(event);"
+					widgetVar="mapTo"> 
+					<p:ajax event="geocode" listener="#{adUserBean.onGeocodeTo}"
+						oncomplete="finishSearchTo()" update="toHidden" />
+					<p:ajax event="pointSelect"
+						listener="#{adUserBean.onPointSelectTo}" update="toHidden" />
+				</p:gmap>
+			</h:panelGrid>
+				
+				<p:outputLabel styleClass="output" value=""></p:outputLabel>
+				<p:commandButton oncomplete="handleSaveRequest(xhr, status, args)"
+					id="post_button" styleClass="output" style="width: 100%;"
+					value="Send" actionListener="#{adUserBean.saveAd}"
+					update="post_form"></p:commandButton>
+				<p:remoteCommand name="clear" actionListener="#{adUserBean.clear}" update="post_form" ></p:remoteCommand>
+				<p:outputLabel value=""></p:outputLabel>
+			</h:panelGrid>
+			</p:panel>
+		</h:form>
+		</div>
+		
+		<div>
+		<p:dialog styleClass="weather-modal-dialog" class="weather-modal-dialog" 
+			header="Weather forecast" widgetVar="forecast"
+			footer="Powered by OpenWeatherAPI">
+			<div id="error">
+			<b> City not found.</b>
+			</div>
+			<div id="weather-table">
+							<b id="city"></b> 
+							<img id="countryIcon" src="" class="weather-img"></img>
+							<br/>
+							<b><i id="weather"></i></b>
+						     <img id="icon" src="" alt="error loading" class="weather-img" ></img>
+							<p>
+								<span id="temperature" class="weather-badge"></span><br/>
+								<span id="minMaxTemperature"></span>
+							</p>
+							<p id="humidity">
+							</p>
+							<p id="pressure">
+							</p>
+				</div>
+		</p:dialog>
+		</div>
+	
+</ui:composition>
+
+</html>
+
+

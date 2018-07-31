@@ -1,0 +1,230 @@
+.navbar-toolbar {
+	margin-top: 0px !important;
+}
+
+.header-name {
+	background-color: #424548 !important;
+	color: white;
+	width: 100%;
+	font-size: 40px !important;
+	font-style: oblique !important;
+	align-content: center;
+}
+
+.ui-toolbar {
+	border-style: none !important;
+}
+
+.footer-name {
+	background-color: #424548 !important;
+	color: white;
+	width: 100%;
+	font-size: 20px !important;
+	font-style: oblique !important;
+	align-content: center;
+}
+
+.ui-widget-header {
+	border-style: none;
+}
+
+.header {
+	height: 10px;
+	vertical-align: middle;
+	width: 100%;
+	background: #424548;
+}
+
+.footer {
+	height: 100px;
+	vertical-align: middle;
+	width: 100%;
+	background: #424548;
+	position: relative;
+	bottom: 0;
+}
+
+.navbar-button {
+	margin-bottom: 0px !important
+}
+
+.dashboard {
+	margin-left: 10%;
+	margin-right: 10%;
+	margin-top: 5%;
+}
+
+.div-ads {
+	margin-top: 10px;
+	width: 100%;
+}
+
+#ad-image {
+	display: block;
+	width: 100%;
+	height: 250px;
+}
+
+.ad-text {
+	display: block;
+	font-family: sans-serif;
+	margin-top: 10px;
+}
+
+.dashboard {
+	margin-left: 10%;
+	margin-right: 10%;
+	margin-top: 3%;
+}
+
+.dashboard-item {
+	display: block;
+	border: thin;
+	border-style: solid;
+	border-color: #424548;
+	margin-bottom: 30px;
+	overflow: hidden;
+	background-color: white;
+}
+
+.title {
+	display: block;
+	padding: 10px;
+	background-color: #424548;
+	color: white;
+	font-family: sans-serif;
+	font-size: 16pt;
+}
+
+a {
+	float: left;
+}
+
+img {
+	width: 300px;
+}
+
+.description {
+	min-height: 40px;
+}
+
+body {
+	background-color: #ecebeb;
+	padding: 0px;
+	margin: 0px;
+}
+
+.feed {
+	font-weight: bold;
+	display: block;
+}
+
+.output {
+	font-family: sans-serif;
+}
+
+.input {
+	font-family: sans-serif;
+	text-decoration: none;
+	font-weight: normal;
+	width: -webkit-fill-available;
+}
+
+.input>input {
+	font-family: sans-serif;
+	font-weight: normal;
+}
+
+.registration-button {
+	width: 100%;
+}
+
+.offer-title {
+	width: 100%;
+	background-color: #F9B569;
+	color: white;
+	border: 1px solid;
+	border-color: orange;
+	border-radius: 4px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+.need-title {
+	width: 100%;
+	background-color: #38C28C;
+	color: white;
+	border: 1px solid;
+	border-color: green;
+	border-radius: 4px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+.filter-area {
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+.search-input {
+	margin-right: 10px;
+	width: 400px;
+	font-size: medium;
+}
+
+.md {
+	margin-left: 10px;
+	margin-right: 10px;
+}
+
+.ad-font{
+	font-weight: bold;
+}
+.weather-modal-dialog {
+	resize: none;
+}
+
+.ui-dialog-footer.ui-widget-content {
+	font-size: 10px;
+}
+.weather-badge {
+    display: inline-block;
+    min-width: 10px;
+    padding: 3px 7px;
+    font-size: 12px;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1;
+    vertical-align: baseline;
+    white-space: nowrap;
+    text-align: center;
+    background-color: #999;
+    border-radius: 10px;
+}
+
+.weather-table {
+	display: table;
+}
+.weather-table>tbody>tr>td:first-of-type {
+	width: 100px;
+}
+.weather-img{
+	width:30px !important;
+}
+.right-align{
+	text-align:right;
+	position: relative;
+}
+.fifty-percent{
+	width: 50%;
+}
+.small-map{
+	width:300px;
+	height:150px;
+	border-style: solid;
+}
+
+.big-map{
+	width:600px;
+	height:300px;
+}

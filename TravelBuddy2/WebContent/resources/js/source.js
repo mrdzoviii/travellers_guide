@@ -10,7 +10,7 @@ function handleSaveRequest(xhr, status, args) {
 function getWeather() {
 	var req = new XMLHttpRequest();
 	req.onreadystatechange = function () {
-		if(this.readyState == 4 &amp;&amp; this.status == 200) {
+		if(this.readyState == 4 && this.status == 200) {
 			var jsonObj = JSON.parse(this.responseText);
 			document.getElementById("icon").src = "http://openweathermap.org/img/w/" + jsonObj.weather[0].icon + ".png";
 			document.getElementById("countryIcon").src = "http://openweathermap.org/images/flags/" + jsonObj.sys.country.toLowerCase() + ".png";

@@ -211,3 +211,20 @@ body {
 .weather-img{
 	width:30px !important;
 }
+.right-align{
+	text-align:right;
+	position: relative;
+}
+.fifty-percent{
+	width: 50%;
+}
+.small-map{
+	width:300px;
+	height:150px;
+	border-style: solid;
+}
+
+.big-map{
+	width:600px;
+	height:300px;
+}

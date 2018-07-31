@@ -5,9 +5,9 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 <h:head>
-<h:outputStylesheet library="css" name="style.css"></h:outputStylesheet>
 </h:head>
-	<body>
+	<ui:composition>
+	<h:outputStylesheet name="style.css"></h:outputStylesheet>
 		<div class="dashboard"  >
 		<p:feedReader value="http://www.faroo.com/api?q=travel&amp;l=en&amp;src=news&amp;f=rss" var="feed">
 			<div class="dashboard-item">
@@ -20,7 +20,7 @@
 			</div>
 		</p:feedReader>
 		</div>
-	</body>
+	</ui:composition>
 </html>
 
 

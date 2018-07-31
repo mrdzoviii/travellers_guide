@@ -7,31 +7,45 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.primefaces.PrimeFaces;
-import org.primefaces.context.RequestContext;
 import org.primefaces.event.map.GeocodeEvent;
+import org.primefaces.event.map.PointSelectEvent;
 import org.primefaces.model.map.DefaultMapModel;
-import org.primefaces.model.map.GeocodeResult;
-import org.primefaces.model.map.LatLng;
 import org.primefaces.model.map.MapModel;
-import org.primefaces.model.map.Marker;
-import org.unibl.etf.travelbuddy.model.Weather;
 import org.unibl.etf.travelbuddy.mysql.AdDao;
 import org.unibl.etf.travelbuddy.mysql.AdDto;
-import org.unibl.etf.travelbuddy.util.ServiceUtility;
+
 
 @ManagedBean
-@RequestScoped
+@SessionScoped
 public class AdUserBean implements Serializable {
 	private static final long serialVersionUID = 9034206682795507344L;
 
+	private boolean from;
+	private boolean to;
+	
+	
+	public boolean isFrom() {
+		return from;
+	}
+
+	public void setFrom(boolean from) {
+		this.from = from;
+	}
+
+	public boolean isTo() {
+		return to;
+	}
+
+	public void setTo(boolean to) {
+		this.to = to;
+	}
 	private AdDto ad;
 	private Date today;
 	private MapModel fromModel;
@@ -131,18 +145,7 @@ public class AdUserBean implements Serializable {
 		
 	}
 	
-	public void onGeocodeFrom(GeocodeEvent event) {
-		List<GeocodeResult> results=event.getResults();
-		if(results!=null && !results.isEmpty()) {
-			LatLng center=results.get(0).getLatLng();
-			centerFromMap=center.getLat()+","+center.getLng();
-			for(int i=0;i<results.size();i++) {
-				GeocodeResult result=results.get(i);
-				fromModel.addOverlay(new Marker(result.getLatLng(),result.getAddress()));
-			}
-		}
-		System.out.println("Geocode from");
-	}
+	
 
 	public void saveAd(ActionEvent event) {
 		/*
@@ -165,10 +168,11 @@ public class AdUserBean implements Serializable {
 		PrimeFaces.current().ajax().addCallbackParam("saved", true);
 		System.out.println(ad);
 		FacesContext.getCurrentInstance().addMessage(null, message);
-		// }
+        //}
 	}
 	public void clear() {
 		ad=new AdDto();
+		System.out.println("Clear form");
 	}
 	public void closeAd(ActionEvent event) {
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
@@ -176,6 +180,28 @@ public class AdUserBean implements Serializable {
 		AdDao.updateStatus(ad.getId(), 2);
 		FacesContext.getCurrentInstance().getApplication().getNavigationHandler()
 				.handleNavigation(FacesContext.getCurrentInstance(), null, "user/my_ads.xhtml?faces-redirect=true");
+	}
+	
+	public void onPointSelectFrom(PointSelectEvent event) {
+		ad.setLocationFromLatitude(event.getLatLng().getLat());
+		ad.setLocationFromLongitude(event.getLatLng().getLng());
+	}
+
+	public void onGeocodeFrom(GeocodeEvent event) {
+		ad.setLocationFromLatitude(event.getResults().get(0).getLatLng().getLat());
+		ad.setLocationFromLongitude(event.getResults().get(0).getLatLng().getLng());
+
+	}
+
+	public void onPointSelectTo(PointSelectEvent event) {
+		ad.setLocationToLatitude(event.getLatLng().getLat());
+		ad.setLocationToLongitude(event.getLatLng().getLng());
+
+	}
+
+	public void onGeocodeTo(GeocodeEvent event) {
+		ad.setLocationToLatitude(event.getResults().get(0).getLatLng().getLat());
+		ad.setLocationToLongitude(event.getResults().get(0).getLatLng().getLng());
 	}
 
 }

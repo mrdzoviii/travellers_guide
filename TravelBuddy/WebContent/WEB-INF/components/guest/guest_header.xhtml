@@ -4,29 +4,12 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
-<h:head>
-    <title>Travel Buddy</title>
-	<h:outputScript library="js" name="source.js"></h:outputScript>
-	<script type="text/javascript">
-	function showLogin(){
-		PF('loginVar').show();
-	}
-
-	function handleLoginRequest(xhr, status, args) {
-		if (args.validationFailed || !args.loggedIn) {
-			PF('loginVar').jq.effect("shake", {
-				times : 5
-			}, 100);
-		} else {
-			PF('loginVar').hide();
-		}
-	}
-	</script>
-	<h:outputStylesheet library="css" name="style.css"></h:outputStylesheet>
-	<h:outputScript library="js" name="source.js"/>
+<h:head>	
 </h:head>
 
-<body style="padding: 0; margin: 0;">
+<ui:composition>
+	<h:outputScript name="js/util.js"></h:outputScript>
+	<h:outputStylesheet name="style.css"/>
  <div>
  <div class="header" align="center">
  <p:outputLabel styleClass="header-name">Travel Buddy - Welcome</p:outputLabel>
@@ -69,7 +52,7 @@
 	</h:form>
 	</div>
 	
-</body>
+</ui:composition>
 
 </html>
 

@@ -4,13 +4,11 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
-<h:head>
-	<title>Travel Buddy</title>
-	<h:outputScript library="js" name="source.js"></h:outputScript>
-	<h:outputStylesheet library="css" name="style.css"></h:outputStylesheet>
+<h:head>	
 </h:head>
-
-<body style="padding: 0; margin: 0;">
+<body>
+<ui:composition>
+  	<h:outputStylesheet name="style.css"></h:outputStylesheet>
 	<div>
 		<div class="header" align="center">
 			<p:outputLabel styleClass="header-name">Travel Buddy - Welcome</p:outputLabel>
@@ -32,8 +30,8 @@
 		<p:sticky target="navbar"></p:sticky>
 		</h:form>
 	</div>
+</ui:composition>
 </body>
-
 </html>
 
 

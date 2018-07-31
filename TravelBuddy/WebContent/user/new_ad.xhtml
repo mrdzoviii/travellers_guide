@@ -6,13 +6,11 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
 <h:head>
-	<title>Travel Buddy</title>
-	<h:outputStylesheet name="css/style.css"/>
-	<h:outputScript library="js" name="source.js"></h:outputScript>
 </h:head>
-<h:body>
+<body>
 
 <ui:composition template="/WEB-INF/templates/template.xhtml">
+		
 		<ui:define name="header">
 			<ui:include src="/WEB-INF/components/user/user_header.xhtml" />
 		</ui:define>
@@ -34,10 +32,15 @@
 		</ui:define>
 		
 		<ui:define name="footer">
+			<div class="dashboard" align="center">
+				<ui:include src="/WEB-INF/components/footer.xhtml" />
+			</div>
 		</ui:define>
 		
 </ui:composition>
 	
-
-</h:body>
+<script async='async' defer='defer'
+		src="//maps.googleapis.com/maps/api/js?key=AIzaSyAptQUSV5ER1TBvT5yBEQAH6QA2x6UBGs0"
+		type="text/javascript"></script>
+</body>
 </html>

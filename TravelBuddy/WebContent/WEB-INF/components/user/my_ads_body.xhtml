@@ -4,12 +4,10 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
-<h:head>
-	<title>Travel Buddy</title>
-	<h:outputStylesheet library="css" name="style.css"></h:outputStylesheet>
-</h:head>
+<h:head></h:head>
 
-<body style="padding: 0; margin: 0;">
+<ui:composition>
+<h:outputStylesheet  name="style.css"></h:outputStylesheet>
 	<div class="dashboard">
 		<h:form>
 			<div class="filter-area">
@@ -89,7 +87,7 @@
 			</p:dataScroller>
 		</h:form>
 	</div>
-</body>
+</ui:composition>
 
 </html>
 

@@ -33,7 +33,7 @@ public class AdDao {
 	private static final String SQL_SELECT_BY_USER_ID = "SELECT * FROM advertisement WHERE user_id=? and status=1";
 	private static final String SQL_SELECT_BY_ID = "SELECT * FROM advertisement WHERE id=? and status=1";
 	private static final String SQL_DELETE = "UPDATE advertisement SET status=0 WHERE id=?";
-	private static final String SQL_INSERT = "INSERT INTO advertisement VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+	private static final String SQL_INSERT = "INSERT INTO advertisement VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	private static final String SQL_UPDATE = "UPDATE advertisement SET title=?, departure_time=?, starting_point=?, category=?, destination=?, number_of_persons=? ,google_map_starting_point=?, google_map_destination=?, google_map_location=?  WHERE id=?";
 	private static final String SQL_UPDATE_STATUS = "UPDATE advertisement SET status=? WHERE id=?";
 	private static final String SQL_SELECT_DISTINCT = "SELECT DISTINCT a.* FROM advertisement a INNER JOIN content_report c on a.id=c.advertisment_id WHERE a.status=1 AND c.status=1";
@@ -103,8 +103,8 @@ public class AdDao {
 					ad.getNumberOfPersons(),
 					ad.getLocationFromLatitude(),
 					ad.getLocationFromLongitude(),
-					ad.getLocationToLatitude(),
 					ad.getLocationToLongitude(),
+					ad.getLocationToLatitude(),
 					ad.getGoogleMapLocation(),
 					ad.getStatus(),
 					ad.getUserId()
