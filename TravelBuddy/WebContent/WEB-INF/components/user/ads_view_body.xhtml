@@ -11,28 +11,43 @@
 <h:outputScript name="js/gmap_utils.js" />
 	<div class="dashboard">
 		<h:form>
-			<div class="filter-area">
-				<p:inputText id="search" placeholder="Search"
-					styleClass="search-input" value="#{myAdsBean.query}">
-					<p:ajax event="keyup" process="search, need, offer" update="ads"
-						listener="#{myAdsBean.filterAds}" />
-				</p:inputText>
-
+			<p:remoteCommand name="filter" update="ads" actionListener="#{adViewBean.filterAds}"></p:remoteCommand>
+			<p:panel header="Filter" styleClass="datascroller">
+			<div class="filter-area" style="border-style:none;">
+			<p:panelGrid columns="4" cellpadding="5" style="width:100%;">
+				<p:outputLabel value="Location from:"></p:outputLabel>
+				<p:autoComplete id="from" placeholder="From" minQueryLength="3" queryDelay="100" queryEvent="keyup" completeMethod="#{adViewBean.complete}"
+					styleClass="input" value="#{adViewBean.from}" onkeyup="filter()">
+				</p:autoComplete>
+				<p:outputLabel value="Location to:"></p:outputLabel>
+				<p:autoComplete id="to" placeholder="To" minQueryLength="3" queryDelay="100" queryEvent="keyup" completeMethod="#{adViewBean.complete}"
+					styleClass="input" value="#{adViewBean.to}" onkeyup="filter()">
+				</p:autoComplete>
+				<p:outputLabel for="@next" value="Time from:"></p:outputLabel>
+				<p:calendar styleClass="input" id="time_from"
+					value="#{adViewBean.timeFrom}" navigator="true" 
+					requiredMessage="Departure time required." yearRange="1900:2050"
+					pattern="dd/MM/yyyy HH:mm" mask="true"  onselect="filter()">
+					</p:calendar>
+					<p:outputLabel for="@next" value="Time from:"></p:outputLabel>
+				<p:calendar styleClass="input" id="time_to"
+					value="#{adViewBean.timeTo}"
+					label="departure_time" navigator="true"  yearRange="1900:2050"
+					pattern="dd/MM/yyyy HH:mm" mask="true" onselect="filter()">
+					</p:calendar>
 				<p:outputLabel for="@next" value="Need" styleClass="md"></p:outputLabel>
 				<p:selectBooleanCheckbox styleClass="md" id="need"
-					value="#{myAdsBean.need}">
-					<p:ajax update="ads" process="search, need, offer"
-						listener="#{myAdsBean.filterAds}" />
+					value="#{adViewBean.need}" onchange="filter()">
 				</p:selectBooleanCheckbox>
 
 				<p:outputLabel style="margin-left: 10px;" for="@next" value="Offer" styleClass="md"></p:outputLabel>
 				<p:selectBooleanCheckbox styleClass="md" id="offer"
-					value="#{myAdsBean.offer}">
-					<p:ajax update="ads" process="search, need , offer"
-						listener="#{myAdsBean.filterAds}" />
+					value="#{adViewBean.offer}" onchange="filter()">
 				</p:selectBooleanCheckbox>
+				</p:panelGrid>
 			</div>
-			<p:dataScroller id="ads" value="#{myAdsBean.ads}" var="ad"
+			</p:panel>
+			<p:dataScroller id="ads" value="#{adViewBean.ads}" var="ad"
 				chunkSize="10" styleClass="datascroller">
 				<f:facet name="header">Scroll for more ads</f:facet>
 				<h:panelGrid columns="1" style="width:100%;">
@@ -41,10 +56,10 @@
 							align="center">
 							<p:outputLabel value="#{ad.category == 0? 'Offer:' : 'Need:'}" style="font-weight:bold;float:left"></p:outputLabel>
 							<h:outputText value="#{ad.title}" styleClass="ad-font" style="float:left" />
-							<p:commandButton style="float: right;margin-right:5px;margin-top:-3px;"
-						  value="Update" action="/user/update_ad.xhtml?faces-redirect=true" ajax="false">
+						<p:commandButton style="float: right;margin-right:5px;margin-top:-3px;" rendered="#{ad.from or ad.to}"
+						  value="Show more" action="/user/ad_detail.xhtml?faces-redirect=true" ajax="false">
 							<f:setPropertyActionListener value="#{ad}"
-							target="#{adUserBean.ad}" />
+							target="#{adViewBean.selectedAd}" />
 						</p:commandButton>
 						</div>
 
@@ -54,11 +69,9 @@
 								<f:convertDateTime type="date" pattern="dd/MM/yyyy HH:mm"
 									timeZone="Europe/Berlin" />
 							</h:outputText>
-							<h:outputText value="Start:" />
-							<h:outputText value="#{ad.departureTime}" styleClass="ad-font">
-								<f:convertDateTime type="date" pattern="dd/MM/yyyy HH:mm"
-									timeZone="Europe/Berlin" />
-							</h:outputText>
+							<h:outputText value="Created by:" />
+							<h:outputText value="#{ad.user.username}" styleClass="ad-font" />
+							
 							<h:outputText value="Location from:" />
 							<h:outputText value="#{ad.startingPoint}" styleClass="ad-font" />
 							
@@ -68,17 +81,14 @@
 							
 							<h:outputText value="Seats left:" />
 							<h:outputText value="#{ad.numberOfPersons}" styleClass="ad-font" />
-							<h:outputText value="" />
-							<h:outputText value="" />
+							<h:outputText value="Start:" />
+							<h:outputText value="#{ad.departureTime}" styleClass="ad-font">
+								<f:convertDateTime type="date" pattern="dd/MM/yyyy HH:mm"
+									timeZone="Europe/Berlin" />
+							</h:outputText>
 							
-							<h:outputText value="Map from:" rendered="#{ad.from}"></h:outputText>
-							<p:gmap type="ROADMAP" styleClass="small-map" zoom="4"
-								center="#{ad.centerFrom}" rendered="#{ad.from}" model="#{ad.mapFrom}" navigationControl="false" disableDoubleClickZoom="true">
-							</p:gmap>
-							<h:outputText value="Map to:" rendered="#{ad.to}"></h:outputText>
-							<p:gmap type="ROADMAP" styleClass="small-map" zoom="4"
-							 	center="#{ad.centerTo}" rendered="#{ad.to}" model="#{ad.mapTo}" navigationControl="false" disableDoubleClickZoom="true" >
-							</p:gmap>
+							
+							
 							
 
 						</h:panelGrid>

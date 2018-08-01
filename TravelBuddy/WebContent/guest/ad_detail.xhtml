@@ -4,9 +4,6 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
-<f:metadata>
-	<f:viewAction action="#{adViewBean.onLoad}"></f:viewAction>
-</f:metadata>
 <h:head>
 
 	<title>Travel Buddy</title>
@@ -15,7 +12,7 @@
 
 <ui:composition template="/WEB-INF/templates/template.xhtml">
 		<ui:define name="header">
-			<ui:include src="/WEB-INF/components/user/user_header.xhtml" />
+			<ui:include src="/WEB-INF/components/guest/guest_header.xhtml" />
 		</ui:define>
 		
 		<ui:define name="ads">
@@ -30,7 +27,7 @@
 		
 		<ui:define name="body">
 			<div class="dashboard" align="center">
-				<ui:include src="/WEB-INF/components/user/ads_view_body.xhtml" />
+				<ui:include src="/WEB-INF/components/user/ad_detail_body.xhtml" />
 			</div>
 		</ui:define>
 		

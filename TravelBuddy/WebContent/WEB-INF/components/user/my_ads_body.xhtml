@@ -41,6 +41,11 @@
 							align="center">
 							<p:outputLabel value="#{ad.category == 0? 'Offer:' : 'Need:'}" style="font-weight:bold;float:left"></p:outputLabel>
 							<h:outputText value="#{ad.title}" styleClass="ad-font" style="float:left" />
+							<p:commandButton style="float: right;margin-right:5px;margin-top:-3px;" rendered="#{ad.from or ad.to}"
+						  value="Show more" action="/user/ad_detail.xhtml?faces-redirect=true" ajax="false">
+						  <f:setPropertyActionListener value="#{ad}"
+							target="#{adUserBean.ad}" />
+						</p:commandButton>
 							<p:commandButton style="float: right;margin-right:5px;margin-top:-3px;"
 						  value="Update" action="/user/update_ad.xhtml?faces-redirect=true" ajax="false">
 							<f:setPropertyActionListener value="#{ad}"
@@ -71,14 +76,7 @@
 							<h:outputText value="" />
 							<h:outputText value="" />
 							
-							<h:outputText value="Map from:" rendered="#{ad.from}"></h:outputText>
-							<p:gmap type="ROADMAP" styleClass="small-map" zoom="4"
-								center="#{ad.centerFrom}" rendered="#{ad.from}" model="#{ad.mapFrom}" navigationControl="false" disableDoubleClickZoom="true">
-							</p:gmap>
-							<h:outputText value="Map to:" rendered="#{ad.to}"></h:outputText>
-							<p:gmap type="ROADMAP" styleClass="small-map" zoom="4"
-							 	center="#{ad.centerTo}" rendered="#{ad.to}" model="#{ad.mapTo}" navigationControl="false" disableDoubleClickZoom="true" >
-							</p:gmap>
+							
 							
 
 						</h:panelGrid>

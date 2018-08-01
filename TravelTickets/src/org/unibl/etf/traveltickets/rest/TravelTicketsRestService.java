@@ -22,7 +22,7 @@ public class TravelTicketsRestService {
 	@Path("/tickets")
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getTickets() {
+	public synchronized Response getTickets() {
 		JSONArray array=new JSONArray();
 		List<Ticket> tickets=ServiceUtility.getAllTickets();
 		for(Ticket t:tickets) {
@@ -34,7 +34,7 @@ public class TravelTicketsRestService {
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response buyTicket(Request request) {
+	public synchronized Response buyTicket(Request request) {
 		return Response.ok(ServiceUtility.buyTicket(request.getName(), request.getSurname(), request.getMail(), 
 				request.getDate(), request.getDestination(),request.getTransportType()).toString()).build();
 	}

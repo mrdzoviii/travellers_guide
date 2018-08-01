@@ -13,11 +13,26 @@ import java.util.ResourceBundle;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 import org.unibl.etf.travelbuddy.bean.AdBean;
-import org.unibl.etf.travelbuddy.model.Weather;
+import org.unibl.etf.travelbuddy.model.Ticket;
+
 
 public class ServiceUtility {
+	private static final List<String> ticketLocations=new ArrayList<>();
+	private static synchronized void addCity(String city) {
+		if(!ticketLocations.contains(city)) {
+			ticketLocations.add(city);
+		}
+	}
+	public static synchronized List<String> filterCities(String filter){
+		List<String> cities=new ArrayList<>();
+		for(String str:ticketLocations) {
+			if(str.toLowerCase().contains(filter)) {
+				cities.add(str);
+			}
+		}
+		return cities;
+	}
 	public static final Random rand=new Random();
 	public static final ResourceBundle bundle=ResourceBundle.getBundle("org.unibl.etf.travelbuddy.config.TravelBuddyConfig");
 	public static List<AdBean> getAds() {
@@ -50,41 +65,38 @@ public class ServiceUtility {
 		}
 		return ads;	
 		}
-	public static AdBean getRandomAd() {
+	public static  AdBean getRandomAd() {
 		List<AdBean> ads=getAds();
 		if(ads.size()>0) {
 		return ads.get(rand.nextInt(ads.size()));
 		}
 		return null;
 	}
-	
-	public static Weather getWeather(String location) {
+	public static synchronized List<Ticket> getTickets() {
+		List<Ticket> temp = new ArrayList<>();
 		try {
-			URL url = new URL(bundle.getString("openWeatherApi.head")+location+bundle.getString("openWeatherApi.tail"));
+			URL url = new URL(bundle.getString("travelTickets.rest.tickets"));
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			conn.setRequestMethod("GET");
 			conn.setDoInput(true);
 			conn.setRequestProperty("Accept", "application/json");
+			
+			
 			if(conn.getResponseCode() == HttpURLConnection.HTTP_OK) {
 				
 				BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 				String input;
-				StringBuffer buffer=new StringBuffer();
+				String buf = "";
 				while ((input = reader.readLine()) != null) {
-					buffer.append(input);
+					buf += input;
 				}
-				JSONObject json=new JSONObject(buffer.toString());
-				JSONObject main=json.getJSONObject("main");
-				int temp = main.getInt("temp");
-				int pressure = main.getInt("pressure");
-				int humidity = main.getInt("humidity");
-				int tempMin = main.getInt("temp_min");
-				int tempMax = main.getInt("temp_max");
-				JSONObject wind = json.getJSONObject("wind");
-				double windSpeed = wind.getDouble("speed");
-				
-				return new Weather(temp, pressure, humidity, tempMin, tempMax, windSpeed);
-				
+				JSONArray array = new JSONArray(buf);
+				for(int i=0; i<array.length(); i++) {
+					temp.add(new Ticket(array.getJSONObject(i).getString("destination"), 
+							array.getJSONObject(i).getString("transportType"),
+							array.getJSONObject(i).getString("price")));
+					addCity(array.getJSONObject(i).getString("destination"));
+				}
 			}
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
@@ -93,9 +105,9 @@ public class ServiceUtility {
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-	
-		
-		return null;
+		return temp;
 	}
+	
+	
 }
 	

@@ -1,0 +1,77 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head></h:head>
+
+<ui:composition>
+	<h:outputStylesheet name="style.css"></h:outputStylesheet>
+	<h:outputScript name="js/gmap_utils.js" />
+	<div>
+		<p:outputPanel>
+			<div
+				class="#{adViewBean.selectedAd.category == 0 ? 'offer-title' : 'need-title'}"
+				align="center">
+				<p:outputLabel
+					value="#{adViewBean.selectedAd.category == 0? 'Offer:' : 'Need:'}"
+					style="font-weight:bold;float:left"></p:outputLabel>
+				<h:outputText value="#{adViewBean.selectedAd.title}"
+					styleClass="ad-font" style="float:left" />
+			</div>
+
+			<h:panelGrid columns="4" cellpadding="5">
+				<h:outputText value="Created:" />
+				<h:outputText value="#{adViewBean.selectedAd.createTime}"
+					styleClass="ad-font">
+					<f:convertDateTime type="date" pattern="dd/MM/yyyy HH:mm"
+						timeZone="Europe/Berlin" />
+				</h:outputText>
+				<h:outputText value="Start:" />
+				<h:outputText value="#{adViewBean.selectedAd.departureTime}"
+					styleClass="ad-font">
+					<f:convertDateTime type="date" pattern="dd/MM/yyyy HH:mm"
+						timeZone="Europe/Berlin" />
+				</h:outputText>
+				<h:outputText value="Location from:" />
+				<h:outputText value="#{adViewBean.selectedAd.startingPoint}"
+					styleClass="ad-font" />
+
+				<h:outputText value="Location to:" />
+				<h:outputText value="#{adViewBean.selectedAd.destination}"
+					styleClass="ad-font" />
+
+
+				<h:outputText value="Seats left:" />
+				<h:outputText value="#{adViewBean.selectedAd.numberOfPersons}"
+					styleClass="ad-font" />
+				<h:outputText value="Created by:" />
+				<h:outputText value="#{adViewBean.selectedAd.user.username}"
+					styleClass="ad-font" />
+
+				<h:outputText value="Map from:"
+					rendered="#{adViewBean.selectedAd.from}"></h:outputText>
+				<p:gmap type="ROADMAP" styleClass="small-map" zoom="4"
+					center="#{adViewBean.selectedAd.centerFrom}"
+					rendered="#{adViewBean.selectedAd.from}"
+					model="#{adViewBean.selectedAd.mapFrom}" navigationControl="false"
+					disableDoubleClickZoom="true">
+				</p:gmap>
+				<h:outputText value="Map to:" rendered="#{adViewBean.selectedAd.to}"></h:outputText>
+				<p:gmap type="ROADMAP" styleClass="small-map" zoom="4"
+					center="#{adViewBean.selectedAd.centerTo}"
+					rendered="#{adViewBean.selectedAd.to}"
+					model="#{adViewBean.selectedAd.mapTo}" navigationControl="false"
+					disableDoubleClickZoom="true">
+				</p:gmap>
+
+
+			</h:panelGrid>
+		</p:outputPanel>
+	</div>
+</ui:composition>
+
+</html>
+
+

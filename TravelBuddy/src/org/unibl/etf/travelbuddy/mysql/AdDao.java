@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.unibl.etf.travelbuddy.util.ConnectionPool;
@@ -31,6 +32,7 @@ public class AdDao {
 
 	private static final String SQL_SELECT_ALL = "SELECT * FROM advertisement WHERE status=1";
 	private static final String SQL_SELECT_STATUS = "SELECT * FROM advertisement WHERE status=?";
+	private static final String SQL_FILTER="SELECT * FROM advertisement WHERE status=1 AND departure_time between ? and ? and lower(starting_point) LIKE ? and lower(destination) LIKE ?";
 	private static final String SQL_SELECT_BY_USER_ID = "SELECT * FROM advertisement WHERE user_id=? and status=1";
 	private static final String SQL_SELECT_BY_ID = "SELECT * FROM advertisement WHERE id=? and status=1";
 	private static final String SQL_DELETE = "UPDATE advertisement SET status=0 WHERE id=?";
@@ -148,6 +150,40 @@ public class AdDao {
 		} finally {
 			ConnectionPool.close(ps);
 			ConnectionPool.getInstance().checkIn(c);
+		}
+		return result;
+	}
+	
+	public static List<AdDto> filterAds(Date timeFrom,Date timeTo,String from,String to) {
+		PreparedStatement ps = null;
+		Connection c = null;
+		List<AdDto> result = new ArrayList<>();
+		ResultSet rs = null;
+		try {
+			c = ConnectionPool.getInstance().checkOut();
+			Object pom[] = { timeFrom,timeTo,from,to };
+			ps = ConnectionPool.prepareStatement(c, SQL_FILTER, false, pom);
+			
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				AdDto advertisment = new AdDto(rs.getInt(ID), rs.getInt(CATEGORY), rs.getTimestamp(CREATE_TIME),
+						rs.getString(TITLE), rs.getTimestamp(DEPARTURE_TIME), rs.getString(STARTING_POINT),
+						rs.getString(DESTINATION), rs.getInt(NUMBER_OF_PERSONS), rs.getDouble(LOCATION_FROM_LATITUDE),
+						rs.getDouble(LOCATION_FROM_LONGITUDE), rs.getDouble(LOCATION_TO_LATITUDE),
+						rs.getDouble(LOCATION_TO_LONGITUDE), rs.getInt(STATUS),
+						rs.getInt(USER_ID), null,rs.getBoolean(FROM),rs.getBoolean(TO));
+				result.add(advertisment);
+			}
+			ps.close();
+		} catch (Exception exp) {
+			exp.printStackTrace();
+		} finally {
+			ConnectionPool.close(ps);
+			ConnectionPool.getInstance().checkIn(c);
+		}
+		System.out.println("FILTER");
+		for(AdDto r:result) {
+			System.out.println(r);
 		}
 		return result;
 	}
