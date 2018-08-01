@@ -152,7 +152,7 @@ public class UserBean implements Serializable{
 		username = "";
 		password = "";
 		passwordConfirmation="";
-		System.out.println("Clean up:"+username+password);
+		System.out.println("Logged in:"+username+password);
 	}
 	
 	public void logout(ActionEvent event) {
