@@ -15,17 +15,13 @@
 	border-style: none !important;
 }
 
-.footer-name {
-	background-color: #424548 !important;
-	color: white;
-	width: 100%;
-	font-size: 20px !important;
-	font-style: oblique !important;
-	align-content: center;
-}
+
 
 .ui-widget-header {
 	border-style: none;
+}
+html {
+	min-height: 100%;
 }
 
 .header {
@@ -35,15 +31,7 @@
 	background: #424548;
 }
 
-.footer {
-	height: 100px;
-	vertical-align: middle;
-	width: 100%;
-	background: #424548;
-	position: relative;
-	bottom: 0;
-	margin-top: 20%;
-}
+
 
 .navbar-button {
 	margin-bottom: 0px !important
@@ -113,6 +101,7 @@ body {
 	background-color: #ecebeb;
 	padding: 0px;
 	margin: 0px;
+	position:relative; 
 }
 
 .feed {

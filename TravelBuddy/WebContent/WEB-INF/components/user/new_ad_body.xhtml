@@ -102,7 +102,7 @@
 				
 				<p:commandButton value="Find on map" icon="ui-icon-search"
 					onclick="geocodeFrom()" type="button" />
-				<h:panelGrid id="mpFrom" onmouseover="initMe()" >
+				<h:panelGrid id="mpFrom"  >
 				<p:gmap type="ROADMAP" styleClass="small-map" zoom="1"
 					center="41.43651688084061,-27.993164060000026"
 					onPointClick="handlePointClickFrom(event);" widgetVar="mapFrom">
@@ -128,7 +128,7 @@
 				<p:commandButton value="Find on map" icon="ui-icon-search"
 					update="mpTo" onclick="geocodeTo()" type="button" />
 
-			<h:panelGrid id="mpTo" onmouseover="initMe()" >
+			<h:panelGrid id="mpTo"  >
 				<p:gmap type="ROADMAP" zoom="1" 
 					center="41.43651688084061,-27.993164060000026"
 					styleClass="small-map" onPointClick="handlePointClickTo(event);"

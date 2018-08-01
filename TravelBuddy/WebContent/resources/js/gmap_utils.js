@@ -55,19 +55,21 @@ var markerFrom = null;
 	function initMe(){
 		if (document.getElementById('count').value=='0'){
 			document.getElementById('count').value='1';
-			
+		var isFrom=document.getElementById('isFrom').value;
+		var isTo=document.getElementById('isTo').value;	
 		var fromX=document.getElementById('fromX').value;
 		var fromY=document.getElementById('fromY').value;
 		var toX=document.getElementById('toX').value;
 		var toY=document.getElementById('toY').value;
-		if (fromX>0&&fromY>0){
+		alert(fromX+","+fromY+"/"+toX+","+toY+"/");
+		if (isFrom){
 			markerFrom = new google.maps.Marker({
 				position : new google.maps.LatLng(fromX, fromY)
 			});
 			PF('mapFrom').addOverlay(markerFrom);
 
 		}
-		if (toX>0&&toY>0){
+		if (isTo){
 			
 			markerTo = new google.maps.Marker({
 				position : new google.maps.LatLng(toX, toY)

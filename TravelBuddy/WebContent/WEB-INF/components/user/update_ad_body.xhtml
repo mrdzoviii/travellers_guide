@@ -39,12 +39,14 @@
 		<h:panelGrid id="fromHidden">
 			<h:inputHidden id="fromX" value="#{adUserBean.ad.locationFromLatitude}" />
 			<h:inputHidden id="fromY" value="#{adUserBean.ad.locationFromLongitude}" />
+			<h:inputHidden id="isFrom" value="#{adUserBean.ad.from}"/>
 		</h:panelGrid>
 		</h:form>
 		<h:form prependId="false">
 		<h:panelGrid id="toHidden">
 			<h:inputHidden id="toX" value="#{adUserBean.ad.locationToLatitude}" />
 			<h:inputHidden id="toY" value="#{adUserBean.ad.locationToLongitude}" />
+			<h:inputHidden id="isTo" value="#{adUserBean.ad.to}"/>
 		</h:panelGrid>
 		<h:inputHidden id="count" value="0" ></h:inputHidden>
 		</h:form>

@@ -5,7 +5,11 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
+	<f:metadata>
+	<f:viewAction action="#{adUserBean.newAdLoad}" />
+</f:metadata>
 <h:head>
+
 </h:head>
 <body>
 
@@ -31,11 +35,6 @@
 			</div>
 		</ui:define>
 		
-		<ui:define name="footer">
-			<div class="dashboard" align="center">
-				<ui:include src="/WEB-INF/components/footer.xhtml" />
-			</div>
-		</ui:define>
 		
 </ui:composition>
 <!-- 

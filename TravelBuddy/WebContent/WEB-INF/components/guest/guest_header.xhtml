@@ -19,10 +19,10 @@
 			<p:toolbarGroup align="left" styleClass="navbar-button">
 				<p:commandButton ajax="false" action="/index.xhtml?faces-redirect=true" value="Home Page"
 					icon="ui-icon-home"/>
-				<p:commandButton ajax="false" value="Advertisements"/>
+				<p:commandButton ajax="false" value="Advertisements" action="/guest/guest_ads.xhtml?faces-redirect=true"/>
 			</p:toolbarGroup>
 			<p:toolbarGroup align="right" styleClass="navbar-button">
-				<p:commandButton ajax="false" action="guest/guest_registration.xhtml?faces-redirect=true"
+				<p:commandButton ajax="false" action="/guest/guest_registration.xhtml?faces-redirect=true"
 					value="Registration"/>
 				<p:commandButton value="Login"
 					onclick="showLogin()" />

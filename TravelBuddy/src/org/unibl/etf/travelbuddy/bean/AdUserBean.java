@@ -97,6 +97,11 @@ public class AdUserBean implements Serializable {
 		FacesContext.getCurrentInstance().addMessage(null, message);
 		System.out.println("Clear form");
 	}
+	public void newAdLoad() {
+		ad = new AdDto();
+		ad.setUserId(userBean.getUser().getId());
+		ad.setUser(userBean.getUser());
+	}
 
 	public void closeAd(ActionEvent event) {
 		AdDao.updateStatus(ad.getId(), 2);
