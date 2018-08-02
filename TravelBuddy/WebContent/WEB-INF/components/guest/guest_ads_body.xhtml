@@ -12,19 +12,16 @@
 <div class="dashboard">
 		<h:form>
 			<div class="filter-area">
-				<p:outputLabel for="@next" value="Need" styleClass="md"></p:outputLabel>
-				<p:selectBooleanCheckbox styleClass="md" id="need"
-					value="#{adViewBean.need}">
-					<p:ajax update="ads" process="need, offer"
-						listener="#{adViewBean.filter}" />
-				</p:selectBooleanCheckbox>
-
-				<p:outputLabel style="margin-left: 10px;" for="@next" value="Offer" styleClass="md"></p:outputLabel>
-				<p:selectBooleanCheckbox styleClass="md" id="offer"
-					value="#{adViewBean.offer}">
-					<p:ajax update="ads" process="need , offer"
-						listener="#{adViewBean.filter}" />
-				</p:selectBooleanCheckbox>
+				<p:outputLabel for="@next" value="Select category:"></p:outputLabel>
+					<p:selectOneButton id="category" value="#{adViewBean.category}">
+					<f:selectItem itemLabel="Need" itemValue="Need" />
+					<f:selectItem itemLabel="Offer" itemValue="Offer" />
+					<f:selectItem itemLabel="All" itemValue="All" />
+					<p:ajax update="ads"
+							process="category"
+							listener="#{adViewBean.filter}" />
+					
+					</p:selectOneButton>
 			</div>
 			<p:dataScroller id="ads" value="#{adViewBean.ads}" var="ad"
 				chunkSize="10" styleClass="datascroller">

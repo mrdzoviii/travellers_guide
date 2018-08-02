@@ -11,27 +11,66 @@
 <h:outputScript name="js/gmap_utils.js" />
 	<div class="dashboard">
 		<h:form>
-			<div class="filter-area">
-				<p:inputText id="search" placeholder="Search"
-					styleClass="search-input" value="#{myAdsBean.query}">
-					<p:ajax event="keyup" process="search, need, offer" update="ads"
-						listener="#{myAdsBean.filterAds}" />
-				</p:inputText>
+			
+			<div class="filter-area" style="border-style: none;">
+			<p:panel header="Filter ads">
+				<p:panelGrid columns="4" cellpadding="5"  style="width:100%;" styleClass="ui-noborder">
 
-				<p:outputLabel for="@next" value="Need" styleClass="md"></p:outputLabel>
-				<p:selectBooleanCheckbox styleClass="md" id="need"
-					value="#{myAdsBean.need}">
-					<p:ajax update="ads" process="search, need, offer"
-						listener="#{myAdsBean.filterAds}" />
-				</p:selectBooleanCheckbox>
+					<p:outputLabel value="Location from:"></p:outputLabel>
+					<p:inputText id="from" placeholder="From" styleClass="input-filter"
+						value="#{myAdsBean.from}">
+						<p:ajax update="ads"
+							process="from,to,time_from,time_to,category"
+							listener="#{myAdsBean.filterAds}" event="keyup" />
+					</p:inputText>
+					<p:outputLabel value="Location to:"></p:outputLabel>
+					<p:inputText id="to" placeholder="To" styleClass="input-filter"
+						value="#{myAdsBean.to}">
+						<p:ajax update="ads"
+							process="from,to,time_from,time_to,category"
+							listener="#{myAdsBean.filterAds}" event="keyup" />
+					</p:inputText>
+					<p:outputLabel for="@next" value="Time from:"></p:outputLabel>
+					<p:calendar styleClass="input-filter" id="time_from" 
+						value="#{myAdsBean.timeFrom}" navigator="true"
+						requiredMessage="Departure time required." yearRange="1900:2050"
+						pattern="dd/MM/yyyy HH:mm" onselect="filter()">
+						<p:ajax update="ads"
+							process="from,to,time_from,time_to,category"
+							listener="#{myAdsBean.filterAds}" />
+					</p:calendar>
+					<p:outputLabel for="@next" value="Time from:"></p:outputLabel>
+					<p:calendar styleClass="input-filter" id="time_to"
+						value="#{myAdsBean.timeTo}" label="departure_time"
+						navigator="true" yearRange="1900:2050" pattern="dd/MM/yyyy HH:mm">
+						<p:ajax update="ads"
+							process="from,to,time_from,time_to,category"
+							listener="#{myAdsBean.filterAds}" />
+					</p:calendar>
 
-				<p:outputLabel style="margin-left: 10px;" for="@next" value="Offer" styleClass="md"></p:outputLabel>
-				<p:selectBooleanCheckbox styleClass="md" id="offer"
-					value="#{myAdsBean.offer}">
-					<p:ajax update="ads" process="search, need , offer"
-						listener="#{myAdsBean.filterAds}" />
-				</p:selectBooleanCheckbox>
+				  
+
+					<p:outputLabel for="@next" value="Select category:"></p:outputLabel>
+					<p:selectOneButton id="category" value="#{myAdsBean.category}">
+					<f:selectItem itemLabel="Need" itemValue="Need" />
+					<f:selectItem itemLabel="Offer" itemValue="Offer" />
+					<f:selectItem itemLabel="All" itemValue="All" />
+					<p:ajax update="ads"
+							process="from,to,time_from,time_to,category"
+							listener="#{myAdsBean.filterAds}" />
+					
+					</p:selectOneButton>
+						<p:outputLabel></p:outputLabel>
+					<p:commandButton value="Reset" actionListener="#{myAdsBean.reset}" styleClass="input-filter"
+						update="from,to,time_from,time_to,category" style="float:center;">
+
+					</p:commandButton>
+					</p:panelGrid>
+					
+			</p:panel>
 			</div>
+			
+			
 			<p:dataScroller id="ads" value="#{myAdsBean.ads}" var="ad"
 				chunkSize="10" styleClass="datascroller">
 				<f:facet name="header">Scroll for more ads</f:facet>
@@ -44,7 +83,7 @@
 							<p:commandButton style="float: right;margin-right:5px;margin-top:-3px;" rendered="#{ad.from or ad.to}"
 						  value="Show more" action="/user/ad_detail.xhtml?faces-redirect=true" ajax="false">
 						  <f:setPropertyActionListener value="#{ad}"
-							target="#{adUserBean.ad}" />
+							target="#{adViewBean.selectedAd}" />
 						</p:commandButton>
 							<p:commandButton style="float: right;margin-right:5px;margin-top:-3px;"
 						  value="Update" action="/user/update_ad.xhtml?faces-redirect=true" ajax="false">

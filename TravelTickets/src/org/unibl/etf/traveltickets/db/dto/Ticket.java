@@ -46,7 +46,6 @@ public class Ticket implements Serializable{
 	}
 	public Ticket() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 	
 }

@@ -2,11 +2,13 @@ package org.unibl.etf.traveltickets.rest;
 
 import java.util.List;
 
+import javax.servlet.ServletContext;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -19,12 +21,16 @@ import org.unibl.etf.traveltickets.util.ServiceUtility;
 
 @Path("/")
 public class TravelTicketsRestService {
+	
+	@Context
+	ServletContext context;
+	
 	@Path("/tickets")
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public synchronized Response getTickets() {
 		JSONArray array=new JSONArray();
-		List<Ticket> tickets=ServiceUtility.getAllTickets();
+		List<Ticket> tickets=ServiceUtility.getAllTickets(context);
 		for(Ticket t:tickets) {
 			array.put(new JSONObject(t));
 		}

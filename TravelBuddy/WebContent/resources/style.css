@@ -119,6 +119,12 @@ body {
 	font-weight: normal;
 	width: -webkit-fill-available;
 }
+.input-filter {
+	font-family: sans-serif;
+	text-decoration: none;
+	font-weight: normal;
+	width: 200px;
+}
 
 .input>input {
 	font-family: sans-serif;
@@ -222,4 +228,19 @@ body {
 }
 .datascroller{
 	margin-top:5%;
+}
+.ticket-table{
+	width:100%;
+}
+
+
+.ticket-fields >tbody >tr >td:first-child{
+	width: 20%;
+}
+.ticket-fields.ui-panelgrid>*>tr,
+.ticket-fileds.ui-panelgrid .ui-panelgrid-cell {
+    border: none;
+}
+.ticket-fields >tbody >tr >td:last-child{
+	width:80%;
 }

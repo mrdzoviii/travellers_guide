@@ -1,7 +1,7 @@
 package org.unibl.etf.travelbuddy.bean;
 
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,6 +23,42 @@ public class MyAdsBean implements Serializable {
 	private List<AdDto> ads;
 	private List<AdDto> data;
 	private AdDto selectedAd;
+	private String category;
+	private Date timeFrom;
+	private Date timeTo;
+	private String from;
+	private String to;
+	
+	public String getCategory() {
+		return category;
+	}
+	public void setCategory(String category) {
+		this.category = category;
+	}
+	public Date getTimeFrom() {
+		return timeFrom;
+	}
+	public void setTimeFrom(Date timeFrom) {
+		this.timeFrom = timeFrom;
+	}
+	public Date getTimeTo() {
+		return timeTo;
+	}
+	public void setTimeTo(Date timeTo) {
+		this.timeTo = timeTo;
+	}
+	public String getFrom() {
+		return from;
+	}
+	public void setFrom(String from) {
+		this.from = from;
+	}
+	public String getTo() {
+		return to;
+	}
+	public void setTo(String to) {
+		this.to = to;
+	}
 	public boolean isNeed() {
 		return need;
 	}
@@ -63,42 +99,70 @@ public class MyAdsBean implements Serializable {
 		super();
 	}
 	
-	public void filterAds(){
-		ads.clear();
-		if (need == false && offer == false)
-			return;
-		SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-		for (AdDto ad : data) {
-			String departureTime = df.format(ad.getDepartureTime());
-			String createDate = df.format(ad.getCreateTime());
-			if (ad.getStartingPoint().contains(query == null ? "" : query)
-					|| ad.getDestination().contains(query == null ? "" : query) 
-					|| departureTime.contains(query == null ? "" : query)
-					|| createDate.contains(query == null ? "" : query)
-					|| ad.getTitle().contains(query == null ? "" : query))
-				ads.add(ad);
-		}
-		if (need && offer)
-			return;
-		if (need) {
-			ads = ads.stream().filter(x -> x.getCategory()==1)
-					.collect(Collectors.toList());
-		}
-		if (offer) {
-			ads = ads.stream().filter(x -> x.getCategory()==0)
-					.collect(Collectors.toList());
-		}
-	}
-	public void delete() {
-		
-	}
 	@PostConstruct
 	public void init() {
 		UserBean bean = (UserBean) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("userBean");
 		ads = AdDao.selectByUserId(bean.getUser().getId());
 		data = AdDao.selectByUserId(bean.getUser().getId());
-		need = true;
-		offer = true;
+		category="All";
+		timeFrom=null;
+		timeTo=null;
+		from="";
+		to="";
 		selectedAd = new AdDto();
+	}
+	public void filter(){
+		ads.clear();
+		ads.addAll(data);
+		if ("All".equals(category))
+			return;
+		if ("Need".equals(category)) {
+			ads = ads.stream().filter(x -> x.getCategory()==1)
+					.collect(Collectors.toList());
+		}
+		if ("Offer".equals(category)) {
+			ads = ads.stream().filter(x -> x.getCategory()==0)
+					.collect(Collectors.toList());
+		}
+	}
+	
+	public void filterAds() {
+		ads.clear();
+		for(AdDto ad:data) {
+			if(ad.getStartingPoint().toLowerCase().contains(from!=null?from.toLowerCase():"") &&
+				ad.getDestination().toLowerCase().contains(to!=null?to.toLowerCase():"")){
+				ads.add(ad);
+				if(timeFrom!=null) {
+					ads = ads.stream().filter(x -> x.getDepartureTime().after(timeFrom))
+							.collect(Collectors.toList());
+				}
+				if(timeTo!=null) {
+					ads = ads.stream().filter(x -> x.getDepartureTime().before(timeTo))
+							.collect(Collectors.toList());
+				}
+			}
+		}
+		
+	
+		
+		if ("All".equals(category)) {
+			return;
+		}
+		if ("Need".equals(category)) {
+			ads = ads.stream().filter(x -> x.getCategory()==1)
+					.collect(Collectors.toList());
+		}
+		if ("Offer".equals(category)) {
+			ads = ads.stream().filter(x -> x.getCategory()==0)
+					.collect(Collectors.toList());
+		}
+		
+	}
+	public void reset() {
+		category="All";
+		from="";
+		to="";
+		timeFrom=null;
+		timeTo=null;
 	}
 }

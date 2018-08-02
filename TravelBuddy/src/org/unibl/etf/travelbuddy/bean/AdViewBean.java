@@ -1,5 +1,6 @@
 package org.unibl.etf.travelbuddy.bean;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -18,44 +19,52 @@ import org.unibl.etf.travelbuddy.util.ServiceUtility;
 
 @ManagedBean
 @SessionScoped
-public class AdViewBean {
+public class AdViewBean implements Serializable {
+	private static final long serialVersionUID = -8152816248191247809L;
 	private List<AdDto> data;
 	private List<AdDto> ads;
-	private boolean need;
-	private boolean offer;
 	private String from;
 	private String to;
 	private Date timeFrom;
 	private Date timeTo;
+	private List<Ticket> ticketData;
 	private List<Ticket> tickets;
+	private Ticket selectedTicket;
+	private String category;
 	
 	
+	public String getCategory() {
+		return category;
+	}
+	public void setCategory(String category) {
+		this.category = category;
+	}
+	public List<Ticket> getTicketData() {
+		return ticketData;
+	}
 	
+	public void setTicketData(List<Ticket> ticketData) {
+		this.ticketData = ticketData;
+	}
 
-
-
-
+	public Ticket getSelectedTicket() {
+		return selectedTicket;
+	}
+	public void setSelectedTicket(Ticket selectedTicket) {
+		this.selectedTicket = selectedTicket;
+	}
 	public List<Ticket> getTickets() {
 		return tickets;
 	}
-
-
-
 
 	public void setTickets(List<Ticket> tickets) {
 		this.tickets = tickets;
 	}
 
-
-
-
 	public List<String> complete(String query) {
 		return AdDao.getLocations(query);
 	}
 	
-	
-	
-
 	public String getFrom() {
 		return from;
 	}
@@ -105,22 +114,7 @@ public class AdViewBean {
 		this.ads = ads;
 	}
 
-	public boolean isNeed() {
-		return need;
-	}
-
-	public void setNeed(boolean need) {
-		this.need = need;
-	}
-
-	public boolean isOffer() {
-		return offer;
-	}
-
-	public void setOffer(boolean offer) {
-		this.offer = offer;
-	}
-
+	
 	public AdDto getSelectedAd() {
 		return selectedAd;
 	}
@@ -137,36 +131,34 @@ public class AdViewBean {
 	public void init() {
 		ads = AdDao.selectAll();
 		data=new ArrayList<>(ads);
-		need = true;
-		offer = true;
 		from="";
 		to="";
+		category="All";
 		timeFrom=null;
 		timeTo=null;
-		tickets=ServiceUtility.getTickets();
+		ticketData=ServiceUtility.getTickets();
+		tickets=new ArrayList<>(ticketData);
+		selectedTicket=new Ticket();
 	}
 	public void onLoad() {
-		ads = AdDao.selectAll();
 		data=AdDao.selectAll();
-		need = true;
-		offer = true;
+		ticketData=ServiceUtility.getTickets();
 		from="";
 		to="";
+		category="All";
 		timeFrom=null;
 		timeTo=null;
 	}
 	public void filter(){
 		ads.clear();
-		if (need == false && offer == false)
-			return;
 		ads.addAll(data);
-		if (need && offer)
+		if ("All".equals(category))
 			return;
-		if (need) {
+		if ("Need".equals(category)) {
 			ads = ads.stream().filter(x -> x.getCategory()==1)
 					.collect(Collectors.toList());
 		}
-		if (offer) {
+		if ("Offer".equals(category)) {
 			ads = ads.stream().filter(x -> x.getCategory()==0)
 					.collect(Collectors.toList());
 		}
@@ -174,20 +166,54 @@ public class AdViewBean {
 	
 	public void filterAds() {
 		ads.clear();
-		ads.addAll(AdDao.filterAds(timeFrom, timeTo, from, to));
-		if (need == false && offer == false)
+		tickets.clear();
+		for(AdDto ad:data) {
+			if(ad.getStartingPoint().toLowerCase().contains(from!=null?from.toLowerCase():"") &&
+				ad.getDestination().toLowerCase().contains(to!=null?to.toLowerCase():"")){
+				ads.add(ad);
+				if(timeFrom!=null) {
+					ads = ads.stream().filter(x -> x.getDepartureTime().after(timeFrom))
+							.collect(Collectors.toList());
+				}
+				if(timeTo!=null) {
+					ads = ads.stream().filter(x -> x.getDepartureTime().before(timeTo))
+							.collect(Collectors.toList());
+				}
+			}
+		}
+		for(Ticket ticket:ticketData) {
+			if(to!=null && ticket.getDestination().toLowerCase().contains(to.toLowerCase())) {
+				tickets.add(ticket);
+			}
+		}
+		
+		if ("All".equals(category)) {
 			return;
-		ads.addAll(data);
-		if (need && offer)
-			return;
-		if (need) {
+		}
+		if ("Need".equals(category)) {
 			ads = ads.stream().filter(x -> x.getCategory()==1)
 					.collect(Collectors.toList());
 		}
-		if (offer) {
+		if ("Offer".equals(category)) {
 			ads = ads.stream().filter(x -> x.getCategory()==0)
 					.collect(Collectors.toList());
 		}
-		System.out.println(from+" "+to+" "+timeFrom+" "+timeTo);
+		
+	}
+	/*
+	public void filterAds() {
+		System.out.println("Category:"+category+" From:"+from+" TO:"+to+" Date from:"+timeFrom+"Date to:"+timeTo);
+	}*/
+	public void reset() {
+		category="All";
+		from="";
+		to="";
+		timeFrom=null;
+		timeTo=null;
+		tickets=new ArrayList<>(ticketData);
+		ads=new ArrayList<>(data);
+	}
+	public static void main(String[] args) {
 	}
 }
+	
