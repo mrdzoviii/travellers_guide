@@ -25,7 +25,22 @@ public class UserBean implements Serializable{
 	private Date today;
 	private String messages;
 	private boolean loggedIn;
+	private boolean typeUser;
+	private boolean typeAdmin;
 	
+	 
+	public boolean isTypeUser() {
+		return typeUser;
+	}
+	public void setTypeUser(boolean typeUser) {
+		this.typeUser = typeUser;
+	}
+	public boolean isTypeAdmin() {
+		return typeAdmin;
+	}
+	public void setTypeAdmin(boolean typeAdmin) {
+		this.typeAdmin = typeAdmin;
+	}
 	public String getMessages() {
 		return messages;
 	}
@@ -73,6 +88,8 @@ public class UserBean implements Serializable{
 		user=new UserDto();
 		today=new Date();
 		loggedIn=false;
+		typeUser=false;
+		typeAdmin=false;
 		messages="5";
 	}
 	
@@ -130,6 +147,7 @@ public class UserBean implements Serializable{
 			logged = true;
 			PrimeFaces.current().ajax().addCallbackParam("loggedIn", logged);
 			if (user.getType()==1) {
+				typeUser=true;
 				FacesContext.getCurrentInstance().getApplication().getNavigationHandler().handleNavigation(
 						FacesContext.getCurrentInstance(), null, "/user/user_home.xhtml?faces-redirect=true");
 				/* messages not implemented yet
@@ -137,6 +155,7 @@ public class UserBean implements Serializable{
 				notSeenMessages = count==0?"":""+count;
 				*/
 			} else {
+				typeAdmin=false;
 				FacesContext.getCurrentInstance().getApplication().getNavigationHandler().handleNavigation(
 						FacesContext.getCurrentInstance(), null, "/admin/admin_home.xhtml?faces-redirect=true");
 			}
@@ -157,6 +176,12 @@ public class UserBean implements Serializable{
 	public void logout(ActionEvent event) {
 		if(loggedIn) {
 			loggedIn = false;
+			if(typeUser) {
+				typeUser=false;
+			}
+			if(typeAdmin) {
+				typeAdmin=false;
+			}
 			user = new UserDto();
 			FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
 			FacesContext.getCurrentInstance().getApplication().getNavigationHandler().handleNavigation(

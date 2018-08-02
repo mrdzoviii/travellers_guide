@@ -200,10 +200,7 @@ public class AdViewBean implements Serializable {
 		}
 		
 	}
-	/*
-	public void filterAds() {
-		System.out.println("Category:"+category+" From:"+from+" TO:"+to+" Date from:"+timeFrom+"Date to:"+timeTo);
-	}*/
+
 	public void reset() {
 		category="All";
 		from="";
